@@ -1,17 +1,36 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
-import {useState} from 'react'
 import { useAuth } from '../lib/authContext'
+import React, { useEffect, useState, useCallback, useContext } from 'react';
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Stack,
+  Link,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
-const Home: NextPage = () => {
+export default function Home() {
+
+  const { username, user, loading} = useAuth()
+
+  return (
+    <main>
+      {user ? <ProfilePage /> : <SignInButton />}
+    </main>
+  )
+  
+}
+
+function SignInButton() {
   const [ email , setEmail ] =  useState<string>('')
   const [ password , setPassword ] =  useState<string>('')
-  const { user, loading} = useAuth()
-
-  if(loading) return null
-
-  if(user) return <h1>U already logged</h1>
 
   const auth=getAuth()
 
@@ -30,49 +49,63 @@ const Home: NextPage = () => {
         window.alert(errorMessage)
       });
   }
-
-  function loginWithGoogle(){
-      const googleProvider = new GoogleAuthProvider();
-
-      signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        console.log('sign with google',user)
-        // ...
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-  }
-
   return (
-    <>
-      <Head>
-        <title>Signin</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="m-auto my-24 w-1/3 h-1/3 divide-y-4 space-y-1"> 
-          <div className="space-y-1">
-              <input type="email" onChange={(e) => setEmail(e.target.value)} className="border border-current	" /><br />
-              <input type="password" onChange={(e) => setPassword(e.target.value)} className="border border-current	"/><br />
-              <button onClick={()=>login()}>Login</button>
-          </div>
-          <div>
-              <button onClick={()=>loginWithGoogle()}>Login with Google</button>
-          </div>
-      </div>
-    </>
-  )
+    <Flex
+    minH={'100vh'}
+    align={'center'}
+    justify={'center'}
+    bg={useColorModeValue('gray.50', 'gray.800')}>
+    <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack align={'center'}>
+        <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+        <Text fontSize={'lg'} color={'gray.600'}>
+          to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
+        </Text>
+      </Stack>
+      <Box
+        rounded={'lg'}
+        bg={useColorModeValue('white', 'gray.700')}
+        boxShadow={'lg'}
+        p={8}>
+        <Stack spacing={4}>
+          <FormControl id="email">
+            <FormLabel>Email address</FormLabel>
+            <Input  onChange={(e) => setEmail(e.target.value)} type="email" />
+          </FormControl>
+          <FormControl id="password">
+            <FormLabel>Password</FormLabel>
+            <Input onChange={(e) => setPassword(e.target.value)} type="password" />
+          </FormControl>
+          <Stack spacing={10}>
+            <Stack
+              direction={{ base: 'column', sm: 'row' }}
+              align={'start'}
+              justify={'space-between'}>
+              <Checkbox>Remember me</Checkbox>
+              <Link color={'blue.400'}>Forgot password?</Link>
+            </Stack>
+            <Button
+              onClick={()=>login()}
+              bg={'pink.400'}
+              bgGradient="linear(to-r, red.400,pink.400)"
+              color={'white'}
+              _hover={{
+                bgGradient: 'linear(to-r, red.400,pink.400)',
+                boxShadow: 'xl',
+              }}>
+              Log in
+            </Button>
+          </Stack>
+        </Stack>
+      </Box>
+    </Stack>
+  </Flex>
+);
 }
 
-export default Home
+function ProfilePage() {
+  return <>
+  <h1>Hey</h1>
+  </>
+
+}

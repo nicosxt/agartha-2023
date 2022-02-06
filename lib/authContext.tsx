@@ -1,8 +1,12 @@
 import { useState, useEffect, useContext, createContext } from 'react'
 import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
 import { setCookie, destroyCookie} from 'nookies'
+import { onSnapshot, doc } from 'firebase/firestore';
+import { firestore } from './firebaseConfig/init';
 
-export type TIdTokenResult = {
+export type TIdTokenResult = { 
+  //https://firebase.google.com/docs/reference/node/firebase.auth.IDTokenResult
+  //Interface representing ID token result obtained from firebase.User.getIdTokenResult
   token: string;
   expirationTime: string;
   authTime: string;
@@ -19,18 +23,23 @@ type Props = {
 };
 
 type UserContext ={
-  user: TIdTokenResult | null,
+  username: null
+  user: TIdTokenResult | null, //type | props 
   loading: boolean
 }
 
 const authContext = createContext<UserContext>({
+  username: null,
   user: null,
-    loading: true
+  loading: true
 });
 
 export default function  AuthContextProvider({children} : Props) {
-  const [user, setUser] = useState<TIdTokenResult | null>(null);
-  const [loading, setLoading] = useState(true);
+  // what i'm trying to do 
+  // add a username to it 
+  const [username, setUsername] = useState(null);
+  const [user, setUser] = useState<TIdTokenResult | null>(null); // useState has to have a type and props defined
+  const [loading, setLoading] = useState(true); //
 
   useEffect(()=>{
     const auth=getAuth()
@@ -39,14 +48,17 @@ export default function  AuthContextProvider({children} : Props) {
         //user returned from firebase not the state
         if (user) {
             // Save token for backend calls
-            user.getIdToken().then(( token  )=> setCookie(null, 'idToken', token, {
+            user.getIdToken().then(( token )=> setCookie(null, 'idToken', token, {
               maxAge: 30 * 24 * 60 * 60,
               path: '/',
             }))
-
             // Save decoded token on the state
             user.getIdTokenResult().then(( result ) => setUser(result))
-        
+            onSnapshot(doc(firestore, "users", user.uid), (doc) => {
+              setUsername(doc.data()?.username);
+            })
+        } else {
+          setUsername(null);
         }
         if (!user) setUser(null)
         setLoading(false)
@@ -55,14 +67,14 @@ export default function  AuthContextProvider({children} : Props) {
 
   },[])
 
-  return <authContext.Provider value={{user,loading}}>{children}</authContext.Provider>;
+  return <authContext.Provider value={{username, user, loading}}>{children}</authContext.Provider>;
 
 }
 
 export const useAuth = () => useContext(authContext);
 
 export const signOut = async () => {
-  const auth=getAuth()
+  const auth =getAuth()
   destroyCookie(null, 'idToken')
   await signout(auth)
  

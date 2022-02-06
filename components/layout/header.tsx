@@ -1,5 +1,6 @@
 import { useAuth,signOut } from '../../lib/authContext'
 import Link from 'next/link'
+import { Button } from '@chakra-ui/react'
 
 export default function Header(props : any){
     const { user, loading} = useAuth()
@@ -13,12 +14,25 @@ export default function Header(props : any){
         </div>
 
         <div className="m-auto space-x-2">
+            
 
         {!user && !loading? 
+        
         <>
-        <Link href='/signup'><button className="m-auto"> Signup</button></Link>
+        <Link href='/signin'><Button className="m-auto"> <b>Log In</b></Button></Link>
 
-        <Link href='/signin'><button className="m-auto"> Signin</button></Link>
+        <Link href='/signup'>
+            <Button 
+                fontFamily={'heading'}
+                bgGradient="linear(to-r, red.400,pink.400)"
+                color={'white'}
+                _hover={{
+                bgGradient: 'linear(to-r, red.400,pink.400)',
+                boxShadow: 'xl',
+            }}> 
+            
+        Sign Up</Button></Link>
+
         </>
         :null}
         {user?<>
@@ -32,5 +46,6 @@ export default function Header(props : any){
         </>:null}
 
         </div>
+        
     </div>
 }

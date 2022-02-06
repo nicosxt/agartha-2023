@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { Button, ButtonGroup } from '@chakra-ui/react'
 
 const Home: NextPage = () => {
 
@@ -10,7 +11,8 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-      Sweet home
+      <h1>Hey Beauty, What's Up?</h1>
+
       </main>
     </>
   )
