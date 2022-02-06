@@ -106,7 +106,7 @@ function SignUpButton() {
               {avatars.map((avatar) => (
                 <Avatar
                   key={avatar.name}
-                  name={avatar.name}
+                  // name={avatar.name}
                   // src={avatar.url}
                   size={useBreakpointValue({ base: 'md', md: 'lg' })}
                   position={'relative'}
