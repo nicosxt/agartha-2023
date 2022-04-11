@@ -3,13 +3,13 @@ import Link from 'next/link'
 import { Button } from '@chakra-ui/react'
 
 export default function Header(props : any){
-    const { user, loading} = useAuth()
+    const { user, username, loading} = useAuth()
 
     return <div className="flex h-full flex-row">
 
         <div className="flex-1 my-auto">
         <Link href='/'>
-            <button >Home</button>
+            <button >Space Exchange</button>
         </Link>
         </div>
 
@@ -37,9 +37,15 @@ export default function Header(props : any){
         :null}
         {user?<>
         
-        <Link href='/privatessr'><button > PrivateSSR</button></Link>
+        {/* <Link href='/privatessr'><button > PrivateSSR</button></Link> */}
 
-        <Link href='/private'><button > Private</button></Link>
+        {/* <Link href='/private'><button > Private</button></Link> */}
+        {/* `/${post.username}/` */}
+
+        <Link href={`/${username}`}><button > Profile Page</button></Link>
+        
+        <Link href={'/admin'}><button > Write Posts</button></Link>
+
 
         <button onClick={signOut}> Signout</button>
         

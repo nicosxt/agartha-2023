@@ -5,6 +5,8 @@ import FirebaseProvider from '../lib/authContext'
 import '../lib/firebaseConfig/init'
 import { ChakraProvider } from '@chakra-ui/react'
 
+// import '../style/global.css'
+
 function MyApp({ Component, pageProps }: AppProps) {
   return    <ChakraProvider>
   <FirebaseProvider>

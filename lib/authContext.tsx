@@ -28,7 +28,7 @@ type UserContext ={
   loading: boolean
 }
 
-const authContext = createContext<UserContext>({
+export const authContext = createContext<UserContext>({
   username: null,
   user: null,
   loading: true

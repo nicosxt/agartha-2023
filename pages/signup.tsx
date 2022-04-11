@@ -322,9 +322,9 @@ function UsernameForm() {
             divider={<StackDivider borderColor='white' />}
             spacing={1}
             align='stretch'> */}
-            <input placeholder="Username (min. 3 characters)" value={formValue} onChange={onChange} ></input>
+            <input name="username" placeholder="Username (min. 3 characters)" value={formValue} onChange={onChange} ></input>
             <br />
-            <button disabled={!isValid}>Choose</button>
+            <button type="submit" className="btn-green" disabled={!isValid}>Choose</button>
               {/* <Input placeholder="Username (min. 3 characters)" size='lg' value={formValue} onChange={onChange} /> */}
               <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
 

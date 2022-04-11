@@ -12,3 +12,4 @@ export const authServer = async (ctx : GetServerSidePropsContext)=> {
       return null
     }
 } 
+

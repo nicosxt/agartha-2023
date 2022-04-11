@@ -104,8 +104,10 @@ function SignInButton() {
 }
 
 function ProfilePage() {
+  const { username} = useAuth()
+
   return <>
-  <h1>Hey</h1>
+  <h1>Hey, {username}</h1>
   </>
 
 }
