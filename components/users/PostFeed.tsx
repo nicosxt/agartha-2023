@@ -26,26 +26,26 @@ function PostItem(props: PostProps) : any {
     const minutesToRead = (wordCount / 100 + 1).toFixed(0);
     
     return (
-        <div className="card">
-      <Link href={`/${post.username}`}>
+      <a href={`/${post.username}/${post.slug}`} className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+      <Link href={`/${post.username}/${post.slug}`}>
         <a>
-          <strong>By @{post.username}</strong>
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>
         </a>
       </Link>
 
-      <Link href={`/${post.username}/${post.slug}`}>
-        <h2>
-          <a>{post.title}</a>
-        </h2>
-
+      <Link href={`/${post.username}`}>
+        <a>
+          <i>By @{post.username}</i>
+        </a>
       </Link>
 
-      <footer>
+      {/* <footer>
         <span>
           {wordCount} words. {minutesToRead} min read
         </span>
         <span className="push-left">💗 {post.heartCount || 0} Hearts</span>
-      </footer>
+      </footer> */}
 
       {/* If admin view, show extra controls for user */}
       {admin && (
@@ -59,7 +59,8 @@ function PostItem(props: PostProps) : any {
           {post.published ? <p className="text-success">Live</p> : <p className="text-danger">Unpublished</p>}
         </>
       )}
-    </div>
+    </a>
     );
+
 
 }
