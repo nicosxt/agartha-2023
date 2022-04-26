@@ -7,9 +7,9 @@ interface Props {
     admin: boolean
 }
 
-export default function PostFeed(props: Props): any {
+export default function CommunityFeed(props: Props): any {
     const {posts, admin} = props;
-    return posts ? posts.map((post:any) =><PostItem post={post} key={post.slug} admin={admin} />) : null;
+    return posts ? posts.map((post:any) =><Community post={post} key={post.slug} admin={admin} />) : null;
 }
 
 interface PostProps{
@@ -18,7 +18,7 @@ interface PostProps{
 }
 
 
-function PostItem(props: PostProps) : any {
+function Community(props: PostProps) : any {
     const post = props.post;
     const admin = props.admin;
     

@@ -14,34 +14,27 @@ import kebabCase from 'lodash.kebabcase';
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import toast from 'react-hot-toast';
 import 'flowbite';
-import { getValueTransition } from "framer-motion/types/animation/utils/transitions";
-import { COUNTRIES } from '../../lib/countries';
-import { CountrySelector } from '../../lib/selector';
 import React from 'react'
-import { SelectMenuOption } from '../../lib/types';
-import ExchangeForm from "../../components/form/PostForm";
-import { nanoid } from "nanoid";
+import CommunityProfilePage from "../../components/communities/CommunityProfile";
+import CommunityFeed from "../../components/communities/CommunityFeed";
 
+export default function CommunityDisplayPage(props:any) {
+    const { user, posts } = props;
 
-export default function AdminPostsPage(props:any) {
     return (
-      <main>
-        <AuthCheck>
-          {/* <PostList /> */}
-          <CreateNewPost />
-        </AuthCheck>
-      </main>
-    );
+    <main>
+        <CommunityProfilePage user={user}/>
+        <CommunityFeed posts={posts} admin={false}/>
+    </main>
+    )  
   }
 
-export function PostList() {
+export function CommunityList() {
     const auth = getAuth();
     const { username } = useContext(authContext);
-    // const [posts, setPosts] = useState([]);
     const uid:string = auth?.currentUser?.uid!;
     const postsQuery = query(
         collection(firestore, "users", uid, "posts"), 
-        // where('published','==', true),
         orderBy('createdAt','desc'));
     const [querySnapshot] = useCollection(postsQuery);
     const posts = querySnapshot?.docs.map((doc) => doc.data());
@@ -52,16 +45,4 @@ export function PostList() {
           <PostFeed posts={posts} admin />
         </>
       );
-}
-
-
-export function CreateNewPost () {
-
-  const slug = nanoid();
-
-    return (
-      <>
-      <ExchangeForm slug={slug}/>
-      </>
-    );
 }

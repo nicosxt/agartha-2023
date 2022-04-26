@@ -7,6 +7,7 @@ import 'firebase/auth';
 import 'firebase/storage';
 import "firebase/firestore"
 import { Timestamp } from 'firebase/firestore';
+import { getStorage } from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -53,6 +54,10 @@ export function postToJSON(doc:any) {
 }
 
 export const fromMillis = Timestamp.fromMillis;
+
+const firebaseApp = initializeApp(firebaseConfig)
+export const storage = getStorage(firebaseApp);
+// const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED;
 
 // }
 

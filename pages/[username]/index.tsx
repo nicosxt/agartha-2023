@@ -14,9 +14,7 @@ interface Props{
 export async function getServerSideProps(context:any) {
     const {query:qr} = context;
     const {username} = qr;
-    console.log("is it caused here? - yes")
     const userDoc = await getUserWithUsername(username)
-    console.log("mate")
     if (!userDoc) {
         return {
             notFound: true,
@@ -61,9 +59,7 @@ interface User {
 }
 export default function UserProfilePage(props: User): any {
     const { user, posts } = props;
-    // console.log(user)
-    // console.log(posts)
-    // console.log('hi')
+
     return (
     <main>
         <UserProfile user={user} />

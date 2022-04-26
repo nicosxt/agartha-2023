@@ -3,22 +3,20 @@ import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from '
 import {firestore} from '../../lib/firebaseConfig/init';
 import PostContent from '../../components/users/PostContent'
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import DisplayForm from '../../components/form/DisplayForm';
+
 
 
 export async function getStaticProps(context:any) {
     const {params} = context;
     const { username, slug } = params;
-    // console.log("------------")
-    // console.log(username, slug)
-    // username = "asimova"
-    // console.log("here?")
+    
+    
     const userDoc = await getUserWithUsername(username);
-  
+    console.log(username)
     let post;
     let path;
-    //using slug of the post as the id to get the post 
 
-    // console.log('im here')
     if (!userDoc) {
         return {
             notFound: true,
@@ -27,19 +25,10 @@ export async function getStaticProps(context:any) {
 
     if (userDoc) {
         const userUid = userDoc.data().uid;
-        // console.log(userUid)
-        // console.log(userDoc.data())
-        // slug = "etetuosetoseht"
-        // console.log('im here')
-        // console.log(username, slug)
-
         const postRef = doc(firestore, "users", userUid, "posts", slug);
         post = postToJSON(await getDoc(postRef));
         path = postRef.path;
     }
-    // console.log("how about here?")
-    // console.log(post)
-    // console.log(path)
   
     return {
       props: { post, path },
@@ -49,13 +38,14 @@ export async function getStaticProps(context:any) {
 
 export async function getStaticPaths() {
     // Improve my using Admin SDK to select empty docs
-    // console.log("maybe this?")
+    console.log("heaosfhaoif")
     const snapshot = await getDocs(collectionGroup(firestore, 'posts'));
-    // console.log('jo')
     const paths = snapshot.docs.map((doc) => {
         const { slug, username } = doc.data();
+        console.log(username)
+        console.log(slug)
         return {
-        params: { username, slug },
+        params: { username, slug},
         };
     });
 
@@ -68,9 +58,6 @@ export async function getStaticPaths() {
         fallback: 'blocking',
     };
 }
-// interface PostProps{
-//     props: any
-// }
 
 export default function Post(props:any) {
 
@@ -80,7 +67,8 @@ export default function Post(props:any) {
 
     return (
         <main>
-             <section>
+            <DisplayForm post={post}/>
+             {/* <section>
                 <PostContent post={post} />
             </section>
 
@@ -89,7 +77,7 @@ export default function Post(props:any) {
                 <strong>{post.heartCount || 0} 🤍</strong>
                 </p>
 
-            </aside>
+            </aside> */}
 
         </main>
     );

@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <main>
       {user ? <ProfilePage /> : <SignInButton />}
-    </main>
+    </main>        
   )
   
 }
@@ -107,6 +107,12 @@ function ProfilePage() {
   const { username} = useAuth()
 
   return <>
+  <h1>Hey, {username}</h1>
+  <h1>Hey, {username}</h1>
+  <h1>Hey, {username}</h1>
+  <h1>Hey, {username}</h1>
+  <h1>Hey, {username}</h1>
+  <h1>Hey, {username}</h1>
   <h1>Hey, {username}</h1>
   </>
 

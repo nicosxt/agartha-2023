@@ -27,7 +27,7 @@ export default function Header(props : any){
                       <button type="button" className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-expanded="false">
                         <span className="sr-only">Open main menu</span>
                         <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                       </button>
                     </div>
@@ -57,9 +57,11 @@ export default function Header(props : any){
                   {user?<>
         
                      <Link href={`/${username}`}><button ><a className="font-medium text-gray-500 hover:text-gray-900"> Profile Page</a></button></Link>
+
+                     <Link href={'/community'}><button><a className="font-medium text-gray-500 hover:text-gray-900">Community</a></button></Link>
+
             
-                     <Link href={'/admin'}><button><a className="font-medium text-gray-500 hover:text-gray-900">Write Posts</a></button></Link>
-    
+                     <Link href={'/admin'}><button><a className="font-medium text-gray-500 hover:text-gray-900">Post an Exchange</a></button></Link>
     
                      <button onClick={signOut}> <a className="font-medium text-gray-500 hover:text-gray-900">Signout</a></button>
             
@@ -79,7 +81,7 @@ export default function Header(props : any){
                     <button type="button" className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                       <span className="sr-only">Close main menu</span>
                       <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
                   </div>

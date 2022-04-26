@@ -313,7 +313,11 @@ function UsernameForm() {
 
   };
 
-  return <>{(
+  return <>
+  <br></br>
+  <br></br>
+  <br></br>
+  {(
     !username && (
       <section>
           <form onSubmit={onSubmit}>
