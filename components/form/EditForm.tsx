@@ -15,6 +15,7 @@ export default function EditForm(props : any) {
     const { username } = useContext(authContext);
     const router = useRouter();
     const slug = defaultValues.slug
+    console.log(defaultValues)
 
     // Set values
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
@@ -23,8 +24,7 @@ export default function EditForm(props : any) {
         const {
             content, title, published, movein, moveout,
             street, city, state, zipcode, price, currency, country} = data;
-          console.log("heyeyeye")
-          console.log(country)
+
         await updateDoc(postRef, {
             // Tip: give all fields a default value here
             title: city+', '+ state+', ' +country+ ', '+zipcode + ' | ' + movein + ' to ' + moveout ,
@@ -57,7 +57,7 @@ export default function EditForm(props : any) {
         <>
           <script src="../path/to/flowbite/dist/flowbite.js"></script>
           <script src="../path/to/flowbite/dist/datepicker.js"></script>
-          <form className="space-y-8 divide-y divide-gray-200"  onSubmit={handleSubmit(updatePost)}>
+          <form className="py-10 space-y-8 divide-y divide-gray-200"  onSubmit={handleSubmit(updatePost)}>
             <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 md:ml-10 pt-8">
               <div>
                 <div> 
@@ -145,23 +145,6 @@ export default function EditForm(props : any) {
                     </div>
                   </div>
   
-  
-                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Country </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    {/* <CountrySelector
-                      id={'countries'}
-                      ref={myRef}
-                      open={isOpen}
-                      onToggle={() => setIsOpen(!isOpen)}
-                      onChange={val => setCountry(val)}
-
-                      // We use this type assertion because we are always sure this find will return a value but need to let TS know since it could technically return null
-                      selectedValue={COUNTRIES.find(option => option.value === country) as SelectMenuOption} 
-                    /> */}
-                    </div>
-  
-                  </div>
   
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="street-address" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Street address </label>
@@ -318,23 +301,7 @@ export default function EditForm(props : any) {
               </div>
             </div>
           </form>
-          <p>Heyyyy</p>
-          <div className="divide-y divide-gray-200 pt-8 space-y-6 sm:pt-10 sm:space-y-5">
-
-          {defaultValues?.images?.map((image:string)=> {
-            console.log("========");
-            console.log(image);
-            <div className="flex flex-wrap justify-center">
-              <Image
-              src={image}
-              className="p-1 bg-white border rounded max-w-sm"
-              alt="..."
-            />
-            </div>
-            // <img className="h-16 w-16 rounded-full" src={image} alt=""/>
-          })}
-          </div>
-          
+      
         </>
     );
 }

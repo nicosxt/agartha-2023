@@ -40,6 +40,7 @@ export async function getStaticPaths() {
     // Improve my using Admin SDK to select empty docs
     console.log("heaosfhaoif")
     const snapshot = await getDocs(collectionGroup(firestore, 'posts'));
+    //get all the posts where slug and username equals to the thing in url. 
     const paths = snapshot.docs.map((doc) => {
         const { slug, username } = doc.data();
         console.log(username)

@@ -1,9 +1,10 @@
+import CommunityFeed from "./CommunityFeed"
 interface Props {
-    user: any
+    communities: any
+    admin: boolean
 }
-export default function CommunityProfilePage(props: Props): any {
-    const { user} = props;
-
+export default function ExploreCommunity(props: Props): any {
+    const {communities, admin} = props;
 
     return (
         <>
@@ -14,13 +15,14 @@ export default function CommunityProfilePage(props: Props): any {
                             <div className="flex-shrink-0">
                             </div>
                         <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Community</h1>
-                        <p className="text-sm font-medium text-gray-500">Find your IRL communities here.</p>
+                        <h1 className="text-2xl font-bold text-gray-900">Explore Communities</h1>
+
                     </div>
                     </div>
 
                     </div>
-                    
+                    <CommunityFeed communities={communities} admin={false}/>
+
                 </main>   
         </div>
     </>

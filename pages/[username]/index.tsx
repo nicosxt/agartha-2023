@@ -27,27 +27,17 @@ export async function getServerSideProps(context:any) {
 
     if (userDoc) {
         user = userDoc.data();
-        // console.log(user)
-        // console.log(user.id)
         const uid = user.uid! 
-        // console.log(uid)
-
         const postsQuery = query(
             collection(firestore, "users", uid, "posts"), 
-            // where('published','==', true),
             orderBy('createdAt','desc'));
-        // const postsQuery = query(
-        //     collection(firestore, "users", uid, "posts"), 
-        //     where('published','==', true),
-        //     orderBy('createdAt','desc'),
-        //     limit(5));
 
         posts = (await getDocs(postsQuery)).docs.map(postToJSON);
     }
     
 
     return {
-        props: {user, posts}
+        props: {user, posts, username}
     }
     
 
@@ -56,14 +46,15 @@ export async function getServerSideProps(context:any) {
 interface User {
     user: any
     posts: any
+    username: string
 }
 export default function UserProfilePage(props: User): any {
-    const { user, posts } = props;
+    const { user, posts, username } = props;
 
     return (
     <main>
-        <UserProfile user={user} />
+        <UserProfile user={user} username={username} />
         <PostFeed posts={posts} admin={true} />
-    </main>
+    </main> 
     )  
 }

@@ -191,7 +191,7 @@ function SignUpButton() {
                 }}
               /> */}
               <Input
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e:any) => setEmail(e.target.value)}
                 placeholder="Email Address"
                 bg={'gray.100'}
                 border={0}
@@ -201,7 +201,7 @@ function SignUpButton() {
                 }}
               />
               <Input
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e:any) => setPassword(e.target.value)}
                 placeholder="Password (min. 6 characters)"
                 bg={'gray.100'}
                 border={0}

@@ -12,27 +12,27 @@ import React from 'react'
 import { SelectMenuOption } from '../../lib/types';
 import ExchangeForm from "../../components/form/PostForm";
 import { nanoid } from "nanoid";
+import CommunityFeed from "../../components/communities/CommunityFeed";
+import CommunityPostForm from "../../components/communities/CommunityPostForm";
 
-
-export default function AdminPostsPage(props:any) {
+export default function CommunityAdminPostsPage(props:any) {
     return (
       <main>
         <AuthCheck>
-          {/* <PostList /> */}
-          <CreateNewPost />
+          <CreateNewCommunity />
         </AuthCheck>
       </main>
     );
   }
 
 
-export function CreateNewPost () {
+export function CreateNewCommunity () {
 
   const slug = nanoid();
 
     return (
       <>
-      <ExchangeForm slug={slug}/>
+      <CommunityPostForm slug={slug}/>
       </>
     );
 }

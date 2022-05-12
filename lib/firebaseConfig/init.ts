@@ -42,6 +42,16 @@ export async function getUserWithUsername(username:string) {
   return userDoc;
 }
 
+export async function getCommunityWithSlug(slug:string) {
+  const communitiesRef = collection(firestore, 'communities');
+  // console.log(username)
+  //get all users documents in user database 
+  const q = query(communitiesRef, where('slug', '==', slug), limit(1));
+  //within those documents, get the one with username equals to the username being passed 
+  const communityDoc = (await getDocs(q)).docs[0];
+  return communityDoc;
+}
+
 export function postToJSON(doc:any) {
   // console.log("init.ts")
   const data = doc.data();
@@ -49,6 +59,27 @@ export function postToJSON(doc:any) {
     ...data,
     createdAt: data.createdAt.toMillis(),
     updatedAt: data.updatedAt.toMillis(),
+  }
+
+}
+
+
+export function communityToJSON(doc:any) {
+  // console.log("init.ts")
+  const data = doc.data();
+  // console.log(data)
+  return {
+    ...data,
+  }
+
+}
+
+export function memberToJSON(doc:any) {
+  // console.log("init.ts")
+  const data = doc.data();
+  console.log("data", data)
+  return {
+    ...data,
   }
 
 }

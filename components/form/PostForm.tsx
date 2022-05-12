@@ -191,21 +191,7 @@ export default function ExchangeForm(props : any) {
                     </div>
                     </div>
                   </div>
-  
-  
-                  {/* <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Country </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <CountrySelector
-                      id={'countries'}
-                      ref={myRef}
-                      open={isOpen}
-                      onToggle={() => setIsOpen(!isOpen)}
-                      onChange={val => setCountry(val)}
-                      // We use this type assertion because we are always sure this find will return a value but need to let TS know since it could technically return null
-                      selectedValue={COUNTRIES.find(option => option.value === country) as SelectMenuOption} 
-                    />
-                    </div> */}
+
   
                   </div>
   
@@ -252,12 +238,12 @@ export default function ExchangeForm(props : any) {
                   </div>
 
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Country </label>
+                    <label htmlFor="country" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Country </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
-                        type="text" name="postal-code" id="postal-code" autoComplete="postal-code" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                        type="text" name="country" id="country" autoComplete="country" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
   
@@ -303,65 +289,7 @@ export default function ExchangeForm(props : any) {
             </div>
             </div>
   
-            <div className="divide-y divide-gray-200 pt-8 space-y-6 sm:pt-10 sm:space-y-5">
-                <div>
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Communities</h3>
-                  <p className="mt-1 max-w-2xl text-sm text-gray-500">We value authentic connections more than transactional relationships.</p>
-                </div>
-                <div className="space-y-6 sm:space-y-5 divide-y divide-gray-200">
-                  <div className="pt-6 sm:pt-5">
-                    <div role="group" aria-labelledby="label-email">
-                      <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-baseline">
-                        <div>
-                          <div className="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700" id="label-email">Select Your Community</div>
-                          <p className="mt-1 max-w-2xl text-sm text-gray-500">Select up to 3 communities you belong to.</p>
-                        </div>
-                        <div className="mt-4 sm:mt-0 sm:col-span-2">
-                          <div className="max-w-lg space-y-4">
-                            <div className="relative flex items-start">
-                              <div className="flex items-center h-5">
-                              </div>
-                              <div>
-                                <label htmlFor="location" className="block text-sm font-medium text-gray-700">Community 1</label>
-                                <select id="location" name="location" className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                  <option>706 Youth Space</option>
-                                  <option selected>Mars College</option>
-                                  <option>Others</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div>
-                              <div className="relative flex items-start">
-                                <div>
-                                <label htmlFor="location" className="block text-sm font-medium text-gray-700">Community 2</label>
-                                <select id="location" name="location" className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                  <option>706 Youth Space</option>
-                                  <option selected>Mars College</option>
-                                  <option>Others</option>
-                                </select>
-                              </div>
-                              </div>
-                            </div>
-                            <div>
-                              <div className="relative flex items-start">
-                                   <div>
-                                <label htmlFor="location" className="block text-sm font-medium text-gray-700">Community 3</label>
-                                <select id="location" name="location" className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                  <option>706 Youth Space</option>
-                                  <option selected>Mars College</option>
-                                  <option>Others</option>
-                                </select>
-                              </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {/* </div> */}
+            
   
             <div className="pt-5">
               <div className="flex justify-end">

@@ -40,19 +40,8 @@ function PostManager() {
       {post && (
         <>
           <section>
-            <h1>{post.title}</h1>
-            <p>ID: {post.slug}</p>
-
             <PostForm postRef={postRef} defaultValues={post} preview={preview} />
           </section>
-
-          <aside>
-          <h3>Tools</h3>
-            <button onClick={() => setPreview(!preview)}>{preview ? 'Edit' : 'Preview'}</button>
-            <Link href={`/${post.username}/${post.slug}`}>
-              <button className="btn-blue">Live view</button>
-            </Link>
-          </aside>
         </>
       )}
     </main>
@@ -66,12 +55,7 @@ interface Props {
 }
 function PostForm(props:Props) {
   const {defaultValues, postRef, preview} =props;
-  
-  // console.log("signal")
-  // console.log(postRef)
-  console.log("ahhhh")
-  console.log(postRef)
-  
+
   return (
     <>
     <EditForm postRef={postRef} defaultValues={defaultValues} preview={preview}/>

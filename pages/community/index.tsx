@@ -3,46 +3,73 @@ import { useAuth } from '../../lib/authContext'
 import { useContext, useState } from 'react';
 import AuthCheck from "../../components/misc/authcheck";
 import { useCollection, useDocumentDataOnce } from 'react-firebase-hooks/firestore';
-import { doc, getDoc, collection, addDoc, setDoc, getDocs, query, where, limit, orderBy} from 'firebase/firestore';
+import { doc, getDoc, startAfter, collection, collectionGroup, addDoc, setDoc, getDocs, query, where, limit, orderBy} from 'firebase/firestore';
 import { firestore } from '../../lib/firebaseConfig/init'
 import { authContext } from '../../lib/authContext'
-import { getUserWithUsername, postToJSON } from '../../lib/firebaseConfig/init';
+import { getUserWithUsername, communityToJSON } from '../../lib/firebaseConfig/init';
 import PostFeed from "../../components/users/PostFeed";
 import { useEffect } from "react";
 import { useRouter } from 'next/router';
 import kebabCase from 'lodash.kebabcase';
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import toast from 'react-hot-toast';
-import 'flowbite';
 import React from 'react'
-import CommunityProfilePage from "../../components/communities/CommunityProfile";
+import CommunityPage from "../../components/communities/CommunityPage";
 import CommunityFeed from "../../components/communities/CommunityFeed";
+import ManageCommunity from "../../components/communities/ManageCommunity";
+import ExploreCommunity from "../../components/communities/ExploreCommunity";
 
-export default function CommunityDisplayPage(props:any) {
-    const { user, posts } = props;
+const LIMIT = 10;
 
-    return (
-    <main>
-        <CommunityProfilePage user={user}/>
-        <CommunityFeed posts={posts} admin={false}/>
-    </main>
-    )  
+export async function getServerSideProps(){
+  const communitiesQuery = query(
+    collection(firestore, 'communities'),
+    orderBy('communityName'),
+    limit(LIMIT)
+    )
+  const communities = (await getDocs(communitiesQuery)).docs.map(communityToJSON);
+
+  return {
+    props: { communities }, // will be passed to the page component as props
+  };
+
+}
+
+interface Props {
+  communities: any 
+}
+
+export default function CommunityHome(props:Props) {
+  const [communities, setCommunities] = useState(props.communities);
+  const [loading, setLoading] = useState(false);
+  const [postsEnd, setCommunitiesEnd] = useState(false);
+
+  const getMoreCommunities = async () => {
+    setLoading(true);
+    const lastVisible = communities[communities.length-1]; // how to set pointer pointing to the name after the one before in alphabetic
+    const communitiesQuery = query(
+      collectionGroup(firestore, 'communities'),
+      orderBy('communityName'),
+      startAfter(lastVisible),
+      limit(LIMIT)
+      )
+    const newCommunities = (await getDocs(communitiesQuery)).docs.map((doc) => doc.data());
+    setCommunities(communities.concat(newCommunities));
+    setLoading(false);
+    if (newCommunities.length < LIMIT) {
+      setCommunitiesEnd(true);
+    }
   }
 
-export function CommunityList() {
-    const auth = getAuth();
-    const { username } = useContext(authContext);
-    const uid:string = auth?.currentUser?.uid!;
-    const postsQuery = query(
-        collection(firestore, "users", uid, "posts"), 
-        orderBy('createdAt','desc'));
-    const [querySnapshot] = useCollection(postsQuery);
-    const posts = querySnapshot?.docs.map((doc) => doc.data());
-
-    return (
-        <>
-          <h1>Manage your Posts</h1>
-          <PostFeed posts={posts} admin />
-        </>
-      );
+  return (
+      <>
+        <main>
+        <CommunityPage />
+        <ManageCommunity communities={communities} admin={false} /> 
+        <ExploreCommunity communities={communities} admin={false} /> 
+    </main>
+      </>
+    );
 }
+
+

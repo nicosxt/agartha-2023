@@ -12,7 +12,7 @@ import Card from '@mui/material/Card';
 import Link from 'next/link'
 
 
-const LIMIT = 1;
+const LIMIT = 10;
 export async function getServerSideProps(){
   const postsQuery = query(
     collectionGroup(firestore, 'posts'),
@@ -35,7 +35,7 @@ interface Props {
 export default function Home(props:Props){
   const [posts, setPosts] = useState(props.posts);
   const [loading, setLoading] = useState(false);
-  const [postsEnd, setPostsEnd] = useState(false);
+  const [postsEnd, setPostsEnd] = useState(false);  
   const getMorePosts = async () => {
     setLoading(true);
     const last = posts[posts.length - 1];
@@ -66,6 +66,7 @@ export default function Home(props:Props){
     <>
       <Head>
         <title>Home</title>
+        
       </Head>
       <div className="relative bg-white overflow-hidden">
 
