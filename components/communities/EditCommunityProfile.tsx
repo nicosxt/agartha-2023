@@ -1,6 +1,6 @@
 import { authContext } from '../../lib/authContext'
 import { useContext, useState } from 'react';
-import { updateDoc, serverTimestamp } from "firebase/firestore";
+import { updateDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
 import { useForm } from 'react-hook-form';
 import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
 import { doc } from 'firebase/firestore';
@@ -11,7 +11,7 @@ import CommunityAvatarUploader from './CommunityAvatarUploader';
 
 
 export default function EditCommunityProfile(props : any) {
-    const {communityRef, defaultValues} =props;
+    const {communityRef, userCommunityRef, communityMemberSnap, defaultValues} =props;
     const router = useRouter();
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
     console.log('hey')
@@ -172,6 +172,7 @@ export default function EditCommunityProfile(props : any) {
             <div className="pt-5">
               <div className="flex justify-end">
                 <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save Changes</button>
+                <DeleteCommunityButton communityMemberSnap={communityMemberSnap} communityRef={communityRef} userCommunityRef={userCommunityRef}/>
               </div>
             </div>
           </form>
@@ -179,4 +180,33 @@ export default function EditCommunityProfile(props : any) {
         </>
     );
 
+}
+
+function DeleteCommunityButton(props:any):any {
+  const {communityRef, communityMemberSnap, userCommunityRef} = props;
+  const router = useRouter();
+  const deletePost = async () => {
+    const doIt = confirm('are you sure!');
+    if (doIt) {
+      await deleteDoc(communityRef);
+      await deleteDoc(userCommunityRef);  
+      communityMemberSnap.docs.map(async (doc:any) => {
+        await deleteDoc(doc.ref);
+        });    
+
+
+      // const client = require('firebase-tools');
+      //   await client.firestore
+      //     .delete(communityRef, {
+      //       project: process.env.GCLOUD_PROJECT,
+      //       recursive: true,
+      //       yes: true
+      //     });
+      router.push('/community');
+    }
+  }
+  return(
+  <button type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+        onClick={deletePost}>Delete</button>
+  );
 }

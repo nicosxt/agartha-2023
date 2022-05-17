@@ -5,6 +5,10 @@ import { firestore, storage, memberToJSON } from '../../../../lib/firebaseConfig
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { communityToJSON } from "../../../../lib/firebaseConfig/init";
 import Link from "next/dist/client/link";
+import { useContext, useState, useEffect} from 'react';
+import { authContext } from '../../../../lib/authContext'
+import { getUserWithUsername } from "../../../../lib/firebaseConfig/init";
+
 export async function getStaticProps(context:any)  {
     const {params} = context;
     const {slug} = params;
@@ -14,7 +18,7 @@ export async function getStaticProps(context:any)  {
     const members = membersSnapshot.docs.map(d => d.id);
     const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
     const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
-    console.log("slug" + realSlug)
+    // console.log("slug" + realSlug)
     return{
         props: {membersInfo, realSlug},
         revalidate: 5000,
@@ -46,6 +50,43 @@ interface Props {
 export default function Members(props: Props) {
     const realSlug = props.realSlug;
     const membersInfo = props.membersInfo;
+    const { username } = useContext(authContext);
+    const realUsername:string = username!;
+    // console.log("username is ", realUsername)
+    const [user, setUser] = useState<any>();
+    const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
+    const [admin, setAdmin] = useState<boolean>(false);
+    let newUserCommunityDoc:any = null;
+    // console.log("1", newUserCommunityDoc);
+
+    
+    useEffect(() => {
+        const getUser = async () => {
+            // console.log("hi im lucy and im cutie ")
+            const userDoc = await getUserWithUsername(realUsername);
+            // console.log("USERDOC", userDoc)
+            if(userDoc){
+                const newUser = memberToJSON(userDoc);
+                setUser(newUser);
+                // console.log("USER", newUser)
+                const userCommunityRef = doc(firestore, "users", newUser.uid, "communities", realSlug);
+                const data = await getDoc(userCommunityRef);
+                newUserCommunityDoc = communityToJSON(data);
+                setUserCommunityDoc(newUserCommunityDoc);
+                // console.log("3", newUserCommunityDoc);
+
+                // console.log("USERCOMMUNITYDOC", newUserCommunityDoc)
+                const realAdmin = newUserCommunityDoc.admin;
+                setAdmin(realAdmin);
+                // if (userCommunityDoc) {
+                //     setAdmin(userCommunityDoc.admin);
+                //     console.log("ADMIN", userCommunityDoc.admin)
+                // }
+            }
+        }
+        getUser();
+    }, [realUsername])
+
 
     return(
         <>
@@ -56,9 +97,11 @@ export default function Members(props: Props) {
               <p className="mt-2 text-sm text-gray-700">A list of all the members in your account including their name, title, email and role.</p>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              {admin && (
               <Link href={`/community/${realSlug}/addmembers`}>
               <button type="button" className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add Member</button>
               </Link>
+              )}
             </div>
           </div>
           <div className="mt-8 flex flex-col">

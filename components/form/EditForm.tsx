@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { updateDoc, serverTimestamp } from "firebase/firestore";
+import { updateDoc, serverTimestamp, deleteDoc, getDoc } from "firebase/firestore";
 import toast, { Toaster } from 'react-hot-toast';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useContext, useState } from 'react';
 import { authContext } from '../../lib/authContext'
 import { Link } from '@chakra-ui/react';
@@ -16,15 +16,23 @@ export default function EditForm(props : any) {
     const router = useRouter();
     const slug = defaultValues.slug
     console.log(defaultValues)
-
+    // let exist = false;
     // Set values
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
 
+    // useEffect(() => {
+    //   const checkExistence = async () => {
+    //     const docSnap = await getDoc(postRef);
+    //     exist =docSnap.exists();
+    //   }
+    //   checkExistence();
+    // }, [])
+
     const updatePost = async (data:any) => {
+      console.log('form submitted')
         const {
             content, title, published, movein, moveout,
             street, city, state, zipcode, price, currency, country} = data;
-
         await updateDoc(postRef, {
             // Tip: give all fields a default value here
             title: city+', '+ state+', ' +country+ ', '+zipcode + ' | ' + movein + ' to ' + moveout ,
@@ -43,8 +51,6 @@ export default function EditForm(props : any) {
 
         },
         )
-
-    
         reset({  content, title, published, movein, moveout,
             street, city, state, zipcode, price, currency, country });
 
@@ -229,66 +235,7 @@ export default function EditForm(props : any) {
               
                   </div>
                 </div>
-            </div>
-  
-            <div className="divide-y divide-gray-200 pt-8 space-y-6 sm:pt-10 sm:space-y-5">
-                <div>
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Communities</h3>
-                  <p className="mt-1 max-w-2xl text-sm text-gray-500">We value authentic connections more than transactional relationships.</p>
-                </div>
-                <div className="space-y-6 sm:space-y-5 divide-y divide-gray-200">
-                  <div className="pt-6 sm:pt-5">
-                    <div role="group" aria-labelledby="label-email">
-                      <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-baseline">
-                        <div>
-                          <div className="text-base font-medium text-gray-900 sm:text-sm sm:text-gray-700" id="label-email">Select Your Community</div>
-                          <p className="mt-1 max-w-2xl text-sm text-gray-500">Select up to 3 communities you belong to.</p>
-                        </div>
-                        <div className="mt-4 sm:mt-0 sm:col-span-2">
-                          <div className="max-w-lg space-y-4">
-                            <div className="relative flex items-start">
-                              <div className="flex items-center h-5">
-                              </div>
-                              <div>
-                                <label htmlFor="location" className="block text-sm font-medium text-gray-700">Community 1</label>
-                                <select id="location" className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                  <option>706 Youth Space</option>
-                                  <option selected>Mars College</option>
-                                  <option>Others</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div>
-                              <div className="relative flex items-start">
-                                <div>
-                                <label htmlFor="location" className="block text-sm font-medium text-gray-700">Community 2</label>
-                                <select id="location" className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                  <option>706 Youth Space</option>
-                                  <option selected>Mars College</option>
-                                  <option>Others</option>
-                                </select>
-                              </div>
-                              </div>
-                            </div>
-                            <div>
-                              <div className="relative flex items-start">
-                                   <div>
-                                <label htmlFor="location" className="block text-sm font-medium text-gray-700">Community 3</label>
-                                <select id="location" className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                  <option>706 Youth Space</option>
-                                  <option selected>Mars College</option>
-                                  <option>Others</option>
-                                </select>
-                              </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div>       
             </div>
   
             <div className="pt-5">
@@ -298,10 +245,27 @@ export default function EditForm(props : any) {
                 {/* <Link href={`/${username}/${defaultValues.slug}`}> */}
                 <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save Changes</button>
                 {/* </Link> */}
+                <DeletePostButton postRef={postRef} />
               </div>
             </div>
           </form>
       
         </>
     );
+}
+
+function DeletePostButton(props:any):any {
+  const {postRef} = props;
+  const router = useRouter();
+  const deletePost = async () => {
+    const doIt = confirm('are you sure!');
+    if (doIt) {
+      await deleteDoc(postRef);
+      router.push('/admin');
+    }
+  }
+  return(
+  <button type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+        onClick={deletePost}>Delete</button>
+  );
 }

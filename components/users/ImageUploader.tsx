@@ -85,16 +85,6 @@ export default function ImageUploader(props: any) :any{
             
             </>
         )}
-
-        {/* {downloadURL && <code className="upload-snippet">{`![alt](${downloadURL})`}</code>} */}
-        {/* <img className="h-16 w-16 rounded-full" src={downloadURL} alt=""/> */}
-        {/* {images.map((image)=> {
-          console.log("heyoaa")
-          console.log(image)
-          return(
-          <img className="h-16 w-16 rounded-full" src={image} alt=""/>)
-        })} */}
-
         </div>
     );
 }

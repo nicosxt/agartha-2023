@@ -4,22 +4,21 @@ import { Container } from '@mui/material'
 
 interface Props {
     communities: any
-    admin: boolean
 }
 
 export default function CommunityFeed(props: Props): any {
-    const {communities, admin} = props;
-    return communities ? communities.map((community:any) =><Community community={community} key={community.slug} admin={admin} />) : null;
+    const {communities} = props;
+    return communities ? communities.map((community:any) =><Community community={community} key={community.slug} />) : null;
 }
 
 interface PostProps{
     community: any
-    admin: boolean
 }
 
 function Community(props: PostProps) : any {
     const community = props.community;
-    const admin = props.admin;
+ 
+
     
     return (
       <>
@@ -39,16 +38,7 @@ function Community(props: PostProps) : any {
                           </Link>
                         </div>
                         <div className="flex space-x-4">
-                          {admin && (
-                              <>
-                                <Link href={`/admin/${community.slug}`}>
-                                  <h3>
-                                    <button className="btn-blue">Edit</button>
-                                  </h3>
-                                </Link>
-                                {community.published ? <p className="text-success">Live</p> : <p className="text-danger">Unpublished</p>}
-                              </>
-                            )}
+                         
                         </div>
 
                         </div>

@@ -15,7 +15,7 @@ export async function getStaticProps(context:any)  {
     const members = membersSnapshot.docs.map(d => d.id);
     const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
     const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
-    console.log("slug" + realSlug)
+    // console.log("slug" + realSlug)
     return{
         props: {membersInfo, realSlug},
         revalidate: 5000,

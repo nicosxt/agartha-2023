@@ -1,11 +1,10 @@
 import CommunityFeed from "./CommunityFeed"
 interface Props {
     communities: any
-    admin: boolean
 }
 export default function ExploreCommunity(props: Props): any {
-    const {communities, admin} = props;
-
+    const {communities } = props;
+    console.log("explore community" , communities)
     return (
         <>
             <div className="min-h-full">
@@ -21,7 +20,7 @@ export default function ExploreCommunity(props: Props): any {
                     </div>
 
                     </div>
-                    <CommunityFeed communities={communities} admin={false}/>
+                    <CommunityFeed communities={communities}/>
 
                 </main>   
         </div>

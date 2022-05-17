@@ -62,6 +62,7 @@ export default function CommunityPostForm(props : any) {
         await setDoc(memberRef, {
           uid: uid,
           admin: true,
+          slug: slug
         })
         // Imperative navigation after doc is set
         router.push(`/community/${slug}`);

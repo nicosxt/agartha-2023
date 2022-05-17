@@ -1,5 +1,6 @@
 
-export default function CommunityPage(): any {
+export default function CommunityPage(props:any): any {
+    const {communities} = props;
 
     return (
         <>
@@ -11,7 +12,7 @@ export default function CommunityPage(): any {
                             </div>
                         <div>
                         <h1 className="text-2xl font-bold text-gray-900">Community</h1>
-                        <p className="text-sm font-medium text-gray-500">Find your IRL communities here.</p>
+                        <p className="text-sm font-medium text-gray-500">Communities that you are a part of.</p>
                     </div>
                     </div>
 

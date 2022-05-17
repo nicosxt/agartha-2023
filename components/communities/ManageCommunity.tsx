@@ -1,13 +1,14 @@
 import Link from 'next/link'
+import CommunityFeed from '../../components/communities/CommunityFeed';
 
 interface Props {
     communities: any
-    admin: boolean
 }
 export default function ManageCommunity(props: Props): any {
     // search the community where the user has admin access, display the community under Manage communities. 
 
-    const {communities, admin} = props;
+    const {communities} = props;
+    console.log("manage communities", communities)
 
     return (
         <>
@@ -19,13 +20,17 @@ export default function ManageCommunity(props: Props): any {
                             </div>
                         <div>
                         <h1 className="text-2xl font-bold text-gray-900">Manage Communities</h1>
+                        <p className="text-sm font-medium text-gray-500">Communities that you have admin access to.</p>
                         <Link href='/communityAdmin'>
-                        <a href="#" className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">+ Create a New Community</a>
+                        <a href="#" className="mt-8 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">+ Create a New Community</a>
                         </Link>
                     </div>
+                    
                     </div>
 
                     </div>
+                    <CommunityFeed communities={communities}/>
+
                     
                 </main>   
         </div>

@@ -26,12 +26,14 @@ type UserContext ={
   username: null
   user: TIdTokenResult | null, //type | props 
   loading: boolean
+  uid: string 
 }
 
 export const authContext = createContext<UserContext>({
   username: null,
   user: null,
-  loading: true
+  loading: true,
+  uid: ""
 });
 
 export default function  AuthContextProvider({children} : Props) {
@@ -40,6 +42,7 @@ export default function  AuthContextProvider({children} : Props) {
   const [username, setUsername] = useState(null);
   const [user, setUser] = useState<TIdTokenResult | null>(null); // useState has to have a type and props defined
   const [loading, setLoading] = useState(true); //
+  const [uid, setUid] = useState("");
 
   useEffect(()=>{
     const auth=getAuth()
@@ -54,8 +57,11 @@ export default function  AuthContextProvider({children} : Props) {
             }))
             // Save decoded token on the state
             user.getIdTokenResult().then(( result ) => setUser(result))
-            onSnapshot(doc(firestore, "users", user.uid), (doc) => {
+            const userUid = user.uid;
+            console.log("userUid", userUid)
+            onSnapshot(doc(firestore, "users", userUid), (doc) => {
               setUsername(doc.data()?.username);
+              setUid(userUid);
             })
         } else {
           setUsername(null);
@@ -67,7 +73,7 @@ export default function  AuthContextProvider({children} : Props) {
 
   },[])
 
-  return <authContext.Provider value={{username, user, loading}}>{children}</authContext.Provider>;
+  return <authContext.Provider value={{username, user, uid, loading}}>{children}</authContext.Provider>;
 
 }
 

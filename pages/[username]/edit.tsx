@@ -20,15 +20,15 @@ export default function EditUser(): any {
 
 function EditUserProfileManager() {
     const { username } = useContext(authContext);
-    console.log("66666")
-    console.log(username)
+    // console.log("66666")
+    // console.log(username)
     const auth = getAuth();
     const uid:string = auth?.currentUser?.uid!;
-    console.log(uid)
+    // console.log(uid)
     const userRef = doc(firestore, "users", uid);
-    console.log(userRef.path)    
+    // console.log(userRef.path)    
     const [user] = useDocumentData(userRef);
-    console.log(user)
+    // console.log(user)
     return (
         <main>
         {user && (

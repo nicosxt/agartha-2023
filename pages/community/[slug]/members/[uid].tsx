@@ -7,17 +7,17 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 export async function getStaticProps(context:any) {
     const {params} = context;
     const {slug, uid} = params; // grab the id from the url parameters
-    console.log("-----")
+    // console.log("-----")
 
-    console.log(slug)
-    console.log(uid)
-    console.log("-----")
+    // console.log(slug)
+    // console.log(uid)
+    // console.log("-----")
     let member;
 
     const memberRef = doc(firestore, "communities", slug, "members", uid);
     const path = memberRef.path;
     const memberDoc= await getDoc(memberRef);
-    console.log(memberDoc.data())
+    // console.log(memberDoc.data())
     if(memberDoc){
         member = memberToJSON(memberDoc);
     }
@@ -32,12 +32,13 @@ export async function getStaticPaths() {
     // Improve my using Admin SDK to select empty docs
     const snapshot = await getDocs(collectionGroup(firestore, 'members'));
     const paths = snapshot.docs.map((doc) => {
+        // console.log("doc", doc)
         const { slug, uid } = doc.data();
         return {
         params: {slug, uid},
         };
     });
-    console.log("paths", paths)
+    // console.log("paths", paths)
 
     return {
         paths,

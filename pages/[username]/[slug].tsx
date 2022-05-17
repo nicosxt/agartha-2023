@@ -13,7 +13,7 @@ export async function getStaticProps(context:any) {
     
     
     const userDoc = await getUserWithUsername(username);
-    console.log(username)
+    // console.log(username)
     let post;
     let path;
 
@@ -38,13 +38,13 @@ export async function getStaticProps(context:any) {
 
 export async function getStaticPaths() {
     // Improve my using Admin SDK to select empty docs
-    console.log("heaosfhaoif")
+    // console.log("heaosfhaoif")
     const snapshot = await getDocs(collectionGroup(firestore, 'posts'));
     //get all the posts where slug and username equals to the thing in url. 
     const paths = snapshot.docs.map((doc) => {
         const { slug, username } = doc.data();
-        console.log(username)
-        console.log(slug)
+        // console.log(username)
+        // console.log(slug)
         return {
         params: { username, slug},
         };

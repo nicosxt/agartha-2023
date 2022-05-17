@@ -70,7 +70,7 @@ export default function Home(props:Props){
       </Head>
       <div className="relative bg-white overflow-hidden">
 
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto pt-16">
           <div className="relative z-10 pt-8 pb-8 bg-white sm:pb-8 md:pb-8 lg:max-w-2xl lg:w-full lg:pb-8 xl:pb-8">
             <svg className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="50,0 100,0 50,100 0,100" /></svg>
 
@@ -97,20 +97,10 @@ export default function Home(props:Props){
           </main>
         </div>
       </div>
-    <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+    <div className="pt-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
       <img className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="https://s2.loli.net/2022/04/14/PAmBNk9uo6vfTZW.png" alt=""/>
     </div>
     </div>
-
-      {/* <h1>Hey Beauty, What's Up?</h1>
-
-      <PostFeed posts={posts}  admin={false} />
-
-        {!loading && !postsEnd && <button onClick={getMorePosts}>Load more</button>}
-
-        <Loader show={loading} />
-
-        {postsEnd && 'You have reached the end!'} */}
 
     </>
   )

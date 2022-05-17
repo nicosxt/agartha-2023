@@ -78,13 +78,12 @@ export default function UserProfilePage(props: Props): any {
                     </div>
                     </div>
                     {/* <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3"> */}
-          <div className='mb-2'>
+          {/* <div className='mb-2'> */}
               
-            <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
+            {/* <h2 id="timeline-title" className="text-lg font-medium text-gray-900">
                 <strong>Communities</strong>
-                {/* <CommunityStack /> */}
-            </h2>
-          </div>
+            </h2> */}
+          {/* </div> */}
           {/* </div> */}
 
                     {/* <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">

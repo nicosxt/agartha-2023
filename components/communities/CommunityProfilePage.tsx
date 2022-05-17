@@ -1,9 +1,103 @@
 import Link from 'next/link';
 import ImageFeed from '../imgs/ImageFeed';
 import MemberStack from '../members/MemberStack';
+import { useContext, useState, useEffect} from 'react';
+import { authContext } from '../../lib/authContext'
+import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from 'firebase/firestore';
+import { getUserWithUsername, communityToJSON, memberToJSON} from '../../lib/firebaseConfig/init';
+import { firestore } from '../../lib/firebaseConfig/init'
+
+// export async function getServerSideProps() {
+//     const { uid } = useContext(authContext);
+//     const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
+//     const [admin, setAdmin] = useState<boolean>(false);
+//     let newUserCommunityDoc:any;
+//     console.log("1", newUserCommunityDoc);
+//     // const newUser = memberToJSON(user);
+//         if(uid) {
+//         const userCommunityRef = doc(firestore, "users", uid, "communities", community.slug);
+//         const data = await getDoc(userCommunityRef);
+//         newUserCommunityDoc = communityToJSON(data);
+//         setUserCommunityDoc(newUserCommunityDoc);
+//         const realAdmin = newUserCommunityDoc.admin;
+//         setAdmin(realAdmin);
+//         if (userCommunityDoc) {
+//             setAdmin(userCommunityDoc.admin);
+//             console.log("ADMIN", userCommunityDoc.admin)
+//         }
+//     }
+// }
+        
+
+
+
 export default function CommunityProfilePage(props : any) {
     const community = props.community;
-    // const createdAt = typeof post?.createdAt === 'number' ? new Date(post.createdAt) : post.createdAt.toDate();
+    const { uid } = useContext(authContext);
+    console.log("uid", uid)
+    const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
+    const [admin, setAdmin] = useState<boolean>(false);
+    let newUserCommunityDoc:any;
+    console.log("1", newUserCommunityDoc);
+    useEffect(() => {
+        const getUser = async () => {
+            // const newUser = memberToJSON(user);
+                if(uid) {
+                const userCommunityRef = doc(firestore, "users", uid, "communities", community.slug);
+                const data = await getDoc(userCommunityRef);
+                newUserCommunityDoc = communityToJSON(data);
+                setUserCommunityDoc(newUserCommunityDoc);
+                const realAdmin = newUserCommunityDoc.admin;
+                setAdmin(realAdmin);
+                    if (userCommunityDoc) {
+                        setAdmin(userCommunityDoc.admin);
+                        console.log("ADMIN", userCommunityDoc.admin)
+                    }
+            }
+        }
+    getUser();
+}, [uid])
+        
+
+    
+    // useEffect(() => {
+    //     const getUser = async () => {
+    //         console.log("hi im lucy and im cutie ")
+    //         const userDoc = await getUserWithUsername(realUsername);
+    //         console.log("USERDOC", userDoc)
+    //         if(userDoc){
+    //             const newUser = memberToJSON(userDoc);
+    //             setUser(newUser);
+    //             console.log("USER", newUser)
+    //             const userCommunityRef = doc(firestore, "users", newUser.uid, "communities", community.slug);
+    //             const data = await getDoc(userCommunityRef);
+    //             newUserCommunityDoc = communityToJSON(data);
+    //             setUserCommunityDoc(newUserCommunityDoc);
+    //             console.log("3", newUserCommunityDoc);
+
+    //             console.log("USERCOMMUNITYDOC", newUserCommunityDoc)
+    //             const realAdmin = newUserCommunityDoc.admin;
+    //             setAdmin(realAdmin);
+    //             // if (userCommunityDoc) {
+    //             //     setAdmin(userCommunityDoc.admin);
+    //             //     console.log("ADMIN", userCommunityDoc.admin)
+    //             // }
+    //         }
+    //     }
+    //     getUser();
+    // }, [realUsername])
+
+    // console.log("2", newUserCommunityDoc);
+    // useEffect(() => {
+    //     const getAdmin = async () => {
+    //         if (userCommunityDoc) {
+    //             const realAdmin = userCommunityDoc.admin;
+    //             setAdmin(realAdmin);
+    //             console.log("ADMIN", realAdmin)
+    //         }
+    //     }
+    //     getAdmin();
+    // }, [newUserCommunityDoc])
 
     return(
         <>
@@ -25,9 +119,11 @@ export default function CommunityProfilePage(props : any) {
 
                         <div className="flex space-x-2">
                         <h1 className="text-2xl font-bold text-gray-900">{community.communityName} </h1>
+                        {admin &&
                         <Link href={`/communityAdmin/${community.slug}`}>
                             Edit
                             </Link>
+                        }
                         </div>
                         <p className="text-sm font-medium text-gray-500">{community.intro}</p>
                         {/* <div className="mt-6"></div> */}

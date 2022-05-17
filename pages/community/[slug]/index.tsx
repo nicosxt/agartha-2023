@@ -11,7 +11,7 @@ import MemberStack from '../../../components/members/MemberStack';
 export async function getStaticProps(context:any) {
     const {params} = context;
     const {slug} = params; // grab the slug from the url parameters
-    console.log("----", slug);
+    // console.log("----", slug);
     const communityDoc = await getCommunityWithSlug(slug);
     let community;
     let path;
@@ -31,7 +31,7 @@ export async function getStaticProps(context:any) {
         community = communityToJSON(await getDoc(communityRef));
         path = communityRef.path;
     }
-    console.log("hjmm", path);
+    // console.log("hjmm", path);
 
     //get members' posts query for the community
     //for each user, get their posts
@@ -68,9 +68,9 @@ export default function Community(props:any) {
     const communityRef = doc(firestore, props.path);
     const [realtimeCommunity] = useDocumentData(communityRef);
     const community = realtimeCommunity || props.community;
-    console.log("heyyyyasfasa");
-    console.log(community.slug)
-    console.log(props.community.slug)
+    // console.log("heyyyyasfasa");
+    // console.log(community.slug)
+    // console.log(props.community.slug)
 
     return (
         <main>
