@@ -8,12 +8,13 @@ import { ChakraProvider } from '@chakra-ui/react'
 // import '../style/global.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return    <ChakraProvider>
+  return  <>  <ChakraProvider>
   <FirebaseProvider>
     <Layout> 
     <Component {...pageProps} />
     </Layout>
   </FirebaseProvider>
   </ChakraProvider>
+  </>
 }
 export default MyApp
