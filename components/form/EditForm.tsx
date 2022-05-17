@@ -90,7 +90,7 @@ export default function EditForm(props : any) {
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <textarea
                         {...register("content")}
-                        type="text" id="about" rows="20" className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
+                        id="about" rows={20} className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
                     <p className="mt-2 text-sm text-gray-500">Write a few sentences about what your room looks like, <br/> and why you want to rent your room.</p>
                     </div>
                   </div>
