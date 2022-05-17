@@ -4,14 +4,14 @@ import { useContext, useState } from 'react';
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import { useForm } from 'react-hook-form';
 import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
 import { firestore } from '../../lib/firebaseConfig/init'
 import {Text} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import debounce from 'lodash.debounce';
 import React, { useEffect, useCallback } from 'react';
 import { getUserWithUsername } from '../../lib/firebaseConfig/init';
-
+import Link from 'next/dist/client/link';
 export default function EditMemberForm(props : any) {
     const {defaultValues, slug} = props;
     const router = useRouter();
@@ -135,12 +135,34 @@ export default function EditMemberForm(props : any) {
           
           <div className="pt-5">
             <div className="flex justify-end">
+              <Link href={`/community/${slug}/members`}>
               <button type="button" className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
+              </Link>
               <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update Member Info</button>
+              <DeleteMemberButton memberRef={memberRef} slug={slug}/>
             </div>
           </div>
         </form>
       </>
+  );
+}
+
+function DeleteMemberButton(props:any):any {
+  const {memberRef, slug} = props;
+  const router = useRouter();
+  const deleteMember = async () => {
+    const doIt = confirm('are you sure!');
+    if (doIt) {
+      await deleteDoc(memberRef);
+      router.push(`/community/${slug}/members`);
+    }
+  }
+  return(
+    // <Link href={`/community/${slug}/members`}>
+
+  <button type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+        onClick={deleteMember}>Delete Member</button>
+  // </Link>
   );
 }
 

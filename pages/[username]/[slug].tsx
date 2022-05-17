@@ -68,7 +68,7 @@ export default function Post(props:any) {
 
     return (
         <main>
-            <DisplayForm post={post}/>
+            <DisplayForm post={post} postRef={postRef}/>
              {/* <section>
                 <PostContent post={post} />
             </section>

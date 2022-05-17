@@ -63,8 +63,9 @@ export default function Header(props : any){
             
                      <Link href={'/admin'}><button><a className="mt-8 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Post an Exchange</a></button></Link>
     
+                     <Link href={'/'}>
                      <button onClick={signOut}> <a className="mt-8 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-indigo-600 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Signout</a></button>
-            
+                     </Link>
                      </>:null}
     
                 </div>

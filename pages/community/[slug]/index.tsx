@@ -1,4 +1,4 @@
-import { getCommunityWithSlug, communityToJSON, postToJSON } from '../../../lib/firebaseConfig/init';
+import { getCommunityWithSlug, communityToJSON, memberToJSON, postToJSON } from '../../../lib/firebaseConfig/init';
 import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from 'firebase/firestore';
 import {firestore} from '../../../lib/firebaseConfig/init';
 import PostContent from '../../../components/users/PostContent'
@@ -38,10 +38,12 @@ export async function getStaticProps(context:any) {
     // const members = community.members;
     const postsQuery  = query(collectionGroup(firestore, "posts"), where("uid", "in", members));
     const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
+    const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
+    const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
 
 
     return {
-      props: { community, path, posts },
+      props: { community, path, posts, membersInfo },
       revalidate: 5000,
     };
   }
@@ -68,9 +70,11 @@ export default function Community(props:any) {
     const communityRef = doc(firestore, props.path);
     const [realtimeCommunity] = useDocumentData(communityRef);
     const community = realtimeCommunity || props.community;
+    const membersInfo = props.membersInfo;
     // console.log("heyyyyasfasa");
     // console.log(community.slug)
     // console.log(props.community.slug)
+
 
     return (
         <main>
@@ -78,7 +82,7 @@ export default function Community(props:any) {
             <p className="text-2xl ml-10">Members</p>
 
             <Link href={`/community/${community.slug}/members`}>
-                <MemberStack slug={community.slug} />
+                <MemberStack slug={community.slug} membersInfo={membersInfo} />
             </Link>
             <br></br>
             <p className="text-2xl ml-10">Member Posts</p>

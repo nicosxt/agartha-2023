@@ -207,6 +207,6 @@ function DeleteCommunityButton(props:any):any {
   }
   return(
   <button type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
-        onClick={deletePost}>Delete</button>
+        onClick={deletePost}>Delete Community</button>
   );
 }

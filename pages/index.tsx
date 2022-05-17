@@ -10,6 +10,7 @@ import Loader from '../components/misc/loader';
 import { fromMillis } from '../lib/firebaseConfig/init';
 import Card from '@mui/material/Card';
 import Link from 'next/link'
+import { useAuth,signOut } from '../lib/authContext'
 
 
 const LIMIT = 10;
@@ -36,6 +37,8 @@ export default function Home(props:Props){
   const [posts, setPosts] = useState(props.posts);
   const [loading, setLoading] = useState(false);
   const [postsEnd, setPostsEnd] = useState(false);  
+  const { user} = useAuth()
+
   const getMorePosts = async () => {
     setLoading(true);
     const last = posts[posts.length - 1];
@@ -82,9 +85,10 @@ export default function Home(props:Props){
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">Low cost & high quality space exchange with your 1st or 2nd degree connection. 🙂</p>
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                  {!user && (<>
                   <div className="rounded-md shadow">
                     <Link href='/signup'>
-                    <a className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"> Sign Up </a>
+                    <a className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl  md:py-4 md:text-lg md:px-10"> Sign Up </a>
                     </Link>
                   </div>
                   <div className="mt-3 sm:mt-0 sm:ml-3">
@@ -92,6 +96,8 @@ export default function Home(props:Props){
                     <a href="#" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"> Log In </a>
                     </Link>
                   </div>
+                  </>
+                  )}
                 </div>
               </div>
           </main>

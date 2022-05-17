@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import ImageFeed from '../imgs/ImageFeed';
+import HeartButton from '../misc/HeartButton';
 
 
 export default function DisplayForm(props : any) {
     const post = props.post;
+    const postRef = props.postRef;
     const createdAt = typeof post?.createdAt === 'number' ? new Date(post.createdAt) : post.createdAt.toDate();
 
     return(
@@ -16,6 +18,7 @@ export default function DisplayForm(props : any) {
                         <a className="text-info">@{post.username}</a>
                     </Link>{' '}
                     on {createdAt.toISOString()}</p>
+                {/* <HeartButton postRef={postRef}/> */}
             </div>
             <div className="border-t border-gray-200">
                 <dl>

@@ -62,10 +62,12 @@ export default function CommunityPostForm(props : any) {
         await setDoc(memberRef, {
           uid: uid,
           admin: true,
-          slug: slug
+          slug: slug,
+          addBy: "Genesis",
+          username: username,
+
         })
         // Imperative navigation after doc is set
-        router.push(`/community/${slug}`);
         const communitySlug:string = Array.isArray(slug)?slug[0]:slug!;
 
         const userCommunityRef = doc(firestore, "users", uid, "communities", communitySlug);
@@ -76,10 +78,13 @@ export default function CommunityPostForm(props : any) {
         await setDoc(userCommunityRef, {
             communitySlug: communitySlug,
             admin: true,
-            communityName: communityName
+            communityName: communityName,
+            addBy: "Genesis",
+            username: username,
         },
         { merge: true });
 
+        router.push(`/community/${slug}`);
 
     };
     

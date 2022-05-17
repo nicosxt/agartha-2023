@@ -5,48 +5,9 @@ import { useAuth } from '../lib/authContext'
 import debounce from 'lodash.debounce';
 import { doc, getDoc, collection, addDoc, setDoc, getDocs} from 'firebase/firestore';
 import React, { useEffect, useState, useCallback } from 'react';
-import {
-  Box,
-  Flex,
-  Stack,
-  Heading,
-  Text,
-  Container,
-  Input,
-  Button,
-  SimpleGrid,
-  Avatar,
-  AvatarGroup,
-  useBreakpointValue,
-  VStack,
-  StackDivider,
-  IconProps,
-  Icon,
-} from '@chakra-ui/react';
-import { delBasePath } from 'next/dist/shared/lib/router/router';
-const avatars = [
-  {
-    name: 'Ryan Florence',
-    url: 'https://bit.ly/ryan-florence',
-  },
-  {
-    name: 'Segun Adebayo',
-    url: 'https://bit.ly/sage-adebayo',
-  },
-  {
-    name: 'Kent Dodds',
-    url: 'https://bit.ly/kent-c-dodds',
-  },
-  {
-    name: 'Prosper Otemuyiwa',
-    url: 'https://bit.ly/prosper-baba',
-  },
-  {
-    name: 'Christian Nwamba',
-    url: 'https://bit.ly/code-beast',
-  },
-];
-
+import Link from 'next/link';
+import SignInWithGoogle from '../components/button/googleLogin';
+import {Text} from '@chakra-ui/react';
 export default function Home() {
   const { user , username, loading} = useAuth()
 
@@ -61,7 +22,8 @@ function SignUpButton() {
   const [ password , setPassword ] =  useState<string>('')
 
   const auth = getAuth()
-  function createUserCredentials(){
+  function createUserCredentials(e:any){
+    e.preventDefault();
   createUserWithEmailAndPassword(auth, email, password)
     .then( userCredential => {
       const user = userCredential.user;
@@ -77,183 +39,145 @@ function SignUpButton() {
   }
   return (
     <>
-    <Head>
-      <title>Signup</title>
-    </Head>
-    <Box position={'relative'}>
-      <Container
-        as={SimpleGrid}
-        maxW={'7xl'}
-        columns={{ base: 1, md: 2 }}
-        spacing={{ base: 10, lg: 32 }}
-        py={{ base: 10, sm: 20, lg: 32 }}>
-        <Stack spacing={{ base: 10, md: 20 }}>
-          <Heading
-            lineHeight={1.1}
-            fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}>
-            Welcome to Web DAO 2.5{' '}
-            <Text
-              as={'span'}
-              bgGradient="linear(to-r, red.400,pink.400)"
-              bgClip="text">
-              &   
-            </Text>{' '}
-            The Future is Now
-          </Heading>
-          <Stack direction={'row'} spacing={4} align={'center'}>
-            {/* size={useBreakpointValue({ base: 'md', md: 'lg' })} */}
-            <AvatarGroup>
-              {avatars.map((avatar) => (
-                <Avatar
-                  key={avatar.name}
-                  // name={avatar.name}
-                  // src={avatar.url}
-                  size={useBreakpointValue({ base: 'md', md: 'lg' })}
-                  position={'relative'}
-                  zIndex={2}
-                  _before={{
-                    content: '""',
-                    width: 'full',
-                    height: 'full',
-                    rounded: 'full',
-                    transform: 'scale(1.125)',
-                    bgGradient: 'linear(to-bl, red.400,pink.400)',
-                    position: 'absolute',
-                    zIndex: -1,
-                    top: 0,
-                    left: 0,
-                  }}
-                />
-              ))}
-            </AvatarGroup>
-            <Text fontFamily={'heading'} fontSize={{ base: '4xl', md: '6xl' }}>
-              +
-            </Text>
-            <Flex
-              align={'center'}
-              justify={'center'}
-              fontFamily={'heading'}
-              fontSize={{ base: 'sm', md: 'lg' }}
-              bg={'gray.800'}
-              color={'white'}
-              rounded={'full'}
-              width={useBreakpointValue({ base: '44px', md: '60px' })}
-              height={useBreakpointValue({ base: '44px', md: '60px' })}
-              position={'relative'}
-              _before={{
-                content: '""',
-                width: 'full',
-                height: 'full',
-                rounded: 'full',
-                transform: 'scale(1.125)',
-                bgGradient: 'linear(to-bl, orange.400,yellow.400)',
-                position: 'absolute',
-                zIndex: -1,
-                top: 0,
-                left: 0,
-              }}>
-              YOU
-            </Flex>
-          </Stack>
-        </Stack>
-        <Stack
-          bg={'gray.50'}
-          rounded={'xl'}
-          p={{ base: 4, sm: 6, md: 8 }}
-          spacing={{ base: 8 }}
-          maxW={{ lg: 'lg' }}>
-          <Stack spacing={4}>
-            <Heading
-              color={'gray.800'}
-              lineHeight={1.1}
-              fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
-              Sign up for your DAO 
-              <Text
-                as={'span'}
-                bgGradient="linear(to-r, red.400,pink.400)"
-                bgClip="text">
-                !
-              </Text>
-            </Heading>
-            <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
-              This world needs amazing community builder just like you!
-            </Text>
-          </Stack>
-          <Box as={'form'} mt={10}>
-            <Stack spacing={4}>
-              {/* <Input
-                placeholder="Username"
-                bg={'gray.100'}
-                border={0}
-                color={'gray.500'}
-                _placeholder={{
-                  color: 'gray.500',
-                }}
-              /> */}
-              <Input
-                onChange={(e:any) => setEmail(e.target.value)}
-                placeholder="Email Address"
-                bg={'gray.100'}
-                border={0}
-                color={'gray.500'}
-                _placeholder={{
-                  color: 'gray.500',
-                }}
-              />
-              <Input
-                onChange={(e:any) => setPassword(e.target.value)}
-                placeholder="Password (min. 6 characters)"
-                bg={'gray.100'}
-                border={0}
-                color={'gray.500'}
-                _placeholder={{
-                  color: 'gray.500',
-                }}
-              />
-              {/* <Input
-                placeholder="+1 (___) __-___-___"
-                bg={'gray.100'}
-                border={0}
-                color={'gray.500'}
-                _placeholder={{
-                  color: 'gray.500',
-                }}
-              /> */}
-              {/* <Button fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
-                Upload CV
-              </Button> */}
-            </Stack>
-            <Button
-              onClick={createUserCredentials}
-              fontFamily={'heading'}
-              mt={4}
-              w={'full'}
-              bgGradient="linear(to-r, red.400,pink.400)"
-              color={'white'}
-              _hover={{
-                bgGradient: 'linear(to-r, red.400,pink.400)',
-                boxShadow: 'xl',
-              }}>
-              Sign Up
-            </Button>
-          </Box>
-          form
-        </Stack>
-      </Container>
-      {/* <Blur
-        position={'absolute'}
-        top={-10}
-        left={-10}
-        style={{ filter: 'blur(70px)' }}
-      /> */}
-    </Box>
-    </>
+<div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <img
+            className="mx-auto h-12 w-auto"
+            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+            alt="Workflow"
+          />
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign up for Space Exchange!</h2>
+          {/* <p className="mt-2 text-center text-sm text-gray-600">
+            Or{' '}
+            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              start your 14-day free trial
+            </a>
+          </p> */}
+        </div>
+
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <form className="space-y-6" action="#" method="POST">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email address
+                </label>
+                <div className="mt-1">
+                  <input
+                    onChange={(e:any) => setEmail(e.target.value)}
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <div className="mt-1">
+                  <input
+                    onChange={(e:any) => setPassword(e.target.value)}
+                    placeholder="(min. 6 characters)"
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                    Remember me
+                  </label>
+                </div>
+
+                <div className="text-sm">
+                  <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    Forgot your password?
+                  </a>
+                </div>
+              </div>
+
+              <div>
+                <button
+                  onClick={(e:any) => createUserCredentials (e) }
+                  // type="submit"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Sign up
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                </div>
+              </div>
+              <SignInWithGoogle />
+            </div>
+          </div>
+        </div>
+      </div>
+      </>
   );
 }
 function ProfilePage() {
+  const { username} = useAuth()
+
   return <>
-  <h1>Hey</h1>
+  <div className="bg-white">
+      <div className="max-w-7xl mx-auto text-center py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+
+        <span className="block text-indigo-600 xl:inline">Hey, {username}</span>
+
+          <span className="block">Welcome to Space Exchange!</span>
+          <span className="block text-indigo-600 xl:inline">Let's start with your User Profile.</span>
+        </h2>
+        <div className="mt-8 flex justify-center">
+          <div className="inline-flex rounded-md shadow">
+            <Link href={`/${username}`}>
+            <a
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl "
+            >
+              Bring me to my profile
+            </a>
+            </Link>
+          </div>
+          <div className="ml-3 inline-flex">
+            <a
+              href="#"
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+            >
+              Learn more
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </>
+
 
 }
 
@@ -321,38 +245,18 @@ function UsernameForm() {
     !username && (
       <section>
           <form onSubmit={onSubmit}>
-          {/* <Box m={10}>
-            <VStack
-            divider={<StackDivider borderColor='white' />}
-            spacing={1}
-            align='stretch'> */}
-            <input name="username" placeholder="Username (min. 3 characters)" value={formValue} onChange={onChange} ></input>
-            <br />
-            <button type="submit" className="btn-green" disabled={!isValid}>Choose</button>
-              {/* <Input placeholder="Username (min. 3 characters)" size='lg' value={formValue} onChange={onChange} /> */}
-              <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
 
-{/* 
-              <div>
-                Username: {formValue}
-                <br />
-                Loading: {loading.toString()}
-                <br />
-                Username Valid: {isValid.toString()}
-              </div> */}
-            {/* </VStack>
-            </Box> */}
+              <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pick Your Username</label>
+              <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              </div>
+              <input name="username" placeholder="Username (min. 3 characters)"  value={formValue} onChange={onChange} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+              </div>
+
+
+            <button type="submit" className="mt-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" disabled={!isValid}>Choose</button>
+              <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
           </form>
-          {/* <Button 
-                fontFamily={'heading'}
-                bgGradient="linear(to-r, red.400,pink.400)"
-                color={'white'}
-                _hover={{
-                bgGradient: 'linear(to-r, red.400,pink.400)',
-                boxShadow: 'xl',}}
-                disabled={!isValid}>
-              Choose
-              </Button> */}
       </section>
     )
   )}</>;

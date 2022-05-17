@@ -1,3 +1,4 @@
+import CommunityStack from "./CommunityStack";
 
 export default function CommunityPage(props:any): any {
     const {communities} = props;
@@ -13,6 +14,11 @@ export default function CommunityPage(props:any): any {
                         <div>
                         <h1 className="text-2xl font-bold text-gray-900">Community</h1>
                         <p className="text-sm font-medium text-gray-500">Communities that you are a part of.</p>
+                        <div className="pt-8">
+
+                        <CommunityStack communities={communities}/>
+                        </div>
+
                     </div>
                     </div>
 

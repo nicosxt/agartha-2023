@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
-
 interface Props {
     members: any
     slug: string
@@ -69,7 +68,11 @@ function MemberItem(props: MemberProps) {
                   <img className="h-10 w-10 rounded-full" src={member.avatarUrl} alt=""/>
                 </div>
                 <div className="ml-4">
+                  <Link href={`/${member.username}`}>
+                    <a href='#'>
                   <div className="font-medium text-gray-900">{member.username}</div>
+                  </a>
+                  </Link>
                   <div className="text-gray-500">{member.email}</div>
                 </div>
               </div>

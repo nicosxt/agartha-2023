@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, query, where, limit} from 'firebase/firestore';
+import { getFirestore, query, where, limit, FieldValue} from 'firebase/firestore';
 import { doc, getDoc, collection, addDoc, setDoc, getDocs} from 'firebase/firestore';
 import * as firebase from 'firebase/app'
 import 'firebase/auth';
@@ -86,8 +86,9 @@ export function memberToJSON(doc:any) {
 
 export const fromMillis = Timestamp.fromMillis;
 
-const firebaseApp = initializeApp(firebaseConfig)
+const firebaseApp = initializeApp(firebaseConfig);
 export const storage = getStorage(firebaseApp);
+
 // const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED;
 
 // }
@@ -95,4 +96,9 @@ export const storage = getStorage(firebaseApp);
 
 // initFirebase()
 
-
+// give me the field value increment in firebase v9 
+// https://firebase.google.com/docs/reference/js/firebase.firestore.FieldValue.html#increment
+// give me a sample code using increment in firebase v9
+// https://firebase.google.com/docs/firestore/manage-data/add-data#increment_a_field_value
+// give me a sample code using batch in firebase v9
+// https://firebase.google.com/docs/firestore/manage-data/transactions#batch_operations
