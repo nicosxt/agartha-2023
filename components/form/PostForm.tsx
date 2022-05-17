@@ -129,7 +129,7 @@ export default function ExchangeForm(props : any) {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         // {...register("content")}
-                        id="about" name="about" rows="20" className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
+                        id="about" name="about" rows={20} className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
                     <p className="mt-2 text-sm text-gray-500">Write a few sentences about what your room looks like, <br/> and why you want to rent your room.</p>
                     </div>
                   </div>
