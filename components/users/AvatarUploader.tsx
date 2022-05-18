@@ -37,10 +37,10 @@ export default function AvatarUploader(props: any) :any{
       setProgress(progress);
       switch(snapshot.state) {
         case 'paused':
-            console.log('Upload is paused');
+            // console.log('Upload is paused');
             break;
           case 'running':
-            console.log('Upload is running');
+            // console.log('Upload is running');
             break;
 
       }
@@ -54,7 +54,7 @@ export default function AvatarUploader(props: any) :any{
         getDownloadURL(uploadImage.snapshot.ref).then((downloadURL) => {
             setDownloadURL(downloadURL);
             setUploading(false);
-            console.log('File available at', downloadURL);
+            // console.log('File available at', downloadURL);
             // avatarUrl = downloadURL;
             avatarUrl.push(downloadURL);
             // console.log("avatar "+avatarUrl[0]);

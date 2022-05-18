@@ -58,7 +58,7 @@ export default function  AuthContextProvider({children} : Props) {
             // Save decoded token on the state
             user.getIdTokenResult().then(( result ) => setUser(result))
             const userUid = user.uid;
-            console.log("userUid", userUid)
+            // console.log("userUid", userUid)
             onSnapshot(doc(firestore, "users", userUid), (doc) => {
               setUsername(doc.data()?.username);
               setUid(userUid);

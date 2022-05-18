@@ -4,7 +4,7 @@ interface Props {
 }
 export default function ExploreCommunity(props: Props): any {
     const {communities } = props;
-    console.log("explore community" , communities)
+    // console.log("explore community" , communities)
     return (
         <>
             <div className="min-h-full">

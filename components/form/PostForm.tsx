@@ -38,7 +38,7 @@ export default function ExchangeForm(props : any) {
 
     // Ensure slug is URL safe
     const {slug} = props;
-    console.log("slug1"+slug)
+    // console.log("slug1"+slug)
     // console.log(post)
     const auth = getAuth();
     const uid:string = auth?.currentUser?.uid!;
@@ -46,7 +46,7 @@ export default function ExchangeForm(props : any) {
   
     const createPost = async (e:any) => {
         e.preventDefault();
-        console.log("slug1.5" + slug)
+        // console.log("slug1.5" + slug)
         const ref = doc(firestore, "users", uid, "posts", slug);
         await setDoc(ref, {
             // Tip: give all fields a default value here

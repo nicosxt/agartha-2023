@@ -52,13 +52,13 @@ export default function CommunityAvatarUploader(props: any) :any{
         getDownloadURL(uploadImage.snapshot.ref).then((downloadURL) => {
             setDownloadURL(downloadURL);
             setUploading(false);
-            console.log('File available at', downloadURL);
+            // console.log('File available at', downloadURL);
             // avatarUrl = downloadURL;
             avatarUrl.push(downloadURL);
             // console.log("avatar "+avatarUrl[0]);
             // console.log(uid);
-            console.log("here is ");
-            console.log(avatarUrl[0]);
+            // console.log("here is ");
+            // console.log(avatarUrl[0]);
             setDoc(doc(firestore, "communities", slug), {
               avatarUrl: avatarUrl[0]
               // imageNames

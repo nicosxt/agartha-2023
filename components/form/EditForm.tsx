@@ -15,7 +15,7 @@ export default function EditForm(props : any) {
     const { username } = useContext(authContext);
     const router = useRouter();
     const slug = defaultValues.slug
-    console.log(defaultValues)
+    // console.log(defaultValues)
     // let exist = false;
     // Set values
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
@@ -29,7 +29,7 @@ export default function EditForm(props : any) {
     // }, [])
 
     const updatePost = async (data:any) => {
-      console.log('form submitted')
+      // console.log('form submitted')
         const {
             content, title, published, movein, moveout,
             street, city, state, zipcode, price, currency, country} = data;

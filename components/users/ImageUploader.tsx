@@ -18,7 +18,7 @@ export default function ImageUploader(props: any) :any{
     const [images, setImages] = useState<Array<string>>(defaultValues?.images || []);
     // const [imageNames, setImageNames] = useState<Array<string>>([]);
 
-    console.log("slug2" +slug)
+    // console.log("slug2" +slug)
 
     // Creates a Firebase Upload Task
     const uploadFile = async (e:any) => {
@@ -37,10 +37,10 @@ export default function ImageUploader(props: any) :any{
       setProgress(progress);
       switch(snapshot.state) {
         case 'paused':
-            console.log('Upload is paused');
+            // console.log('Upload is paused');
             break;
           case 'running':
-            console.log('Upload is running');
+            // console.log('Upload is running');
             break;
 
       }
@@ -54,7 +54,7 @@ export default function ImageUploader(props: any) :any{
         getDownloadURL(uploadImage.snapshot.ref).then((downloadURL) => {
             setDownloadURL(downloadURL);
             setUploading(false);
-            console.log('File available at', downloadURL);
+            // console.log('File available at', downloadURL);
             images.push(downloadURL);
             setDoc(doc(firestore, "users", uid, "posts", slug), {
               username,

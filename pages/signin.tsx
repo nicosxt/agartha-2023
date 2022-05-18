@@ -32,13 +32,13 @@ function SignInButton() {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        console.log('success', user)
+        // console.log('success', user)
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log('error', errorMessage)
+        // console.log('error', errorMessage)
         window.alert(errorMessage)
       });
   }

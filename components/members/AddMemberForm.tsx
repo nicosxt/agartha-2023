@@ -30,7 +30,7 @@ export default function AddMemberForm(props : any) {
         const docRef = doc(firestore, 'usernames', username);
         const docSnap = await getDoc(docRef)
         const exists = docSnap.exists();
-        console.log('Firestore read executed!');
+        // console.log('Firestore read executed!');
         setIsValid(!exists);
         setLoading(false);
       }

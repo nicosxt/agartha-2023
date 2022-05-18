@@ -27,12 +27,12 @@ function SignUpButton() {
   createUserWithEmailAndPassword(auth, email, password)
     .then( userCredential => {
       const user = userCredential.user;
-      console.log('success', user)
+      // console.log('success', user)
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log('error', errorMessage)
+      // console.log('error', errorMessage)
       window.alert(errorMessage)
       // ..
     });
@@ -189,7 +189,7 @@ function UsernameForm() {
         const docRef = doc(firestore, 'usernames', username);
         const docSnap = await getDoc(docRef)
         const exists = docSnap.exists();
-        console.log('Firestore read executed!');
+        // console.log('Firestore read executed!');
         setIsValid(!exists);
         setLoading(false);
       }

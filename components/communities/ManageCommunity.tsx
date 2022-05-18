@@ -8,7 +8,7 @@ export default function ManageCommunity(props: Props): any {
     // search the community where the user has admin access, display the community under Manage communities. 
 
     const {communities} = props;
-    console.log("manage communities", communities)
+    // console.log("manage communities", communities)
 
     return (
         <>

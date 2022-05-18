@@ -7,38 +7,15 @@ import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from '
 import { getUserWithUsername, communityToJSON, memberToJSON} from '../../lib/firebaseConfig/init';
 import { firestore } from '../../lib/firebaseConfig/init'
 
-// export async function getServerSideProps() {
-//     const { uid } = useContext(authContext);
-//     const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
-//     const [admin, setAdmin] = useState<boolean>(false);
-//     let newUserCommunityDoc:any;
-//     console.log("1", newUserCommunityDoc);
-//     // const newUser = memberToJSON(user);
-//         if(uid) {
-//         const userCommunityRef = doc(firestore, "users", uid, "communities", community.slug);
-//         const data = await getDoc(userCommunityRef);
-//         newUserCommunityDoc = communityToJSON(data);
-//         setUserCommunityDoc(newUserCommunityDoc);
-//         const realAdmin = newUserCommunityDoc.admin;
-//         setAdmin(realAdmin);
-//         if (userCommunityDoc) {
-//             setAdmin(userCommunityDoc.admin);
-//             console.log("ADMIN", userCommunityDoc.admin)
-//         }
-//     }
-// }
-        
-
-
 
 export default function CommunityProfilePage(props : any) {
     const community = props.community;
     const { uid } = useContext(authContext);
-    console.log("uid", uid)
+    // console.log("uid", uid)
     const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
     const [admin, setAdmin] = useState<boolean>(false);
     let newUserCommunityDoc:any;
-    console.log("1", newUserCommunityDoc);
+    // console.log("1", newUserCommunityDoc);
     useEffect(() => {
         const getUser = async () => {
             // const newUser = memberToJSON(user);
@@ -51,53 +28,13 @@ export default function CommunityProfilePage(props : any) {
                 setAdmin(realAdmin);
                     if (userCommunityDoc) {
                         setAdmin(userCommunityDoc.admin);
-                        console.log("ADMIN", userCommunityDoc.admin)
+                        // console.log("ADMIN", userCommunityDoc.admin)
                     }
             }
         }
     getUser();
 }, [uid])
         
-
-    
-    // useEffect(() => {
-    //     const getUser = async () => {
-    //         console.log("hi im lucy and im cutie ")
-    //         const userDoc = await getUserWithUsername(realUsername);
-    //         console.log("USERDOC", userDoc)
-    //         if(userDoc){
-    //             const newUser = memberToJSON(userDoc);
-    //             setUser(newUser);
-    //             console.log("USER", newUser)
-    //             const userCommunityRef = doc(firestore, "users", newUser.uid, "communities", community.slug);
-    //             const data = await getDoc(userCommunityRef);
-    //             newUserCommunityDoc = communityToJSON(data);
-    //             setUserCommunityDoc(newUserCommunityDoc);
-    //             console.log("3", newUserCommunityDoc);
-
-    //             console.log("USERCOMMUNITYDOC", newUserCommunityDoc)
-    //             const realAdmin = newUserCommunityDoc.admin;
-    //             setAdmin(realAdmin);
-    //             // if (userCommunityDoc) {
-    //             //     setAdmin(userCommunityDoc.admin);
-    //             //     console.log("ADMIN", userCommunityDoc.admin)
-    //             // }
-    //         }
-    //     }
-    //     getUser();
-    // }, [realUsername])
-
-    // console.log("2", newUserCommunityDoc);
-    // useEffect(() => {
-    //     const getAdmin = async () => {
-    //         if (userCommunityDoc) {
-    //             const realAdmin = userCommunityDoc.admin;
-    //             setAdmin(realAdmin);
-    //             console.log("ADMIN", realAdmin)
-    //         }
-    //     }
-    //     getAdmin();
-    // }, [newUserCommunityDoc])
 
     return(
         <>
@@ -131,6 +68,12 @@ export default function CommunityProfilePage(props : any) {
                         
                         <div className="mt-2">
                         <ul className="flex space-x-4">
+                        <li className="flex items-center space-x-1">
+                                <a href={community.instagram} className="text-sm font-medium text-gray-500">
+                                <img src="https://img.icons8.com/material-outlined/30/000000/home--v2.png"/>{community.city? (community.city + ", "+ community.state + ", "+ community.country) : 'N/A'}
+                                </a>
+                            </li>
+
                             <li className="flex items-center space-x-1">
                                 <a href={community.instagram} className="text-sm font-medium text-gray-500">
                                 <img src="https://img.icons8.com/ios-glyphs/30/000000/instagram-new.png"/>{community.instagram? "ins" : 'N/A'}

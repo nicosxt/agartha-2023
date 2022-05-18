@@ -24,6 +24,15 @@ export default function CommunityPostForm(props : any) {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [avatarUrl, setAvatarUrl] = useState('');
+
+    //Social Media
+    const [instagram, setInstagram] = useState(''); 
+    const [wechat , setWechat] = useState('');
+    const [twitter , setTwitter] = useState('');
+    const [email , setEmail] = useState('');
+    const [website , setWebsite] = useState('');
+    const [phone , setPhone] = useState('');
+    const [discord  , setDiscord] = useState('');
     
     // type AdminCheck = {
     //   communitySlug: string
@@ -54,6 +63,13 @@ export default function CommunityPostForm(props : any) {
             state,
             slug,
             intro,
+            instagram,
+            twitter,
+            website,
+            wechat,
+            discord,
+            email,
+            phone
 
         },
         { merge: true })
@@ -146,7 +162,6 @@ export default function CommunityPostForm(props : any) {
                     </div>
                   </div>
                 </div>
-              </div>
   
               <div className="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
                 <div>
@@ -184,47 +199,88 @@ export default function CommunityPostForm(props : any) {
                     </div>
                   </div>
                 </div>
+              </div>
 
                 <div className="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
                 <div>
                   <h3 className="text-lg leading-6 font-medium text-gray-900">Contact</h3>
-                  <p className="mt-1 max-w-2xl text-sm text-gray-500">Getting to know more about the specifications.</p>
+                  <p className="mt-1 max-w-2xl text-sm text-gray-500">Let us connect!</p>
+                </div>
+  
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                  <label htmlFor="instagram" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Instagram </label>
+                  <div className="mt-1 sm:mt-0 sm:col-span-2">
+                    <input 
+                      value={instagram}
+                      onChange={(e) => setInstagram(e.target.value)}
+                      type="text" id="instagram" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                  </div>
                 </div>
   
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> City </label>
+                    <label htmlFor="twitter" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Twitter </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        type="text" name="city" id="city" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                        value={twitter}
+                        onChange={(e) => setTwitter(e.target.value)}
+                        type="text" id="twitter" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
   
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="region" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> State / Province </label>
+                    <label htmlFor="website" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Website </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                        type="text" name="region" id="region" autoComplete="address-level1" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                        value = {website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                        type="text" id="website" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+  
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="discord" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Discord Handle </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                        value={discord}
+                        onChange={(e) => setDiscord(e.target.value)}
+                        type="text" id="discord" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
 
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Country </label>
+                    <label htmlFor="wechat" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> WeChat</label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        type="text" name="country" id="country" autoComplete="country" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                        value={wechat}
+                        onChange={(e) => setWechat(e.target.value)}
+                        type="text" id="wechat" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Email</label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        type="text" id="email" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Phone</label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        type="text" id="phone" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
-            </div>
-    
-            
             <div className="pt-5">
               <div className="flex justify-end">
                 <button type="button" className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
