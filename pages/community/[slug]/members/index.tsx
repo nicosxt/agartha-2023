@@ -13,14 +13,14 @@ export async function getStaticProps(context:any)  {
     const {params} = context;
     const {slug} = params;
     const realSlug:string = Array.isArray(slug)?slug[0]:slug!;
-    const communityQuery= query(collection(firestore, "communities", slug, "members"));
-    const membersSnapshot = await getDocs(communityQuery);
-    const members = membersSnapshot.docs.map(d => d.id);
-    const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-    const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
+    // const communityQuery= query(collection(firestore, "communities", slug, "members"));
+    // const membersSnapshot = await getDocs(communityQuery);
+    // const members = membersSnapshot.docs.map(d => d.id);
+    // const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
+    // const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
     // console.log("slug" + realSlug)
     return{
-        props: {membersInfo, realSlug},
+        props: { realSlug},
         revalidate: 5000,
     };
 
@@ -49,7 +49,6 @@ interface Props {
 
 export default function Members(props: Props) {
     const realSlug = props.realSlug;
-    const membersInfo = props.membersInfo;
     const { username } = useContext(authContext);
     const realUsername:string = username!;
     // console.log("username is ", realUsername)
@@ -87,6 +86,26 @@ export default function Members(props: Props) {
         getUser();
     }, [realUsername])
 
+    const [membersInfo, setMembersInfo] = useState<any>();
+    let membersSnapshot;
+    let members;
+    useEffect (() => {
+        const getMember = async () => {
+            const communityQuery= query(collection(firestore, "communities", realSlug, "members"));
+            membersSnapshot = await getDocs(communityQuery);
+            if(membersSnapshot){
+                members = membersSnapshot.docs.map(d => d.id);
+
+                const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
+                const newMembersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
+                if(newMembersInfo){
+                    setMembersInfo(newMembersInfo);
+                }
+            }
+        }
+        getMember();
+    }, [membersSnapshot]);
+        
 
     return(
         <>
