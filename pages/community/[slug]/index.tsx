@@ -7,6 +7,7 @@ import CommunityProfilePage from '../../../components/communities/CommunityProfi
 import PostFeed from '../../../components/users/PostFeed';
 import Link from 'next/dist/client/link';
 import MemberStack from '../../../components/members/MemberStack';
+import { useState, useEffect} from 'react';
 
 export async function getStaticProps(context:any) {
     const {params} = context;
@@ -38,12 +39,12 @@ export async function getStaticProps(context:any) {
     // const members = community.members;
     const postsQuery  = query(collectionGroup(firestore, "posts"), where("uid", "in", members));
     const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
-    const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-    const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
+    // const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
+    // const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
 
 
     return {
-      props: { community, path, posts, membersInfo },
+      props: { community, path, posts },
       revalidate: 5000,
     };
   }
@@ -70,10 +71,32 @@ export default function Community(props:any) {
     const communityRef = doc(firestore, props.path);
     const [realtimeCommunity] = useDocumentData(communityRef);
     const community = realtimeCommunity || props.community;
-    const membersInfo = props.membersInfo;
+    // const membersInfo = props.membersInfo;
     // console.log("heyyyyasfasa");
     // console.log(community.slug)
     // console.log(props.community.slug)
+    const slug = community.slug;
+    const [membersInfo, setMembersInfo] = useState<any>();
+    let membersSnapshot;
+    let members;
+    useEffect (() => {
+        const getMember = async () => {
+            const communityQuery= query(collection(firestore, "communities", slug, "members"));
+            membersSnapshot = await getDocs(communityQuery);
+            if(membersSnapshot){
+                members = membersSnapshot.docs.map(d => d.id);
+
+                const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
+                const newMembersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
+                if(newMembersInfo){
+                    setMembersInfo(newMembersInfo);
+                }
+            }
+        }
+        getMember();
+    }, [membersSnapshot]);
+        
+
 
 
     return (
