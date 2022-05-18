@@ -10,7 +10,7 @@ interface Props {
 
 export default function MemberFeed(props: Props): any {
     const {members, slug} = props;
-    return members ? members.map((member:any) =><MemberTable member={member} slug={slug}/>) : null;
+    return members ? members.map((member:any) =><MemberTable member={member} key={slug} slug={slug}/>) : null;
 }
 
 interface PostProps{

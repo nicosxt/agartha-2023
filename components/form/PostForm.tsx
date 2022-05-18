@@ -85,8 +85,8 @@ export default function ExchangeForm(props : any) {
     
     return (
         <>
-          <script src="../path/to/flowbite/dist/flowbite.js"></script>
-          <script src="../path/to/flowbite/dist/datepicker.js"></script>
+          {/* <script src="../path/to/flowbite/dist/flowbite.js"></script> */}
+          {/* <script src="../path/to/flowbite/dist/datepicker.js"></script> */}
   
           <form className="py-10 space-y-8 divide-y divide-gray-200" onSubmit={createPost}>
             <div className="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">

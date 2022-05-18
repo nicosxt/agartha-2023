@@ -37,8 +37,6 @@ export default function EditUserProfile(props : any) {
     };
     return (
         <>
-          <script src="../path/to/flowbite/dist/flowbite.js"></script>
-          <script src="../path/to/flowbite/dist/datepicker.js"></script>
           <form className="space-y-8 divide-y divide-gray-200"  onSubmit={handleSubmit(updatePost)}>
             <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 md:ml-10 pt-8">
               <div>

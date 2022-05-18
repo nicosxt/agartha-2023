@@ -1,6 +1,6 @@
 export default function MemberAvatarStack(props:any): any {
     const {membersInfo} = props;
-    return membersInfo ? membersInfo.map((member:any) =><MemberItem member={member}/>) : null;
+    return membersInfo ? membersInfo.map((member:any) =><MemberItem member={member} key={member.slug}/>) : null;
 }
 
 

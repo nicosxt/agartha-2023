@@ -6,5 +6,5 @@ interface Props {
 export default function ImageUrlFeed(props: Props): any {
     const {urls} = props;
 
-    return urls? urls.map((url:string) =><ImageUrl url={url} />) : null;
+    return urls? urls.map((url:string) =><ImageUrl url={url} key={url}/>) : null;
 }

@@ -157,7 +157,7 @@ function ProfilePage() {
         <span className="block text-indigo-600 xl:inline">Hey , {username}</span>
 
           <span className="block">Welcome to Space Exchange!</span>
-          <span className="block text-indigo-600 xl:inline">Let's start exchange!</span>
+          <span className="block text-indigo-600 xl:inline">Let us start exchange!</span>
         </h2>
         <div className="mt-8 flex justify-center">
           <div className="inline-flex rounded-md shadow">

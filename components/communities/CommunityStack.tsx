@@ -1,7 +1,7 @@
 import Link from 'next/link';
 export default function CommunityStack(props:any): any {
     const {communities} = props;
-    return communities ? communities.map((community:any) =><CommunityItem community={community}/>) : null;
+    return communities ? communities.map((community:any) =><CommunityItem community={community} key={community.slug}/>) : null;
 }
 
 
