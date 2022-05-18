@@ -89,6 +89,10 @@ export const fromMillis = Timestamp.fromMillis;
 const firebaseApp = initializeApp(firebaseConfig);
 export const storage = getStorage(firebaseApp);
 
+// const firestoreDB = initializeFirestore(firebaseApp, {
+//   experimentalForceLongPolling: true, // this line
+//   useFetchStreams: false, // and this line
+// })
 // const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED;
 
 // }
