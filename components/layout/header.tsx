@@ -33,7 +33,7 @@ export default function Header(props : any){
 
                   </div>
                 </div>
-                <div className=" block ml-2 pr-2 space-x-2 md:block md:ml-10 md:pr-4 md:space-x-8 ">
+                <div className=" block ml-2 pr-2 space-x-2 text-xs md:block md:ml-10 md:pr-4 md:space-x-8 ">
           
  
                   {user?<>
