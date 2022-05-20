@@ -75,6 +75,10 @@ export default function AddMemberForm(props : any) {
     if(!isValid) {
       const user = await getUserWithUsername(member);
       const ref = doc(firestore, 'communities', slug, 'members', user.data().uid);
+      const communityRef = doc(firestore, 'communities', slug);
+      const communityDoc = await getDoc(communityRef);
+      const communityName = communityDoc.data()?.communityName;
+
       await setDoc(ref, {
         username: user.data().username,
         uid: user.data().uid,
@@ -83,6 +87,7 @@ export default function AddMemberForm(props : any) {
         titles: titles,
         responsibilities: responsibilities,
         slug: slug,
+        communityName: communityName,
       }, { merge: true }
       );
 
@@ -93,6 +98,7 @@ export default function AddMemberForm(props : any) {
         addBy: username,
         titles: titles,
         responsibilities: responsibilities,
+        communityName: communityName,
       }, { merge: true }
       );
       router.push(`/community/${slug}/members`);

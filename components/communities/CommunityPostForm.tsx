@@ -81,6 +81,7 @@ export default function CommunityPostForm(props : any) {
           slug: slug,
           addBy: "Genesis",
           username: username,
+          communityName: communityName,
 
         })
         // Imperative navigation after doc is set

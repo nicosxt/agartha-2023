@@ -1,5 +1,5 @@
 import { getCommunityWithSlug, communityToJSON, memberToJSON, postToJSON } from '../../../lib/firebaseConfig/init';
-import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from 'firebase/firestore';
+import { doc, startAfter, collection, collectionGroup, addDoc, getDoc, getDocs, query, where, limit, orderBy} from 'firebase/firestore';
 import {firestore} from '../../../lib/firebaseConfig/init';
 import PostContent from '../../../components/users/PostContent'
 import { useDocumentData } from 'react-firebase-hooks/firestore';
@@ -8,6 +8,10 @@ import PostFeed from '../../../components/users/PostFeed';
 import Link from 'next/dist/client/link';
 import MemberStack from '../../../components/members/MemberStack';
 import { useState, useEffect} from 'react';
+import { fromMillis } from '../../../lib/firebaseConfig/init';
+import Loader from '../../../components/misc/loader';
+
+const LIMIT = 10;
 
 export async function getStaticProps(context:any) {
     const {params} = context;
@@ -32,19 +36,14 @@ export async function getStaticProps(context:any) {
         community = communityToJSON(await getDoc(communityRef));
         path = communityRef.path;
     }
-    // console.log("hjmm", path);
 
-    //get members' posts query for the community
-    //for each user, get their posts
-    // const members = community.members;
-    const postsQuery  = query(collectionGroup(firestore, "posts"), where("uid", "in", members));
+    const postsQuery  = query(collectionGroup(firestore, "posts"), where("uid", "in", members), orderBy("createdAt", "desc"), limit(LIMIT));
     const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
-    // const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-    // const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
+    const fetchedMembers = members;
 
 
     return {
-      props: { community, path, posts },
+      props: { community, path, posts, fetchedMembers},
       revalidate: 5000,
     };
   }
@@ -69,12 +68,13 @@ export async function getStaticPaths() {
 export default function Community(props:any) {
 
     const communityRef = doc(firestore, props.path);
+    const fetchedMembers = props.fetchedMembers;
     const [realtimeCommunity] = useDocumentData(communityRef);
     const community = realtimeCommunity || props.community;
-    // const membersInfo = props.membersInfo;
-    // console.log("heyyyyasfasa");
-    // console.log(community.slug)
-    // console.log(props.community.slug)
+    const [posts, setPosts] = useState(props.posts);
+    const [loading, setLoading] = useState(false);
+    const [postsEnd, setPostsEnd] = useState(false);
+    console.log(fetchedMembers);
     const slug = community.slug;
     const [membersInfo, setMembersInfo] = useState<any>();
     let membersSnapshot;
@@ -96,20 +96,73 @@ export default function Community(props:any) {
         getMember();
     }, [membersSnapshot]);
         
-
+    const getMorePosts = async () => {
+        setLoading(true);
+        const last = posts[posts.length - 1];
+        // console.log(last)
+        // console.log('++++++')
+    
+        const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
+        // console.log("cursor", cursor)
+        const postsQuery = query(
+            collectionGroup(firestore, "posts"), 
+            where("uid", "in", fetchedMembers), 
+            orderBy("createdAt", "desc"), 
+            startAfter(cursor),
+            limit(LIMIT));
+    
+        const newPosts = (await getDocs(postsQuery)).docs.map((doc) => doc.data());
+        console.log(newPosts);
+        setPosts(posts.concat(newPosts));
+        setLoading(false);
+    
+        if (newPosts.length < LIMIT) {
+          setPostsEnd(true);
+        }
+      };
 
 
     return (
         <main>
+            
             <CommunityProfilePage community={community}/>
-            <p className="text-2xl ml-10">Members</p>
+            <div className="ml-10">
+            <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-pink-500 to-purple-600">Members</p>
 
             <Link href={`/community/${community.slug}/members`}>
                 <MemberStack slug={community.slug} membersInfo={membersInfo} />
             </Link>
+            </div>
             <br></br>
-            <p className="text-2xl ml-10">Member Posts</p>
-            <PostFeed posts={props.posts} admin={false} />
+            <div className="ml-10">
+            <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-purple-600 to-blue-500">Member Posts</p>
+            <PostFeed posts={posts} admin={false} />
+            <div className="min-h-full">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
+            <div className="flex items-center space-x-5">
+                {!loading && !postsEnd &&
+                <button 
+                    className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+
+                    onClick={getMorePosts}>
+                         <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              Load More Posts
+              </span>
+                        </button>}
+
+                <Loader show={loading} />
+
+                {postsEnd && 
+              <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+              <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              You have reached the end!
+              </span>
+               </button>
+                }
+            </div>
+            </div>
+        </div>
+        </div>
         </main>
     );
 }

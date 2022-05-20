@@ -77,7 +77,7 @@ export function communityToJSON(doc:any) {
 export function memberToJSON(doc:any) {
   // console.log("init.ts")
   const data = doc.data();
-  console.log("data", data)
+  // console.log("data", data)
   return {
     ...data,
   }

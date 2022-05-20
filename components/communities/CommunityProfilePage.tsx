@@ -55,7 +55,7 @@ export default function CommunityProfilePage(props : any) {
                         <div>
 
                         <div className="flex space-x-2">
-                        <h1 className="text-2xl font-bold text-gray-900">{community.communityName} </h1>
+                        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-pink-500">{community.communityName} </h1>
                         {admin &&
                         <Link href={`/communityAdmin/${community.slug}`}>
                             Edit

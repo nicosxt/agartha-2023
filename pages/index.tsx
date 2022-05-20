@@ -39,30 +39,7 @@ export default function Home(props:Props){
   const [postsEnd, setPostsEnd] = useState(false);  
   const { user} = useAuth()
 
-  const getMorePosts = async () => {
-    setLoading(true);
-    const last = posts[posts.length - 1];
-    // console.log(last)
-    // console.log('++++++')
 
-    const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
-
-    const postsQuery = query(
-      collectionGroup(firestore, 'posts'),
-      where('published', '==', true),
-      orderBy('createdAt', 'desc'),
-      startAfter(cursor),
-      limit(LIMIT))
-
-    const newPosts = (await getDocs(postsQuery)).docs.map((doc) => doc.data());
-
-    setPosts(posts.concat(newPosts));
-    setLoading(false);
-
-    if (newPosts.length < LIMIT) {
-      setPostsEnd(true);
-    }
-  };
 
 
   return (
@@ -81,9 +58,9 @@ export default function Home(props:Props){
               <div className="sm:text-center lg:text-left">
                 <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                   <span className="block xl:inline">Space</span>
-                  <span className="block text-indigo-600 xl:inline"> Exchange</span>
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-br from-purple-600 to-blue-500 xl:inline"> Exchange</span>
                 </h1>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">Low cost & high quality space exchange with your 1st or 2nd degree connection. 🙂</p>
+                <p className="mt-2 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">Low cost & high quality space exchange with your 1st or 2nd degree connection. 🙂</p>
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   {!user && (<>
                   <div className="rounded-md shadow">

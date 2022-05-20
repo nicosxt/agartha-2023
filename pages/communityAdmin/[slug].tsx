@@ -31,6 +31,8 @@ function CommunityManager() {
     const realSlug:string = Array.isArray(slug)?slug[0]:slug!;
     const communityRef = doc(firestore, "communities", realSlug);
     const userCommunityRef = doc(firestore, "users", uid, "communities", realSlug);
+    const communityMemberRef= doc(firestore, "communities", realSlug, "members", uid);
+
     let communityMemberSnap;
     useEffect( () => {
         const getMemberDoc = async () => {
@@ -42,13 +44,16 @@ function CommunityManager() {
         getMemberDoc();
     }, [communityMemberSnap]);
 
+    //need to get a list of uids 
+
+
     const [community] = useDocumentData(communityRef);
 
     return (
         <main>
         {community && (
             <EditCommunityProfileForm 
-            communityRef={communityRef} communityMemberSnap={members} userCommunityRef={userCommunityRef} defaultValues={community} />
+            communityRef={communityRef} communityMemberRef={communityMemberRef} communityMemberSnap={members} userCommunityRef={userCommunityRef} defaultValues={community} />
         )}
         </main>
     );
@@ -59,16 +64,18 @@ interface Props {
     defaultValues: any,
     communityRef: any,
     userCommunityRef: any,
-    communityMemberSnap: any
+    communityMemberSnap: any,
+    communityMemberRef: any
+
   }
 
 function EditCommunityProfileForm(props:Props) {
-    const {defaultValues, communityRef, communityMemberSnap, userCommunityRef} =props;
+    const {defaultValues, communityRef, communityMemberSnap, communityMemberRef, userCommunityRef} =props;
   
     return (
       <>
       <EditCommunityProfile 
-      communityRef={communityRef} communityMemberSnap={communityMemberSnap} userCommunityRef={userCommunityRef} defaultValues={defaultValues}/>
+      communityRef={communityRef} communityMemberRef={communityMemberRef} communityMemberSnap={communityMemberSnap} userCommunityRef={userCommunityRef} defaultValues={defaultValues}/>
       </>
     );
   }

@@ -11,7 +11,7 @@ import CommunityAvatarUploader from './CommunityAvatarUploader';
 
 
 export default function EditCommunityProfile(props : any) {
-    const {communityRef, userCommunityRef, communityMemberSnap, defaultValues} =props;
+    const {communityRef, userCommunityRef, communityMemberRef, communityMemberSnap, defaultValues} =props;
     const router = useRouter();
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
     // console.log('hey')
@@ -39,6 +39,30 @@ export default function EditCommunityProfile(props : any) {
             phone
         },
         )
+
+        // also need to update communities/slug/members/uid.communityname
+        // meed to update for all members shit.
+        communityMemberSnap.docs.map(async (d:any) => {
+            await updateDoc(d.ref, {
+              communityName,
+            },)
+            // and users/uid/communities/slug/.communityname
+            // need to update community name for all users.
+            const uid = d.data().uid;
+            const slug = d.data().slug;
+            const userCommunityRef = doc(firestore, "users", uid, "communities", slug);
+            await updateDoc(userCommunityRef, {
+              communityName,
+            },)
+     
+          });   
+  
+        // and users/uid/communities/slug/.communityname
+        // need to update community name for all users.
+        await updateDoc(userCommunityRef, {
+          communityName,
+        },)
+
         reset({ communityName,phone, city, state, country, discord, email, instagram, intro,
           twitter, website, wechat});
         router.push(`/community/${defaultValues.slug}`);
@@ -224,8 +248,12 @@ function DeleteCommunityButton(props:any):any {
     if (doIt) {
       await deleteDoc(communityRef);
       await deleteDoc(userCommunityRef);  
-      communityMemberSnap.docs.map(async (doc:any) => {
-        await deleteDoc(doc.ref);
+      communityMemberSnap.docs.map(async (d:any) => {
+        await deleteDoc(d.ref);
+        const uid = d.data().uid;
+        const slug = d.data().slug;
+        const userCommunityRef = doc(firestore, "users", uid, "communities", slug);
+        await deleteDoc(userCommunityRef);
         });    
 
 
