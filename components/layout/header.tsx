@@ -43,7 +43,7 @@ export default function Header(props : any){
                      <Link href={'/community'}><button><a className="font-medium text-gray-500 hover:text-gray-900">Community</a></button></Link>
 
             
-                     <Link href={'/admin'}><button><a className="font-bold mt-8 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">+ Post an Exchange</a></button></Link>
+                     <Link href={'/admin'}><button><a className="font-bold mt-8 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Post an Exchange</a></button></Link>
     
                      <Link href={'/'}>
                      <button onClick={signOut}> <a className="mt-8 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-indigo-600 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Signout</a></button>
