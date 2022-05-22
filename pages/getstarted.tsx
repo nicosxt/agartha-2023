@@ -123,7 +123,7 @@ export default function GetStarted() {
                 <div className="mt-6 prose prose-indigo prose-lg text-gray-500 lg:mt-0">
               
                   <p>
-                    Different from Airbnb or Couchsurfing where they try to connect strangers, this webapp is designed for <b><a className="text-bold underline decoration-pink-500">"Acquaintance Community". </a></b>
+                    Different from Airbnb or Couchsurfing where they try to connect strangers, this webapp is designed for <b><a className="text-bold underline decoration-pink-500">&quot;Acquaintance Community&quot;. </a></b>
                     For example, people who participated in a co-living space (whether that person is actually living there or participated in an event host by the space) are acquaintances to each other within the community. 
                     At most, the degree of connection would not exceeded by 2.
                     
@@ -132,17 +132,17 @@ export default function GetStarted() {
 
                   <p>
                     Exchange your place with other people in your community can have a lot of perks.
-                    The obvious thing is that since it&quot;s a acquaintance community, it eliminates the need to background check the person renting your room. 
-                    The cost for renting or sharing a place is also greatly reduced. For big cities like NYC, you're more likely to get the place with lower-than market rate (including Aribnb). 
-                    After all, you're doing your a favor to your friend, or your friend's friend. 
-                    What's more valueable here is the network. If it's a co-living community, you're also more likely to get more local interaction and feel much better to hang out with actual people than just being a tourist. 
+                    The obvious thing is that since it&apos;s a acquaintance community, it eliminates the need to background check the person renting your room. 
+                    The cost for renting or sharing a place is also greatly reduced. For big cities like NYC, you&apos;re more likely to get the place with lower-than market rate (including Aribnb). 
+                    After all, you&apos;re doing your a favor to your friend, or your friend&apos;s friend. 
+                    What&apos;s more valueable here is the network. If it&apos;s a co-living community, you&apos;re also more likely to get more local interaction and feel much better to hang out with actual people than just being a tourist. 
                     
                     </p>
                   <br></br>
 
                   <p>
-                    If you find the place you want to rent within the community through the members' post. You are<b><a className="text-bold underline decoration-pink-500"> encouraged to contact the person directly </a></b>by clicking on their profile page. There should be a list of social media contact methods that person has.
-                    If you're already a friend, great, just send the person a message. If you're not a friend yet but you belong to the same community, just send a friend invitation, and let the conversation begin.
+                    If you find the place you want to rent within the community through the members&apos; post. You are<b><a className="text-bold underline decoration-pink-500"> encouraged to contact the person directly </a></b>by clicking on their profile page. There should be a list of social media contact methods that person has.
+                    If you&apos;re already a friend, great, just send the person a message. If you&apos;re not a friend yet but you belong to the same community, just send a friend invitation, and let the conversation begin.
                     Since this webapp is still at its early stage, there are other more convenient features yet to be built. 
                     For any questions, please contact me at: lucy1049684100@gmail.com 
                   </p>
