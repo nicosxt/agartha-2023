@@ -132,11 +132,12 @@ export default function GetStarted() {
 
                   <p>
                     Exchange your place with other people in your community can have a lot of perks.
-                    The obvious thing is that since it's a acquaintance community, it eliminates the need to background check the person renting your room. 
+                    The obvious thing is that since it&quot;s a acquaintance community, it eliminates the need to background check the person renting your room. 
                     The cost for renting or sharing a place is also greatly reduced. For big cities like NYC, you're more likely to get the place with lower-than market rate (including Aribnb). 
                     After all, you're doing your a favor to your friend, or your friend's friend. 
                     What's more valueable here is the network. If it's a co-living community, you're also more likely to get more local interaction and feel much better to hang out with actual people than just being a tourist. 
-                  </p>
+                    
+                    </p>
                   <br></br>
 
                   <p>
