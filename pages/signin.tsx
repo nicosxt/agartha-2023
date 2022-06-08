@@ -10,11 +10,14 @@ import { useRouter } from "next/router";
 export default function Home() {
 
   const { username, user, loading} = useAuth()
+  const router = useRouter();
+
+
 
 
   return (
     <main>
-      {user ? <ProfilePage/> : <SignInButton />}
+      {user ?  <ProfilePage/> : <SignInButton />}
     </main>        
   )
   

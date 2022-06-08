@@ -1,10 +1,10 @@
-import MemberFeed from "../../../components/members/MemberFeed";
+import MemberFeed from "../../../../components/members/MemberFeed";
 import { useRouter } from "next/router";
 import { doc, getDoc, query, collection, where, getDocs } from "firebase/firestore";
-import { firestore, storage, memberToJSON } from '../../../lib/firebaseConfig/init';
+import { firestore, storage, memberToJSON } from '../../../../lib/firebaseConfig/init';
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { communityToJSON } from "../../../lib/firebaseConfig/init";
-import AddMemberForm from "../../../components/members/AddMemberForm";
+import { communityToJSON } from "../../../../lib/firebaseConfig/init";
+import AddMemberForm from "../../../../components/members/AddMemberForm";
 
 export async function getStaticProps(context:any)  {
     const {params} = context;
@@ -28,8 +28,9 @@ export async function getStaticPaths() {
     const snapshot = await getDocs(collection(firestore, 'communities'));
     const paths = snapshot.docs.map((doc) => {
         const { slug } = doc.data();
+        const username = "";  
         return {
-        params: {slug},
+        params: {slug, username},
         };
     });
 
@@ -47,13 +48,8 @@ interface Props {
 export default function AddMembers(props: Props) {
     const realSlug = props.realSlug;
     const membersInfo = props.membersInfo;
-    // add member form needs to have a searchable bar with a list of members
-    // then after selecting, set the member to the community
-
-
     return(
         <>
-
        <AddMemberForm slug={realSlug}/>
         </>
     );

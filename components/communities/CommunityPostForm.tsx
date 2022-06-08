@@ -8,7 +8,7 @@ import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
 import { doc, getDoc, collection, addDoc, setDoc, getDocs, query, where, limit, orderBy} from 'firebase/firestore';
 import { firestore } from '../../lib/firebaseConfig/init'
 import CommunityAvatarUploader from './CommunityAvatarUploader';
-
+import Link from 'next/link';
 export default function CommunityPostForm(props : any) {
 
     const [preview, setPreview] = useState(false);
@@ -101,7 +101,7 @@ export default function CommunityPostForm(props : any) {
         },
         { merge: true });
 
-        router.push(`/community/${slug}`);
+        router.push(`/${username}/community/${slug}`);
 
     };
     
@@ -284,7 +284,9 @@ export default function CommunityPostForm(props : any) {
             </div>
             <div className="pt-5">
               <div className="flex justify-end">
+                <Link href={`/${username}/community/manage`}>
                 <button type="button" className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
+                </Link>
                 <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create New Community</button>
               </div>
             </div>

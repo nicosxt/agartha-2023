@@ -1,7 +1,7 @@
-import EditMemberForm from '../../../../components/members/EditMemberForm';
+import EditMemberForm from '../../../../../components/members/EditMemberForm';
 import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from 'firebase/firestore';
-import {firestore} from '../../../../lib/firebaseConfig/init';
-import { getUserWithUsername, postToJSON, memberToJSON, communityToJSON} from '../../../../lib/firebaseConfig/init';
+import {firestore} from '../../../../../lib/firebaseConfig/init';
+import { getUserWithUsername, postToJSON, memberToJSON, communityToJSON} from '../../../../../lib/firebaseConfig/init';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 export async function getStaticProps(context:any) {

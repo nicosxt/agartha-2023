@@ -1,14 +1,16 @@
 import Link from "next/dist/client/link"
+import { useAuth } from "../../lib/authContext";
 import MemberAvatarStack from "./MemberAvatarStack";
 
 export default function MemberStack(props:any) :any{
     const slug = props.slug;
     const membersInfo = props.membersInfo;
+    const username = useAuth();
 
     return (
     <>
     <div className="bg-white overflow-hidden sm:rounded-md">
-    <Link href={`/community/${slug}/members`}>
+    {/* <Link href={`${username}/community/${slug}/members`}> */}
 
         <a className="block hover:bg-gray-50">
             
@@ -28,7 +30,7 @@ export default function MemberStack(props:any) :any{
                 </div>
                 </div>
             </a>
-            </Link>
+            {/* </Link> */}
 
             </div>
          </>

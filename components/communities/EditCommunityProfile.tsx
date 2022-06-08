@@ -11,7 +11,7 @@ import CommunityAvatarUploader from './CommunityAvatarUploader';
 
 
 export default function EditCommunityProfile(props : any) {
-    const {communityRef, userCommunityRef, communityMemberRef, communityMemberSnap, defaultValues} =props;
+    const {communityRef, userCommunityRef, username, communityMemberRef, communityMemberSnap, defaultValues} =props;
     const router = useRouter();
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
     // console.log('hey')
@@ -65,7 +65,7 @@ export default function EditCommunityProfile(props : any) {
 
         reset({ communityName,phone, city, state, country, discord, email, instagram, intro,
           twitter, website, wechat});
-        router.push(`/community/${defaultValues.slug}`);
+        router.push(`/${username}/community/${defaultValues.slug}`);
 
     };
     return (
@@ -230,7 +230,7 @@ export default function EditCommunityProfile(props : any) {
             <div className="pt-5">
               <div className="flex justify-end">
                 <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save Changes</button>
-                <DeleteCommunityButton communityMemberSnap={communityMemberSnap} communityRef={communityRef} userCommunityRef={userCommunityRef}/>
+                <DeleteCommunityButton username={username} communityMemberSnap={communityMemberSnap} communityRef={communityRef} userCommunityRef={userCommunityRef}/>
               </div>
             </div>
           </form>
@@ -241,7 +241,7 @@ export default function EditCommunityProfile(props : any) {
 }
 
 function DeleteCommunityButton(props:any):any {
-  const {communityRef, communityMemberSnap, userCommunityRef} = props;
+  const {communityRef, communityMemberSnap, userCommunityRef, username} = props;
   const router = useRouter();
   const deletePost = async () => {
     const doIt = confirm('are you sure!');
@@ -264,7 +264,7 @@ function DeleteCommunityButton(props:any):any {
       //       recursive: true,
       //       yes: true
       //     });
-      router.push('/community');
+      router.push(`/${username}/community`);
     }
   }
   return(

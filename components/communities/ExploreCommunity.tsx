@@ -1,9 +1,10 @@
 import CommunityFeed from "./CommunityFeed"
 interface Props {
     communities: any
+    username: any
 }
 export default function ExploreCommunity(props: Props): any {
-    const {communities } = props;
+    const {communities, username} = props;
     // console.log("explore community" , communities)
     return (
         <>
@@ -13,13 +14,12 @@ export default function ExploreCommunity(props: Props): any {
                         <div className="flex items-center space-x-5">
              
                         <div>
-                        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-purple-600 to-blue-500">Explore Communities</h1>
 
                     </div>
                     </div>
 
                     </div>
-                    <CommunityFeed communities={communities}/>
+                    <CommunityFeed username={username} communities={communities}/>
 
                 </main>   
         </div>

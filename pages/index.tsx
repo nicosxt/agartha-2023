@@ -11,7 +11,9 @@ import { fromMillis } from '../lib/firebaseConfig/init';
 import Card from '@mui/material/Card';
 import Link from 'next/link'
 import { useAuth,signOut } from '../lib/authContext'
-
+import type { ReactElement } from 'react'
+import Layout from '../components/layout'
+import FrontPage from '../components/layout/frontpage'
 
 const LIMIT = 10;
 export async function getServerSideProps(){
@@ -33,7 +35,7 @@ interface Props {
   posts: any
 }
 
-export default function Home(props:Props){
+export default function Home(props:Props): any {
   const [posts, setPosts] = useState(props.posts);
   const [loading, setLoading] = useState(false);
   const [postsEnd, setPostsEnd] = useState(false);  
@@ -89,3 +91,10 @@ export default function Home(props:Props){
   )
 }
 
+// Home.getLayout = function getLayout(page: ReactElement) {
+//   return (
+//       <FrontPage>{page}</FrontPage>
+//       // <Layout>{page}</Layout>
+
+//   )
+// }

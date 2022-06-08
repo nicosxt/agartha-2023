@@ -13,19 +13,22 @@ import MemberAvatarStackSmall from '../../components/members/MemberAvatarStackSm
 
 interface Props {
     communities: any
+    username: any
 }
 
 export default function CommunityFeed(props: Props): any {
-    const {communities} = props;
-    return communities ? communities.map((community:any) =><Community community={community} key={community.slug} />) : null;
+    const {communities, username} = props;
+    return communities ? communities.map((community:any) =><Community community={community} username={username} key={community.slug} />) : null;
 }
 
 interface PostProps{
     community: any
+    username: any
 }
 
 function Community(props: PostProps) : any {
     const community = props.community;
+    const username = props.username;
     const slug = community.slug;
     const [membersInfo, setMembersInfo] = useState<any>();
     let membersSnapshot;
@@ -53,16 +56,16 @@ function Community(props: PostProps) : any {
             <div className="space-y-6 lg:col-start-1 lg:col-span-2">
             <ul role="list" className="divide-y divide-gray-200">
                 <li>
-                <a href={`/community/${community.slug}`} className="block hover:bg-gray-50">
+                <Link href={`/${username}/community/${community.slug}`}>
+
+                <a  className="block hover:bg-gray-50">
                     <div className="px-4 py-4 flex items-center sm:px-6">
                     <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                         <div className="truncate">
                         <div className="flex text-sm">
-                          <Link href={`/community/${community.slug}`}>
                             <a>
                             <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{community.communityName}</p>
                             </a>
-                          </Link>
                         </div>
                         <div className="flex space-x-4">
                          
@@ -82,6 +85,8 @@ function Community(props: PostProps) : any {
                     </div>
                     </div>
                 </a>
+                </Link>
+
             </li>
           </ul>
         </div>

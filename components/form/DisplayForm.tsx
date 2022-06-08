@@ -1,12 +1,22 @@
 import Link from 'next/link';
 import ImageFeed from '../imgs/ImageFeed';
 import HeartButton from '../misc/HeartButton';
-
+import { useRouter } from 'next/router';
+import { updateDoc, serverTimestamp, deleteDoc, getDoc } from "firebase/firestore";
+import { useContext, useState } from 'react';
+import { authContext } from '../../lib/authContext'
 
 export default function DisplayForm(props : any) {
     const post = props.post;
     const postRef = props.postRef;
     const createdAt = typeof post?.createdAt === 'number' ? new Date(post.createdAt) : post.createdAt.toDate();
+    const postUsername = post.username
+    const { username } = useContext(authContext);
+    let admin = false;
+    if (postUsername === username){
+        admin = true;
+    }
+    // need to make sure no one else can edit/delete the post. 
 
     return(
         <>
@@ -53,17 +63,22 @@ export default function DisplayForm(props : any) {
                 </div>
                 </dl>
             </div>
-            <div className="flex space-x-4">
-                <>
-                <Link href={`/admin/${post.slug}`}>
-                    <h3>
-                    <button className="mt-2 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center mr-2 mb-2">Edit</button>
-                    </h3>
+            <div className="pt-5">
+              <div className="flex justify-end">
+            {admin && (<>
+                <Link href={`/${username}/exchange`}>
+                <button className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Back</button>
                 </Link>
-                {/* {post.published ? <p className="text-success">Live</p> : <p className="text-danger">Unpublished</p>} */}
+                <Link href={`/admin/${post.slug}`}>
+                <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edit</button>
+                </Link>
+
+                <DeletePostButton postRef={postRef} />
                 </>
+                )}
+              </div>
             </div>
-            
+     
             
 
             </div>
@@ -72,3 +87,19 @@ export default function DisplayForm(props : any) {
     );
 
 }
+
+function DeletePostButton(props:any):any {
+    const {postRef} = props;
+    const router = useRouter();
+    const deletePost = async () => {
+      const doIt = confirm('are you sure!');
+      if (doIt) {
+        await deleteDoc(postRef);
+        router.push('/admin');
+      }
+    }
+    return(
+    <button type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+          onClick={deletePost}>Delete</button>
+    );
+  }

@@ -1,21 +1,20 @@
-import { getCommunityWithSlug, communityToJSON, memberToJSON, postToJSON } from '../../../lib/firebaseConfig/init';
+import { getCommunityWithSlug, communityToJSON, memberToJSON, postToJSON } from '../../../../lib/firebaseConfig/init';
 import { doc, startAfter, collection, collectionGroup, addDoc, getDoc, getDocs, query, where, limit, orderBy} from 'firebase/firestore';
-import {firestore} from '../../../lib/firebaseConfig/init';
-import PostContent from '../../../components/users/PostContent'
+import {firestore} from '../../../../lib/firebaseConfig/init';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
-import CommunityProfilePage from '../../../components/communities/CommunityProfilePage';
-import PostFeed from '../../../components/users/PostFeed';
+import CommunityProfilePage from '../../../../components/communities/CommunityProfilePage';
+import PostFeed from '../../../../components/users/PostFeed';
 import Link from 'next/dist/client/link';
-import MemberStack from '../../../components/members/MemberStack';
-import { useState, useEffect} from 'react';
-import { fromMillis } from '../../../lib/firebaseConfig/init';
-import Loader from '../../../components/misc/loader';
+import MemberStack from '../../../../components/members/MemberStack';
+import { useState, useEffect, useContext} from 'react';
+import { fromMillis } from '../../../../lib/firebaseConfig/init';
+import Loader from '../../../../components/misc/loader';
 
 const LIMIT = 10;
 
 export async function getStaticProps(context:any) {
     const {params} = context;
-    const {slug} = params; // grab the slug from the url parameters
+    const {slug, username} = params; // grab the slug from the url parameters
     // console.log("----", slug);
     const communityDoc = await getCommunityWithSlug(slug);
     let community;
@@ -43,7 +42,7 @@ export async function getStaticProps(context:any) {
 
 
     return {
-      props: { community, path, posts, fetchedMembers},
+      props: { community, path, posts, username, fetchedMembers},
       revalidate: 5000,
     };
   }
@@ -52,10 +51,12 @@ export async function getStaticProps(context:any) {
 export async function getStaticPaths() {
     // Improve my using Admin SDK to select empty docs
     const snapshot = await getDocs(collection(firestore, 'communities'));
+
     const paths = snapshot.docs.map((doc) => {
         const { slug } = doc.data();
+        const username = "";
         return {
-        params: {slug},
+        params: {slug, username},
         };
     });
 
@@ -66,7 +67,7 @@ export async function getStaticPaths() {
 }
 
 export default function Community(props:any) {
-
+    const username = props.username;
     const communityRef = doc(firestore, props.path);
     const fetchedMembers = props.fetchedMembers;
     const [realtimeCommunity] = useDocumentData(communityRef);
@@ -74,7 +75,11 @@ export default function Community(props:any) {
     const [posts, setPosts] = useState(props.posts);
     const [loading, setLoading] = useState(false);
     const [postsEnd, setPostsEnd] = useState(false);
-    console.log(fetchedMembers);
+    const cSlug:string = community.slug;
+    const realUsername:string = username!;
+
+    // console.log(fetchedMembers);
+    console.log("check", community.slug)
     const slug = community.slug;
     const [membersInfo, setMembersInfo] = useState<any>();
     let membersSnapshot;
@@ -112,7 +117,7 @@ export default function Community(props:any) {
             limit(LIMIT));
     
         const newPosts = (await getDocs(postsQuery)).docs.map((doc) => doc.data());
-        console.log(newPosts);
+        // console.log(newPosts);
         setPosts(posts.concat(newPosts));
         setLoading(false);
     
@@ -121,18 +126,27 @@ export default function Community(props:any) {
         }
       };
 
+console.log("hmm",realUsername)
+console.log("check2", cSlug)
 
     return (
         <main>
             
             <CommunityProfilePage community={community}/>
+
             <div className="ml-10">
             <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-pink-500 to-purple-600">Members</p>
-
-            <Link href={`/community/${community.slug}/members`}>
+            
+            <Link href={`/${realUsername}/community/${cSlug}/members`}>
+                <a>
                 <MemberStack slug={community.slug} membersInfo={membersInfo} />
+                </a>
             </Link>
+
+
             </div>
+
+
             <br></br>
             <div className="ml-10">
             <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-purple-600 to-blue-500">Member Posts</p>
@@ -140,7 +154,7 @@ export default function Community(props:any) {
             <div className="min-h-full">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
             <div className="flex items-center space-x-5">
-                {!loading && !postsEnd &&
+                {!loading && !postsEnd && posts.length > 0 && 
                 <button 
                     className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
 
@@ -152,7 +166,7 @@ export default function Community(props:any) {
 
                 <Loader show={loading} />
 
-                {postsEnd && 
+                {(postsEnd || posts.length === 0 )&& 
               <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
               You have reached the end!

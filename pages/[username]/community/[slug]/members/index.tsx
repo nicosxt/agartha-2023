@@ -1,24 +1,18 @@
-import MemberFeed from "../../../../components/members/MemberFeed";
+import MemberFeed from "../../../../../components/members/MemberFeed";
 import { useRouter } from "next/router";
 import { doc, getDoc, query, collection, where, getDocs } from "firebase/firestore";
-import { firestore, storage, memberToJSON } from '../../../../lib/firebaseConfig/init';
+import { firestore, storage, memberToJSON } from '../../../../../lib/firebaseConfig/init';
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { communityToJSON } from "../../../../lib/firebaseConfig/init";
+import { communityToJSON } from "../../../../../lib/firebaseConfig/init";
 import Link from "next/dist/client/link";
 import { useContext, useState, useEffect} from 'react';
-import { authContext } from '../../../../lib/authContext'
-import { getUserWithUsername } from "../../../../lib/firebaseConfig/init";
+import { authContext } from '../../../../../lib/authContext'
+import { getUserWithUsername } from "../../../../../lib/firebaseConfig/init";
 
 export async function getStaticProps(context:any)  {
     const {params} = context;
     const {slug} = params;
     const realSlug:string = Array.isArray(slug)?slug[0]:slug!;
-    // const communityQuery= query(collection(firestore, "communities", slug, "members"));
-    // const membersSnapshot = await getDocs(communityQuery);
-    // const members = membersSnapshot.docs.map(d => d.id);
-    // const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-    // const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
-    // console.log("slug" + realSlug)
     return{
         props: { realSlug},
         revalidate: 5000,
@@ -31,8 +25,9 @@ export async function getStaticPaths() {
     const snapshot = await getDocs(collection(firestore, 'communities'));
     const paths = snapshot.docs.map((doc) => {
         const { slug } = doc.data();
+        const username="";
         return {
-        params: {slug},
+        params: {slug, username},
         };
     });
 
@@ -67,20 +62,13 @@ export default function Members(props: Props) {
             if(userDoc){
                 const newUser = memberToJSON(userDoc);
                 setUser(newUser);
-                // console.log("USER", newUser)
                 const userCommunityRef = doc(firestore, "users", newUser.uid, "communities", realSlug);
                 const data = await getDoc(userCommunityRef);
                 newUserCommunityDoc = communityToJSON(data);
                 setUserCommunityDoc(newUserCommunityDoc);
-                // console.log("3", newUserCommunityDoc);
-
-                // console.log("USERCOMMUNITYDOC", newUserCommunityDoc)
                 const realAdmin = newUserCommunityDoc.admin;
                 setAdmin(realAdmin);
-                // if (userCommunityDoc) {
-                //     setAdmin(userCommunityDoc.admin);
-                //     console.log("ADMIN", userCommunityDoc.admin)
-                // }
+      
             }
         }
         getUser();
@@ -117,7 +105,7 @@ export default function Members(props: Props) {
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               {admin && (
-              <Link href={`/community/${realSlug}/addmembers`}>
+              <Link href={`/${username}/community/${realSlug}/addmembers`}>
               <button type="button" className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add Member</button>
               </Link>
               )}

@@ -11,6 +11,8 @@ import { firestore } from '../../lib/firebaseConfig/init'
 export default function CommunityProfilePage(props : any) {
     const community = props.community;
     const { uid } = useContext(authContext);
+    // console.log("uhhhh")
+
     // console.log("uid", uid)
     const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
     const [admin, setAdmin] = useState<boolean>(false);

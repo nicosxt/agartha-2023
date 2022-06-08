@@ -2,6 +2,7 @@ import {communityToJSON, firestore, postToJSON} from '../../lib/firebaseConfig/i
 import Link from 'next/link';
 import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { useAuth } from '../../lib/authContext';
 
 interface Props {
     members: any
@@ -55,6 +56,7 @@ function MemberItem(props: MemberProps) {
   const admin = props.admin;
   const userDoc = props.userDoc;
   const slug = props.slug;
+  const username = useAuth();
 
   return (
     
@@ -87,7 +89,7 @@ function MemberItem(props: MemberProps) {
               <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">{userDoc.addBy}</span>
             </td>
             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-              <Link href={`/community/${slug}/members/${member.uid}`}>
+              <Link href={`${username}/community/${slug}/members/${member.uid}`}>
               <a className="text-indigo-600 hover:text-indigo-900">Edit</a>
               </Link>
             </td>

@@ -12,7 +12,10 @@ import debounce from 'lodash.debounce';
 import React, { useEffect, useCallback } from 'react';
 import { getUserWithUsername } from '../../lib/firebaseConfig/init';
 import Link from 'next/dist/client/link';
+import { useAuth } from '../../lib/authContext'
+
 export default function EditMemberForm(props : any) {
+    const {username } = useAuth();
     const {defaultValues, slug} = props;
     const router = useRouter();
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
@@ -36,7 +39,7 @@ export default function EditMemberForm(props : any) {
         });
         
         reset({ admin, titles, responsibilities});
-        router.push(`/community/${slug}/members`);
+        router.push(`${username}/community/${slug}/members`);
 
     };
   
@@ -135,7 +138,7 @@ export default function EditMemberForm(props : any) {
           
           <div className="pt-5">
             <div className="flex justify-end">
-              <Link href={`/community/${slug}/members`}>
+              <Link href={`${username}/community/${slug}/members`}>
               <button type="button" className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
               </Link>
               <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update Member Info</button>
@@ -150,11 +153,12 @@ export default function EditMemberForm(props : any) {
 function DeleteMemberButton(props:any):any {
   const {memberRef, slug} = props;
   const router = useRouter();
+  const {username} = useAuth();
   const deleteMember = async () => {
     const doIt = confirm('are you sure!');
     if (doIt) {
       await deleteDoc(memberRef);
-      router.push(`/community/${slug}/members`);
+      router.push(`${username}/community/${slug}/members`);
     }
   }
   return(

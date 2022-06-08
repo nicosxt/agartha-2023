@@ -4,17 +4,28 @@ import Layout from '../components/layout'
 import FirebaseProvider from '../lib/authContext'
 import '../lib/firebaseConfig/init'
 import { ChakraProvider } from '@chakra-ui/react'
+import type { ReactElement, ReactNode } from 'react'
+import type { NextPage } from 'next'
+import FrontPage from '../components/layout/frontpage'
 
-// import '../style/global.css'
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (<> <ChakraProvider>
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page)
+  return <ChakraProvider>
     <FirebaseProvider>
       <Layout>
+        {/* {getLayout(<Component {...pageProps} />) }  */}
         <Component {...pageProps} />
       </Layout>
     </FirebaseProvider>
+    
   </ChakraProvider>
-  </>)
+  
 }
 export default MyApp

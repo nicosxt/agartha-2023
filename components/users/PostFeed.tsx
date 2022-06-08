@@ -1,5 +1,5 @@
 import Link from 'next/link';
-
+import DropDown from '../misc/dropdown';
 
 interface Props {
     posts: any
@@ -20,7 +20,8 @@ interface PostProps{
 function PostItem(props: PostProps) : any {
     const post = props.post;
     const admin = props.admin;
-    
+    const createdAt = typeof post?.createdAt === 'number' ? new Date(post.createdAt) : post.createdAt.toDate();
+
     return (
       <>
         <div className="mt-8 max-w-3xl mx-auto gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
@@ -28,42 +29,49 @@ function PostItem(props: PostProps) : any {
 
             <ul role="list" className="divide-y divide-gray-200">
                 <li>
-                <a href={`/${post.username}/${post.slug}`} className="block hover:bg-gray-50">
+                <Link href={`/${post.username}/${post.slug}`}>
+
+                <a className="block hover:bg-gray-50">
                     <div className="px-4 py-4 flex items-center sm:px-6">
                     <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                         <div className="truncate">
                         <div className="flex text-sm">
-                          <Link href={`/${post.username}/${post.slug}`}>
                             <a>
                             <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</p>
                             </a>
-                          </Link>
                         </div>
+              
                         <div className="flex">
                             {/* <div className="flex items-center text-sm text-gray-500"> */}
+                            <p className="mt-1 max-w-2xl text-sm text-gray-500"> 
                             <Link href={`/${post.username}`}>
                             <a>
-                              <i>By @{post.username}</i>
+                              <i>By @{post.username} </i>
                             </a>
-                          </Link>
+                            
+
+                          </Link> {' '} on {createdAt.toISOString()} </p>
                  
                         </div>
                         <div className="flex space-x-4">
-                          {admin && (
+                          {/* {admin && (
                               <>
                                 <Link href={`/admin/${post.slug}`}>
                                   <h3>
                                     <button className="mt-2 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center mr-2 mb-2">Edit</button>
                                   </h3>
                                 </Link>
-                                {/* {post.published ? <p className="text-success">Live</p> : <p className="text-danger">Unpublished</p>} */}
                               </>
-                            )}
+                            )} */}
                         </div>
+                
 
                         </div>
                         <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
                         <div className="flex overflow-hidden -space-x-1">
+                        {/* <div>
+                          <DropDown/>
+                        </div> */}
                             {/* <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Dries Vincent"/>
 
                             <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Lindsay Walton"/>
@@ -81,7 +89,10 @@ function PostItem(props: PostProps) : any {
                     </div>
                     </div>
                 </a>
+                </Link>
+
             </li>
+
           </ul>
         </div>
         </div>
