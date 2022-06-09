@@ -89,7 +89,7 @@ function MemberItem(props: MemberProps) {
               <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">{userDoc.addBy}</span>
             </td>
             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-              <Link href={`${username}/community/${slug}/members/${member.uid}`}>
+              <Link href={`/${username}/community/${slug}/members/${member.uid}`}>
               <a className="text-indigo-600 hover:text-indigo-900">Edit</a>
               </Link>
             </td>

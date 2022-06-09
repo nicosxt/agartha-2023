@@ -54,7 +54,7 @@ export async function getStaticPaths() {
 
     const paths = snapshot.docs.map((doc) => {
         const { slug } = doc.data();
-        const username = "";
+        const username = "123";
         return {
         params: {slug, username},
         };
@@ -126,8 +126,8 @@ export default function Community(props:any) {
         }
       };
 
-console.log("hmm",realUsername)
-console.log("check2", cSlug)
+// console.log("hmm",realUsername)
+// console.log("check2", cSlug)
 
     return (
         <main>

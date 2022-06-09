@@ -13,7 +13,7 @@ const LIMIT = 5;
 export async function getServerSideProps(context:any){
   const {query:qr} = context;
   const {username} = qr;
-  console.log("username",username);
+  // console.log("username",username);
   const userDoc = await getUserWithUsername(username)
 
   if (!userDoc) {

@@ -34,8 +34,9 @@ export async function getStaticPaths() {
     const paths = snapshot.docs.map((doc) => {
         // console.log("doc", doc)
         const { slug, uid } = doc.data();
+        const username="123";
         return {
-        params: {slug, uid},
+        params: {slug, username, uid},
         };
     });
     // console.log("paths", paths)

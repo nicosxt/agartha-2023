@@ -28,7 +28,7 @@ export async function getStaticPaths() {
     const snapshot = await getDocs(collection(firestore, 'communities'));
     const paths = snapshot.docs.map((doc) => {
         const { slug } = doc.data();
-        const username = "";  
+        const username = "123";  
         return {
         params: {slug, username},
         };

@@ -58,7 +58,7 @@ export default function ExchangePage(props: User): any {
         const last = posts[posts.length - 1];
     
         const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
-        console.log("cursor", cursor)
+        // console.log("cursor", cursor)
         const uid = user.uid! 
         const postsQuery = query(
         collection(firestore, "users", uid, "posts"),

@@ -25,7 +25,7 @@ export async function getStaticPaths() {
     const snapshot = await getDocs(collection(firestore, 'communities'));
     const paths = snapshot.docs.map((doc) => {
         const { slug } = doc.data();
-        const username="";
+        const username="123 ";
         return {
         params: {slug, username},
         };
@@ -101,7 +101,7 @@ export default function Members(props: Props) {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-xl font-semibold text-gray-900">Members</h1>
-              <p className="mt-2 text-sm text-gray-700">A list of all the members in your account including their name, title, email and role.</p>
+              <p className="mt-2 text-sm text-gray-700">A list of all the members in your community including their name, title, email and role.</p>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               {admin && (
