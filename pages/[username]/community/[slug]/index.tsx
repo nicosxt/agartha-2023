@@ -126,9 +126,6 @@ export default function Community(props:any) {
         }
       };
 
-// console.log("hmm",realUsername)
-// console.log("check2", cSlug)
-
     return (
         <main>
             

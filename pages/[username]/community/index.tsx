@@ -40,8 +40,10 @@ export async function getServerSideProps(context:any){
         const communitySlug = memberDoc.slug;
         slugs.push(communitySlug);
       })
-      const communityQuery = query(collection(firestore, 'communities'),where('slug','in',slugs))
-      memberCommunities= (await getDocs(communityQuery)).docs.map(communityToJSON);
+      if(slugs.length > 0){
+        const communityQuery = query(collection(firestore, 'communities'),where('slug','in',slugs))
+        memberCommunities= (await getDocs(communityQuery)).docs.map(communityToJSON);
+      }
   }
 
       
