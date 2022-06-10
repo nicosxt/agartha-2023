@@ -59,7 +59,6 @@ export default function UserProfilePage(props: User): any {
     <>
         
         <UserProfile user={user} username={username} />
-       
         </>
     )  
 }

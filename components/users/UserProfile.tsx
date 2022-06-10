@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useAuth,signOut } from '../../lib/authContext'
+import PostFeed from './PostFeed';
 
 interface Props {
     user: any
@@ -14,6 +15,7 @@ export default function UserProfilePage(props: Props): any {
         <>
             <div className="min-h-full">
             <h1 className="text-2xl text-center font-semibold text-gray-900">Profile</h1>
+
                 <div className="mt-6 flex-shrink-0 flex border-t border-gray-200 p-4"/>
                 <main className="py-10">
                     <div className="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
@@ -62,7 +64,10 @@ export default function UserProfilePage(props: Props): any {
 
                     
                         </ul>
+
                     </div>
+                    
+                    
 
                     </div>
                     </div>
@@ -70,6 +75,10 @@ export default function UserProfilePage(props: Props): any {
                     </div>
                     
                 </main>   
+                {/* <h1 className="text-2xl text-center font-semibold text-gray-900">Your Community Post Feed</h1>
+
+<div className="mt-6 flex-shrink-0 flex border-t border-gray-200 p-4"/> */}
+                {/* <PostFeed/> */}
         </div>
 
 

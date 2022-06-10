@@ -31,12 +31,21 @@ export default function Dashboard(props: Props): any {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [navigation, setNavigation] = useState([
         { name: 'Profile', href:  `/${username}`, icon: HomeIcon, current: false },
-        { name: 'Exchange', href:  `/${username}/exchange`, icon: UsersIcon, current: false },
+        // { name: 'Exchange', href:  `/${username}/exchange`, icon: InboxIcon, current: false },
         // { name: 'Exchange', href:  `/${username}/community/manage`, icon: UsersIcon, current: false },
         // { name: 'Community', href: '/community', icon: FolderIcon, current: false },
         // { name: 'Calendar', href: '/', icon: CalendarIcon, current: false },
         // { name: 'Documents', href: '#', icon: InboxIcon, current: false },
         // { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+        {
+          name: 'Exchange',
+          icon: InboxIcon,
+          current: false,
+          children: [
+            { name: 'Manage Your Exchange', href: `/${username}/exchange` },// manage communities in the same page?        
+            { name: 'Exchange Feed', href: `/${username}/feed`},
+          ],
+        },
         {
             name: 'Community',
             icon: UsersIcon,
