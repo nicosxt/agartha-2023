@@ -32,9 +32,7 @@ function SignUpButton() {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      // console.log('error', errorMessage)
       window.alert(errorMessage)
-      // ..
     });
   }
   return (
