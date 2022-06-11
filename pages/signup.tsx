@@ -14,7 +14,6 @@ export default function Home() {
   return (
     <main>{user ? !username ? <UsernameForm /> :<ProfilePage /> : <SignUpButton />}</main>
   )
-
 }
 function SignUpButton() {
   const [ email , setEmail ] =  useState<string>('')
