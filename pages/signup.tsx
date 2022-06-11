@@ -16,7 +16,6 @@ export default function Home() {
   )
 
 }
-
 function SignUpButton() {
   const [ email , setEmail ] =  useState<string>('')
   const [ password , setPassword ] =  useState<string>('')
