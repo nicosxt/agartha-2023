@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import DropDown from '../misc/dropdown';
 
 interface Props {
     posts: any
@@ -36,9 +35,9 @@ function PostItem(props: PostProps) : any {
                     <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                         <div className="truncate">
                         <div className="flex text-sm">
-                            <a>
+                            {/* <a> */}
                             <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</p>
-                            </a>
+                            {/* </a> */}
                         </div>
               
                         <div className="flex">
@@ -53,34 +52,11 @@ function PostItem(props: PostProps) : any {
                           </Link> {' '} on {createdAt.toISOString()} </p>
                  
                         </div>
-                        <div className="flex space-x-4">
-                          {/* {admin && (
-                              <>
-                                <Link href={`/admin/${post.slug}`}>
-                                  <h3>
-                                    <button className="mt-2 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center mr-2 mb-2">Edit</button>
-                                  </h3>
-                                </Link>
-                              </>
-                            )} */}
-                        </div>
+        
                 
 
                         </div>
-                        <div className="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
-                        <div className="flex overflow-hidden -space-x-1">
-                        {/* <div>
-                          <DropDown/>
-                        </div> */}
-                            {/* <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Dries Vincent"/>
-
-                            <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Lindsay Walton"/>
-
-                            <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Courtney Henry"/>
-
-                            <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Tom Cook"/> */}
-                        </div>
-                        </div>
+      
                     </div>
                     <div className="ml-5 flex-shrink-0">
                         <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

@@ -157,14 +157,15 @@ function DeleteMemberButton(props:any):any {
   const deleteMember = async () => {
     const doIt = confirm('are you sure!');
     if (doIt) {
+      router.push(`/${username}/community/${slug}/members`);
+
       await deleteDoc(memberRef);
-      router.push(`${username}/community/${slug}/members`);
     }
   }
   return(
     // <Link href={`/community/${slug}/members`}>
 
-  <button type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+  <button  type="button" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
         onClick={deleteMember}>Delete Member</button>
   // </Link>
   );
