@@ -7,24 +7,27 @@ import { useAuth } from '../../lib/authContext';
 interface Props {
     members: any
     slug: string
+    admin: boolean
 }
 
 export default function MemberFeed(props: Props): any {
-    const {members, slug} = props;
-    return members ? members.map((member:any) =><MemberTable member={member} key={slug} slug={slug}/>) : null;
+    const {members, slug, admin} = props;
+    return members ? members.map((member:any) =><MemberTable admin={admin} member={member} key={slug} slug={slug}/>) : null;
 }
 
 interface PostProps{
     member: any
     slug: string
+    admin: boolean
 }
 
 function MemberTable(props: PostProps) {
     const member = props.member;
     const slug = props.slug; // the slug is community slug 
     const userCommunityRef = doc(firestore, "users", member.uid, "communities", slug);
+    const admin = props.admin;
     const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
-    let admin = false;
+    // let admin = false;
     // find community where slug equals slug
     // then assign the value of admin in that set to the variable
     useEffect(() => {
@@ -34,7 +37,7 @@ function MemberTable(props: PostProps) {
         }
         getData()
     }, [])
-    admin = userCommunityDoc?.admin;
+    // admin = userCommunityDoc?.admin;
 
     return (
       <>
@@ -67,7 +70,7 @@ function MemberItem(props: MemberProps) {
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
               <div className="flex items-center">
                 <div className="h-10 w-10 flex-shrink-0">
-                  <img className="h-10 w-10 rounded-full" src={member.avatarUrl} alt=""/>
+                  <img className="h-10 w-10 rounded-full" src={member.avatarUrl?member.avatarUrl : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg"} alt=""/>
                 </div>
                 <div className="ml-4">
                   <Link href={`/${member.username}`}>
@@ -89,9 +92,11 @@ function MemberItem(props: MemberProps) {
               <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">{userDoc.addBy}</span>
             </td>
             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+              {admin && (
               <Link href={`/${username}/community/${slug}/members/${member.uid}`}>
               <a className="text-indigo-600 hover:text-indigo-900">Edit</a>
               </Link>
+              )}
             </td>
           </tr>
 

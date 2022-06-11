@@ -8,6 +8,7 @@ import Link from "next/dist/client/link";
 import { useContext, useState, useEffect} from 'react';
 import { authContext } from '../../../../../lib/authContext'
 import { getUserWithUsername } from "../../../../../lib/firebaseConfig/init";
+import RequestFeed from "../../../../../components/members/RequestFeed";
 
 export async function getStaticProps(context:any)  {
     const {params} = context;
@@ -53,7 +54,8 @@ export default function Members(props: Props) {
     let newUserCommunityDoc:any = null;
     // console.log("1", newUserCommunityDoc);
 
-    
+    let uid;
+
     useEffect(() => {
         const getUser = async () => {
             // console.log("hi im lucy and im cutie ")
@@ -62,7 +64,8 @@ export default function Members(props: Props) {
             if(userDoc){
                 const newUser = memberToJSON(userDoc);
                 setUser(newUser);
-                const userCommunityRef = doc(firestore, "users", newUser.uid, "communities", realSlug);
+                uid = newUser.uid;
+                const userCommunityRef = doc(firestore, "users", uid, "communities", realSlug);
                 const data = await getDoc(userCommunityRef);
                 newUserCommunityDoc = communityToJSON(data);
                 setUserCommunityDoc(newUserCommunityDoc);
@@ -76,14 +79,13 @@ export default function Members(props: Props) {
 
     const [membersInfo, setMembersInfo] = useState<any>();
     let membersSnapshot;
-    let members;
+    let members : any[]=[];
     useEffect (() => {
         const getMember = async () => {
             const communityQuery= query(collection(firestore, "communities", realSlug, "members"));
             membersSnapshot = await getDocs(communityQuery);
             if(membersSnapshot){
                 members = membersSnapshot.docs.map(d => d.id);
-
                 const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
                 const newMembersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
                 if(newMembersInfo){
@@ -93,6 +95,24 @@ export default function Members(props: Props) {
         }
         getMember();
     }, [membersSnapshot]);
+    const isMember =Array.isArray(members)?members.includes(uid):false;
+
+    const[requestInfo, setRequestInfo] = useState<any>();
+    let requestSnapshot;
+    let requests;
+    useEffect (() => {
+        const getRequest = async () => {
+            const requestQuery= query(collection(firestore, "communities", realSlug, "requests"));
+            requestSnapshot = await getDocs(requestQuery);
+            if( requestSnapshot){
+                requests = requestSnapshot.docs.map(memberToJSON);
+                setRequestInfo(requests);
+            }
+          }
+          getRequest();
+    }, [requestSnapshot]);
+
+
         
 
     return(
@@ -109,6 +129,13 @@ export default function Members(props: Props) {
               <button type="button" className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add Member</button>
               </Link>
               )}
+              {(!isMember) && (!admin) && (
+                  <Link href={`/${username}/community/${realSlug}/join`}>
+                  <button type="button" className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Join Community</button>
+                  </Link>
+
+              )}
+              
             </div>
           </div>
           <div className="mt-8 flex flex-col">
@@ -127,11 +154,34 @@ export default function Members(props: Props) {
                         </th>
                       </tr>
                     </thead>
-       <MemberFeed members={membersInfo} slug={realSlug}/>
+       <MemberFeed members={membersInfo} slug={realSlug} admin={admin}/>
        </table>
                 </div>
               </div>
             </div>
+            <div className="mt-8 sm:flex-auto">
+              <h1 className="text-xl font-semibold text-gray-900">Pending Members Application</h1>
+              <p className="mt-2 text-sm text-gray-700">A list of people who wants to join the community.</p>
+            </div>
+            <table className="mt-8 min-w-full divide-y divide-gray-300">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
+                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Reference</th>
+                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Reason</th>
+                        {/* <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Added By</th> */}
+                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                          <span className="sr-only">Approve</span>
+                        </th>
+                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                          <span className="sr-only">Decline</span>
+                        </th>
+                      </tr>
+                    </thead>
+        {requestInfo && 
+       <RequestFeed requests={requestInfo} slug={realSlug} admin={admin}/>
+        }
+       </table>
           </div>
         </div>
         </>

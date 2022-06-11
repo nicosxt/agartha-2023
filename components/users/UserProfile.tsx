@@ -75,10 +75,6 @@ export default function UserProfilePage(props: Props): any {
                     </div>
                     
                 </main>   
-                {/* <h1 className="text-2xl text-center font-semibold text-gray-900">Your Community Post Feed</h1>
-
-<div className="mt-6 flex-shrink-0 flex border-t border-gray-200 p-4"/> */}
-                {/* <PostFeed/> */}
         </div>
 
 
