@@ -79,7 +79,7 @@ export default function Community(props:any) {
     const realUsername:string = username!;
 
     // console.log(fetchedMembers);
-    console.log("check", community.slug)
+    // console.log("check", community.slug)
     const slug = community.slug;
     const [membersInfo, setMembersInfo] = useState<any>();
     let membersSnapshot;
