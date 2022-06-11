@@ -1,4 +1,3 @@
-import styles from '../../style/Admin.module.css';
 import AuthCheck from "../../components/misc/authcheck";
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -36,7 +35,7 @@ function PostManager() {
   const [post] = useDocumentData(postRef);
 
   return (
-    <main className={styles.container}>
+    <main >
       {post && (
         <>
           <section>
