@@ -52,7 +52,7 @@ export default function Home(props:Props): any {
       </Head>
       <div className="relative bg-white overflow-hidden">
 
-        <div className="max-w-7xl mx-auto pt-16">
+        <div className="max-w-7xl mx-auto pt-8">
           <div className="relative z-10 pt-8 pb-8 bg-white sm:pb-8 md:pb-8 lg:max-w-2xl lg:w-full lg:pb-8 xl:pb-8">
             <svg className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="50,0 100,0 50,100 0,100" /></svg>
 
