@@ -13,6 +13,7 @@ import {
   MenuIcon,
   UsersIcon,
   XIcon,
+  AcademicCapIcon
 } from '@heroicons/react/outline'
 
 
@@ -57,6 +58,8 @@ export default function Dashboard(props: Props): any {
             //   { name: 'Settings', href: '#' },
             ],
           },
+          { name: 'Wiki', href:"https://yingru-qiu.gitbook.io/space-exchange/", icon: AcademicCapIcon, current: false },
+
     ])
       
 //  <Link href={'/'}>

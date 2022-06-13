@@ -21,6 +21,8 @@ export default function UserProfilePage(props: Props): any {
            
 
                         <img className="h-16 w-16 rounded-full btn" src={user.avatarUrl? user.avatarUrl : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" }alt=""/>
+                        <p className="mt-4 text-sm font-medium text-gray-500">@{user.username}</p>
+
                         <div className='mt-8'>
 
                         <p className="text-sm font-medium text-gray-500">{user.intro}</p>
