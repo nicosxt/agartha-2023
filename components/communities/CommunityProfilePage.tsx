@@ -82,17 +82,17 @@ export default function CommunityProfilePage(props : any) {
                                 </a>
                             </li>
                             <li className="flex items-center space-x-1">
-                                <a href="#" className="text-sm font-medium text-gray-500">
+                                <a href={community.twitter} className="text-sm font-medium text-gray-500">
                                 <img src="https://img.icons8.com/ios-glyphs/30/000000/twitter--v1.png"/>{community.twitter? "twi" : 'N/A'}
                                 </a>
                             </li>
                             <li className="flex items-center space-x-1">
-                                <a href="#" className="text-sm font-medium text-gray-500">
+                                <a href={community.website} className="text-sm font-medium text-gray-500">
                                 <img src="https://img.icons8.com/material-outlined/30/000000/globe--v3.png"/>{community.website? "web" : 'N/A'}
                                 </a>
                             </li>
                             <li className="flex items-center space-x-1">
-                                <a href="#" className="text-sm font-medium text-gray-500">
+                                <a href={community.discord}  className="text-sm font-medium text-gray-500">
                                 <img src="https://img.icons8.com/ios-glyphs/30/000000/discord-logo.png"/>{community.discord || 'N/A'}
                                 </a>
                             </li>

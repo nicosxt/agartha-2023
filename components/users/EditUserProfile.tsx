@@ -9,7 +9,7 @@ import { firestore } from '../../lib/firebaseConfig/init'
 import { useRouter } from 'next/router';
 import AvatarUploader from './AvatarUploader';
 
-export default function EditUserProfile(props : any) {
+export default function Edit(props : any) {
     const {userRef, defaultValues, username} =props;
     const router = useRouter();
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });

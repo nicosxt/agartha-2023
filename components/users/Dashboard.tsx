@@ -5,15 +5,14 @@ import { useAuth,signOut } from '../../lib/authContext'
 import { Disclosure } from '@headlessui/react'
 
 import {
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
+  LightBulbIcon,
   HomeIcon,
-  InboxIcon,
+  UserIcon,  
   MenuIcon,
-  UsersIcon,
   XIcon,
-  AcademicCapIcon
+  AcademicCapIcon,
+  SwitchHorizontalIcon,
+  UserGroupIcon
 } from '@heroicons/react/outline'
 
 
@@ -31,7 +30,7 @@ export default function Dashboard(props: Props): any {
     const { user, username} = props;
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [navigation, setNavigation] = useState([
-        { name: 'Profile', href:  `/${username}`, icon: HomeIcon, current: false },
+        { name: 'Profile', href:  `/${username}`, icon: UserIcon, current: false },
         // { name: 'Exchange', href:  `/${username}/exchange`, icon: InboxIcon, current: false },
         // { name: 'Exchange', href:  `/${username}/community/manage`, icon: UsersIcon, current: false },
         // { name: 'Community', href: '/community', icon: FolderIcon, current: false },
@@ -40,7 +39,7 @@ export default function Dashboard(props: Props): any {
         // { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
         {
           name: 'Exchange',
-          icon: InboxIcon,
+          icon: SwitchHorizontalIcon,
           current: false,
           children: [
             { name: 'Manage Your Exchange', href: `/${username}/exchange` },// manage communities in the same page?        
@@ -49,7 +48,7 @@ export default function Dashboard(props: Props): any {
         },
         {
             name: 'Community',
-            icon: UsersIcon,
+            icon: UserGroupIcon,
             current: false,
             children: [
               { name: 'My Communities', href: `/${username}/community` },// manage communities in the same page?        
@@ -59,6 +58,8 @@ export default function Dashboard(props: Props): any {
             ],
           },
           { name: 'Wiki', href:"https://yingru-qiu.gitbook.io/space-exchange/", icon: AcademicCapIcon, current: false },
+          // { name: 'Plugin', href:"https://yingru-qiu.gitbook.io/space-exchange/", icon: LightBulbIcon, current: false },
+
 
     ])
       

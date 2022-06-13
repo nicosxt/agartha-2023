@@ -133,6 +133,6 @@ function DeleteRequestButton(props:any):any {
   }
   return(
   <button type="button" className="text-red-600 hover:text-red-900" 
-        onClick={deletePost}>Delete</button>
+        onClick={deletePost}>Decline</button>
   );
 }
