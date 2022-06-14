@@ -41,7 +41,7 @@ function MemberTable(props: PostProps) {
 
     return (
       <>
-      <MemberItem member={member} admin={memberAdmin} slug={slug} userDoc={userCommunityDoc}/>
+      <MemberItem member={member} admin={admin} memberAdmin={memberAdmin} slug={slug} userDoc={userCommunityDoc}/>
     </>
     );
 
@@ -53,6 +53,7 @@ interface MemberProps{
   admin: boolean
   userDoc: any
   slug: string 
+  memberAdmin: boolean
 }
 function MemberItem(props: MemberProps) {
   const member = props.member;
@@ -60,6 +61,7 @@ function MemberItem(props: MemberProps) {
   const userDoc = props.userDoc;
   const slug = props.slug;
   const username = useAuth();
+  const memberAdmin = props.memberAdmin;
 
   return (
     
@@ -86,7 +88,7 @@ function MemberItem(props: MemberProps) {
               <div className="text-gray-900">{userDoc?.titles}</div>
               <div className="text-gray-500">{userDoc?.responsibilities}</div>
             </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{admin? "Admin" : 'Member'}</td>
+            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{memberAdmin? "Admin" : 'Member'}</td>
 
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
               <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">{userDoc.addBy}</span>

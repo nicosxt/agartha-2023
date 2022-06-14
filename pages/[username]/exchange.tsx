@@ -89,9 +89,9 @@ export default function ExchangePage(props: User): any {
 
                    >
                          <span className="w-full relative px-5 py-2.5 transition-all ease-in duration-75 dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              + Create a new Exchange
+              + Create a New Exchange
               </span>
-    </button>
+    </button>   
     </Link>
      <PostFeed posts={posts} admin={true} />
         <div className="mt-8 min-h-full">

@@ -1,7 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { updateDoc, serverTimestamp } from "firebase/firestore";
-import toast from 'react-hot-toast';
-import ReactMarkdown from 'react-markdown';
 import React from 'react'
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
@@ -73,7 +71,6 @@ export default function ExchangeForm(props : any) {
         },
         { merge: true })
 
-        toast.success('Post created!')
 
         // Imperative navigation after doc is set
         router.push(`/${username}/${slug}`);

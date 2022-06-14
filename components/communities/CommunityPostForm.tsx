@@ -1,5 +1,3 @@
-import toast from 'react-hot-toast';
-import ReactMarkdown from 'react-markdown';
 import React from 'react'
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
