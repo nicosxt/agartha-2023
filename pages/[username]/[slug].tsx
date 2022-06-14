@@ -69,16 +69,6 @@ export default function Post(props:any) {
     return (
         <main>
             <DisplayForm post={post} postRef={postRef}/>
-             {/* <section>
-                <PostContent post={post} />
-            </section>
-
-            <aside className="card">
-                <p>
-                <strong>{post.heartCount || 0} 🤍</strong>
-                </p>
-
-            </aside> */}
 
         </main>
     );

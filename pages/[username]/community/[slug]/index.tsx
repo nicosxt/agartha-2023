@@ -43,7 +43,7 @@ export async function getStaticProps(context:any) {
 
     return {
       props: { community, path, posts, username, fetchedMembers},
-      revalidate: 5000,
+      revalidate: 5,
     };
   }
 
@@ -104,8 +104,6 @@ export default function Community(props:any) {
     const getMorePosts = async () => {
         setLoading(true);
         const last = posts[posts.length - 1];
-        // console.log(last)
-        // console.log('++++++')
     
         const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
         // console.log("cursor", cursor)
