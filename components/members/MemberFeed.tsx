@@ -27,7 +27,7 @@ function MemberTable(props: PostProps) {
     const userCommunityRef = doc(firestore, "users", member.uid, "communities", slug);
     const admin = props.admin;
     const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
-    // let admin = false;
+    let memberAdmin = false;
     // find community where slug equals slug
     // then assign the value of admin in that set to the variable
     useEffect(() => {
@@ -37,11 +37,11 @@ function MemberTable(props: PostProps) {
         }
         getData()
     }, [])
-    // admin = userCommunityDoc?.admin;
+    memberAdmin = userCommunityDoc?.admin;
 
     return (
       <>
-      <MemberItem member={member} admin={admin} slug={slug} userDoc={userCommunityDoc}/>
+      <MemberItem member={member} admin={memberAdmin} slug={slug} userDoc={userCommunityDoc}/>
     </>
     );
 

@@ -71,6 +71,7 @@ export default function Members(props: Props) {
                 setUserCommunityDoc(newUserCommunityDoc);
                 const realAdmin = newUserCommunityDoc.admin;
                 setAdmin(realAdmin);
+                console.log("admin is ", realAdmin);
       
             }
         }

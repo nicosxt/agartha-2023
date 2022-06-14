@@ -58,7 +58,7 @@ export default function Dashboard(props: Props): any {
             ],
           },
           { name: 'Wiki', href:"https://yingru-qiu.gitbook.io/space-exchange/", icon: AcademicCapIcon, current: false },
-          // { name: 'Plugin', href:"https://yingru-qiu.gitbook.io/space-exchange/", icon: LightBulbIcon, current: false },
+          { name: 'Plugin', href:"https://yingru-qiu.gitbook.io/space-exchange/", icon: LightBulbIcon, current: false },
 
 
     ])
