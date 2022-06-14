@@ -36,7 +36,7 @@ function PostItem(props: PostProps) : any {
                         <div className="truncate">
                         <div className="flex text-sm">
                             {/* <a> */}
-                            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</p>
+                            <p className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{post.title}</p>
                             {/* </a> */}
                         </div>
               
