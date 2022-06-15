@@ -50,7 +50,6 @@ export async function getStaticProps(context:any) {
 export async function getStaticPaths() {
     // Improve my using Admin SDK to select empty docs
     const snapshot = await getDocs(collection(firestore, 'communities'));
-
     const paths = snapshot.docs.map((doc) => {
         const { slug } = doc.data();
         const username = "123";
@@ -81,14 +80,14 @@ export default function Community(props:any) {
     // console.log("check", community.slug)
     const slug = community.slug;
     const [membersInfo, setMembersInfo] = useState<any>();
-    const membersSnapshot:any = useRef(null);
+    let membersSnapshot;
     let members;
     useEffect (() => {
         const getMember = async () => {
             const communityQuery= query(collection(firestore, "communities", slug, "members"));
-            membersSnapshot.current = await getDocs(communityQuery);
+            membersSnapshot = await getDocs(communityQuery);
             if(membersSnapshot){
-                members = membersSnapshot.docs.map((d:any) => d.id);
+                members = membersSnapshot.docs.map(d => d.id);
 
                 const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
                 const newMembersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
