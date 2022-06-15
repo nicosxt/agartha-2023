@@ -46,20 +46,8 @@ interface Props {
 export default function CommunityHome(props:Props) {
 const { username } = props;
   const [communities, setCommunities] = useState(props.communities);
-  const [adminCommunities, setAdminCommunities] = useState<any>(props.adminCommunities);
-
   const [loading, setLoading] = useState(false);
-  const [adminLoading, setAdminLoading] = useState(false);
   const [communityEnd, setCommunitiesEnd] = useState(false);
-  const [adminCommunityEnd, setAdminCommunityEnd] = useState(false);
-
-  let check;
-
-
-  const {uid} = useContext(authContext);
-
-
-
   const getMoreCommunities = async () => {
     setLoading(true);
     const last= communities[communities.length-1]; // how to set pointer pointing to the name after the one before in alphabetic
@@ -91,7 +79,6 @@ const { username } = props;
 
      
 <div className="mt-8 min-h-full">
-
               {!loading && !communityEnd && 
               <button 
               className="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"

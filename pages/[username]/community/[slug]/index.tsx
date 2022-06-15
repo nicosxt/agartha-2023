@@ -15,7 +15,6 @@ const LIMIT = 10;
 export async function getStaticProps(context:any) {
     const {params} = context;
     const {slug, username} = params; // grab the slug from the url parameters
-    // console.log("----", slug);
     const communityDoc = await getCommunityWithSlug(slug);
     let community;
     let path;
@@ -45,7 +44,6 @@ export async function getStaticProps(context:any) {
     }
 
     while(members.length){
-        members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
 
         const batch = members.splice(0, 10);
 
@@ -104,12 +102,8 @@ export default function Community(props:any) {
     const getMorePosts = async () => {
         setLoading(true);
         const last = posts[posts.length - 1];
-        // console.log(last)
-        // console.log('++++++')
-
 
         const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
-        // console.log("cursor", cursor)
         while(fetchedMembers.length){
             const batch = fetchedMembers.splice(0, 10);
             const postsQuery = query(
