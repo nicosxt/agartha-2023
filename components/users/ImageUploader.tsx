@@ -15,7 +15,10 @@ export default function ImageUploader(props: any) :any{
     const [downloadURL, setDownloadURL] = useState('');
     const uid:string = auth?.currentUser?.uid!;
     const {slug, username, defaultValues } = props;
-    const [images, setImages] = useState<Array<string>>(defaultValues?.images || []);
+    // const [images, setImages] = useState<Array<string>>(defaultValues?.images || []);
+    let images:any[]=[];
+    // console.log("heu")
+    
     // const [imageNames, setImageNames] = useState<Array<string>>([]);
 
     // console.log("slug2" +slug)
@@ -56,10 +59,12 @@ export default function ImageUploader(props: any) :any{
             setUploading(false);
             // console.log('File available at', downloadURL);
             images.push(downloadURL);
+            // console.log("images", images)
             setDoc(doc(firestore, "users", uid, "posts", slug), {
               username,
               slug,
               images,
+            
               // imageNames
             },
             { merge: true }

@@ -32,7 +32,6 @@ export default function ExchangeForm(props : any) {
     const [zipcode, setZipcode] = useState('');
     const [price, setPrice] = useState('');
     const [currency, setCurrency] = useState('');
-    const [images, setImages] = useState<Array<string>>([]);
 
     // Ensure slug is URL safe
     const {slug} = props;
@@ -40,12 +39,18 @@ export default function ExchangeForm(props : any) {
     // console.log(post)
     const auth = getAuth();
     const uid:string = auth?.currentUser?.uid!;
+    const ref = doc(firestore, "users", uid, "posts", slug);
+    // async () => {
+    //   await setDoc(ref, {
+    //     slug
+    //   },
+    //   { merge: true });
+    // }
 
-  
+  // console.log('1')
     const createPost = async (e:any) => {
         e.preventDefault();
         // console.log("slug1.5" + slug)
-        const ref = doc(firestore, "users", uid, "posts", slug);
         await setDoc(ref, {
             // Tip: give all fields a default value here
             title: city+', '+ state+', ' +country+ ', '+zipcode + ' | ' + movein + ' to ' + moveout ,
@@ -60,7 +65,6 @@ export default function ExchangeForm(props : any) {
             currency,
             slug,
             uid,
-            images,
             username,
             published: false,
             content,
@@ -106,26 +110,14 @@ export default function ExchangeForm(props : any) {
                 </div>
   
                 <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
-{/* 
-                    {preview && (
-                        <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                            <div className="px-6 py-4">
-                                <ReactMarkdown>{watch('content')}</ReactMarkdown>
-                            </div>
-                        </div>
-                    )} */}
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                       
                     <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Description 👀</label>
-                    {/* <p className="mt-1 max-w-2xl text-sm text-gray-500">Select up to 3 communities you belong to.</p> */}
-                    {/* <button className="mt-1 max-w-2xl text-sm text-gray-500" onClick={() => setPreview(!preview)}>{preview ? 'Edit' : 'Preview'}</button> */}
 
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
-                      {/* <textarea {...register("content")}  */}
                     <textarea
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        // {...register("content")}
                         id="about" name="about" rows={20} className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
                     <p className="mt-2 text-sm text-gray-500">Write a few sentences about what your room looks like, <br/> and why you want to rent your room.</p>
                     </div>
@@ -137,20 +129,14 @@ export default function ExchangeForm(props : any) {
                       <div className="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                         <div className="space-y-1 text-center">
                           <div className="space-y-1 text-center">
-                          {/* <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />`
-                          </svg> */}
+    
                           <div className="flex text-sm text-gray-600">
                             <ImageUploader slug={slug} username={username} />
                           </div>
                           {/* <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p> */}
                           {/* {defaultValues?.images} */}
                           <ImageUrlFeed  urls={post?.images}/>
-                          {/* {defaultValues?.images?.map((image:string)=> {
-                            <p>
-                              <a href={image}> {image} </a>
-                            </p>
-                         })} */}
+  
                         </div>
                       </div>
                     </div>
