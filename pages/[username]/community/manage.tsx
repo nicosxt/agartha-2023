@@ -113,7 +113,6 @@ export default function CommunityHome(props:Props) {
         <h1 className="text-2xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-br from-pink-500 to-purple-600">Manage Communities</h1>
         <p className="text-sm text-center font-medium text-gray-500">Communities that you have admin access to.</p>
         
-{/* <h1 className="text-2xl text-center font-semibold text-gray-900">Manage Communities</h1> */}
            <div className="mt-6 flex-shrink-0 flex border-t border-gray-200 p-4"/>
            <Link href='/communityAdmin'>
 
@@ -126,7 +125,6 @@ export default function CommunityHome(props:Props) {
               </span>
     </button>
     </Link>
-        {/* <ManageCommunity username={username} communities={adminCommunities} />  */}
         <CommunityFeed username={username} communities={adminCommunities}/>
 
         <div className="mt-8 min-h-full">

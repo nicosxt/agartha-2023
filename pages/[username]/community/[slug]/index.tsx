@@ -6,7 +6,7 @@ import CommunityProfilePage from '../../../../components/communities/CommunityPr
 import PostFeed from '../../../../components/users/PostFeed';
 import Link from 'next/dist/client/link';
 import MemberStack from '../../../../components/members/MemberStack';
-import { useState, useEffect, useContext} from 'react';
+import { useState, useEffect, useRef} from 'react';
 import { fromMillis } from '../../../../lib/firebaseConfig/init';
 import Loader from '../../../../components/misc/loader';
 
@@ -15,7 +15,6 @@ const LIMIT = 10;
 export async function getStaticProps(context:any) {
     const {params} = context;
     const {slug, username} = params; // grab the slug from the url parameters
-    // console.log("----", slug);
     const communityDoc = await getCommunityWithSlug(slug);
     let community;
     let path;
@@ -43,7 +42,7 @@ export async function getStaticProps(context:any) {
 
     return {
       props: { community, path, posts, username, fetchedMembers},
-      revalidate: 5,
+      revalidate: 5000,
     };
   }
 
@@ -82,14 +81,14 @@ export default function Community(props:any) {
     // console.log("check", community.slug)
     const slug = community.slug;
     const [membersInfo, setMembersInfo] = useState<any>();
-    let membersSnapshot;
+    const membersSnapshot:any = useRef(null);
     let members;
     useEffect (() => {
         const getMember = async () => {
             const communityQuery= query(collection(firestore, "communities", slug, "members"));
-            membersSnapshot = await getDocs(communityQuery);
+            membersSnapshot.current = await getDocs(communityQuery);
             if(membersSnapshot){
-                members = membersSnapshot.docs.map(d => d.id);
+                members = membersSnapshot.docs.map((d:any) => d.id);
 
                 const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
                 const newMembersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
@@ -174,8 +173,6 @@ export default function Community(props:any) {
                </button>
                 }
             </div>
-        {/* </div> */}
-        {/* </div> */}
         </main>
     );
 }

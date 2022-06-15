@@ -20,7 +20,8 @@ export async function getStaticProps(context:any) {
     let user = null;
     let slugs;
     let members:any[] = [];
-    let posts = null;
+    let temp :any[] = [];
+    let posts:any[] = [];
     let uid:any;
 
     if (userDoc) {
@@ -45,11 +46,19 @@ export async function getStaticProps(context:any) {
     }
     if(members.length > 0) {
         members = members.filter(item => item !== uid);
-        const postsQuery  = query(collectionGroup(firestore, "posts"), where("uid", "in", members), orderBy("createdAt", "desc"), limit(LIMIT));
-        posts = (await getDocs(postsQuery)).docs.map(postToJSON);
+        members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
+
+        temp = [...members];
+        while(members.length){
+            const batch = members.splice(0, 10);
+            const postsQuery  = query(collectionGroup(firestore, "posts"), where("uid", "in", [...batch]), orderBy("createdAt", "desc"), limit(LIMIT));
+            posts.push(...(await getDocs(postsQuery)).docs.map(postToJSON));
+        }
     }
-    
-    let fetchedMembers = members;
+    // members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
+
+    let fetchedMembers = temp;
+
 
 
     return {
@@ -88,8 +97,11 @@ export default function ExchangePage(props: User): any {
 
     const { user} = props;
     const [posts, setPosts] = useState(props.posts);
+    console.log(posts);
     const [loading, setLoading] = useState(false);
     let members=props.fetchedMembers;
+    // members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
+    console.log(members)
 
     const [postsEnd, setPostsEnd] = useState(false);
     let newPosts;
@@ -101,16 +113,17 @@ export default function ExchangePage(props: User): any {
         const uid = user.uid! 
         const communityQuery =  query(collection(firestore, "users", uid, "communities"));
         const communitySnapshot = await getDocs(communityQuery);
-
-        if(members.length > 0 ){
+        while(members.lenth){
+            const batch = members.splice(0, 10);
             const postsQuery = query(
             collectionGroup(firestore, "posts"),
-            where("uid", "in", members),
+            where("uid", "in", [...batch]),
             orderBy('createdAt', 'desc'),
             startAfter(cursor),
             limit(LIMIT))
             newPosts = (await getDocs(postsQuery)).docs.map(postToJSON);
             setPosts(posts.concat(newPosts));
+            
 
         }
     
