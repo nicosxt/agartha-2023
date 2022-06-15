@@ -5,6 +5,7 @@ import { getAuth, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll} from "firebase/storage";
 import { Item } from 'framer-motion/types/components/Reorder/Item';
 import { doc, getDoc, collection, addDoc, setDoc, getDocs, query, where, limit, orderBy} from 'firebase/firestore';
+import { updateDoc, serverTimestamp } from "firebase/firestore";
 
 
 // Uploads images to Firebase Storage
@@ -64,6 +65,10 @@ export default function ImageUploader(props: any) :any{
               username,
               slug,
               images,
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp(),
+
+
             
               // imageNames
             },
