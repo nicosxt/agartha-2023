@@ -109,7 +109,7 @@ export default function GetStarted() {
                   <br></br>
 
                   <p>
-                    In fact, this is webapp is designed for <b><a className="text-bold underline decoration-pink-500">established IRL (In Real Life) communities</a></b> (e.g. DAOs, Co-living Spaces, people who formed a community by living together in a desert place for 3 months etc.)
+                    In fact, this webapp is designed for <b><a className="text-bold underline decoration-pink-500">established IRL (In Real Life) communities</a></b> (e.g. DAOs, Co-living Spaces, people who formed a community by living together in a desert place for 3 months etc.)
                   </p>
                   <br
                   ></br>
