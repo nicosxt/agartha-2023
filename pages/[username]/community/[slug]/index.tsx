@@ -6,7 +6,7 @@ import CommunityProfilePage from '../../../../components/communities/CommunityPr
 import PostFeed from '../../../../components/users/PostFeed';
 import Link from 'next/dist/client/link';
 import MemberStack from '../../../../components/members/MemberStack';
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useContext} from 'react';
 import { fromMillis } from '../../../../lib/firebaseConfig/init';
 import Loader from '../../../../components/misc/loader';
 
@@ -15,6 +15,7 @@ const LIMIT = 10;
 export async function getStaticProps(context:any) {
     const {params} = context;
     const {slug, username} = params; // grab the slug from the url parameters
+    // console.log("----", slug);
     const communityDoc = await getCommunityWithSlug(slug);
     let community;
     let path;
@@ -42,7 +43,7 @@ export async function getStaticProps(context:any) {
 
     return {
       props: { community, path, posts, username, fetchedMembers},
-      revalidate: 0,
+      revalidate: 5000,
     };
   }
 
@@ -50,6 +51,7 @@ export async function getStaticProps(context:any) {
 export async function getStaticPaths() {
     // Improve my using Admin SDK to select empty docs
     const snapshot = await getDocs(collection(firestore, 'communities'));
+
     const paths = snapshot.docs.map((doc) => {
         const { slug } = doc.data();
         const username = "123";
@@ -76,15 +78,16 @@ export default function Community(props:any) {
     const cSlug:string = community.slug;
     const realUsername:string = username!;
 
-    console.log(fetchedMembers);
+    // console.log(fetchedMembers);
     // console.log("check", community.slug)
     const slug = community.slug;
     const [membersInfo, setMembersInfo] = useState<any>();
     let membersSnapshot;
+    let communityQuery;
     let members;
     useEffect (() => {
         const getMember = async () => {
-            const communityQuery= query(collection(firestore, "communities", slug, "members"));
+            communityQuery= query(collection(firestore, "communities", slug, "members"));
             membersSnapshot = await getDocs(communityQuery);
             if(membersSnapshot){
                 members = membersSnapshot.docs.map(d => d.id);
@@ -97,11 +100,13 @@ export default function Community(props:any) {
             }
         }
         getMember();
-    }, [membersSnapshot]);
+    }, [communityQuery]);
         
     const getMorePosts = async () => {
         setLoading(true);
         const last = posts[posts.length - 1];
+        // console.log(last)
+        // console.log('++++++')
     
         const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
         // console.log("cursor", cursor)
@@ -172,6 +177,8 @@ export default function Community(props:any) {
                </button>
                 }
             </div>
+        {/* </div> */}
+        {/* </div> */}
         </main>
     );
 }

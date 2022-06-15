@@ -16,7 +16,7 @@ export async function getStaticProps(context:any)  {
     const realSlug:string = Array.isArray(slug)?slug[0]:slug!;
     return{
         props: { realSlug},
-        revalidate: 5000,
+        revalidate: 5,
     };
 
 }
