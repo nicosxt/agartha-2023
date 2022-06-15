@@ -1,21 +1,10 @@
-import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
-import { useAuth } from '../../../lib/authContext'
 import { useContext, useState } from 'react';
-import AuthCheck from "../../../components/misc/authcheck";
-import { useCollection, useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { doc, getDoc, startAfter, collection, collectionGroup, addDoc, setDoc, getDocs, query, where, limit, orderBy} from 'firebase/firestore';
 import { firestore } from '../../../lib/firebaseConfig/init'
-import { authContext } from '../../../lib/authContext'
 import { getUserWithUsername, communityToJSON } from '../../../lib/firebaseConfig/init';
-import PostFeed from "../../../components/users/PostFeed";
-import { useEffect } from "react";
 import React from 'react'
 import CommunityFeed from "../../../components/communities/CommunityFeed";
-import ManageCommunity from "../../../components/communities/ManageCommunity";
-import ExploreCommunity from "../../../components/communities/ExploreCommunity";
 import Loader from '../../../components/misc/loader';
-import type { ReactElement } from 'react'
-import Layout from '../../../components/layout'
 const LIMIT = 5;
 
 export async function getServerSideProps(context:any){
