@@ -1,10 +1,5 @@
-import MemberFeed from "../../../../components/members/MemberFeed";
-import { useRouter } from "next/router";
 import { doc, getDoc, query, collection, where, getDocs } from "firebase/firestore";
 import { firestore, storage, memberToJSON } from '../../../../lib/firebaseConfig/init';
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { communityToJSON } from "../../../../lib/firebaseConfig/init";
-import AddMemberForm from "../../../../components/members/AddMemberForm";
 import JoinCommunityForm from "../../../../components/members/JoinCommunityForm";
 export async function getStaticProps(context:any)  {
     const {params} = context;
@@ -12,10 +7,16 @@ export async function getStaticProps(context:any)  {
     const realSlug:string = Array.isArray(slug)?slug[0]:slug!;
     const communityQuery= query(collection(firestore, "communities", slug, "members"));
     const membersSnapshot = await getDocs(communityQuery);
-    const members = membersSnapshot.docs.map(d => d.id);
-    const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-    const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
-    // console.log("slug" + realSlug)
+    let membersInfo:any[] = [];
+
+    let members = membersSnapshot.docs.map(d => d.id);
+
+    if (members.length) {
+        members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
+
+        const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
+        membersInfo.push(...(await getDocs(membersQuery)).docs.map(memberToJSON));
+    }
     return{
         props: {membersInfo, realSlug},
         revalidate: 5000,
@@ -47,7 +48,6 @@ interface Props {
 
 export default function JoinCommunity(props: Props) {
     const realSlug = props.realSlug;
-    const membersInfo = props.membersInfo;
     return(
         <>
        <JoinCommunityForm slug={realSlug}/>

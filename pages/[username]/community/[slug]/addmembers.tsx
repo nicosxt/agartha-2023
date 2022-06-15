@@ -13,8 +13,12 @@ export async function getStaticProps(context:any)  {
     const communityQuery= query(collection(firestore, "communities", slug, "members"));
     const membersSnapshot = await getDocs(communityQuery);
     const members = membersSnapshot.docs.map(d => d.id);
-    const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-    const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
+    let membersInfo:any[] = [];
+    while(members.length){
+        const batch = members.splice(0, 10);
+        const membersQuery = query(collection(firestore, "users"), where("uid", "in", [...batch]))
+        membersInfo.push(...(await getDocs(membersQuery)).docs.map(memberToJSON));
+    }
     // console.log("slug" + realSlug)
     return{
         props: {membersInfo, realSlug},

@@ -40,7 +40,6 @@ export async function getStaticProps(context:any) {
                 const membersSnapshot = (await getDocs(memberQuery));
                 const memberBatch =  membersSnapshot.docs.map(d=>d.id);
                 members.push(...memberBatch)             
-               
             }
         }  
     }
@@ -97,11 +96,11 @@ export default function ExchangePage(props: User): any {
 
     const { user} = props;
     const [posts, setPosts] = useState(props.posts);
-    console.log(posts);
+    // console.log(posts);
     const [loading, setLoading] = useState(false);
     let members=props.fetchedMembers;
     // members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
-    console.log(members)
+    // console.log(members)
 
     const [postsEnd, setPostsEnd] = useState(false);
     let newPosts;
@@ -111,8 +110,6 @@ export default function ExchangePage(props: User): any {
     
         const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
         const uid = user.uid! 
-        const communityQuery =  query(collection(firestore, "users", uid, "communities"));
-        const communitySnapshot = await getDocs(communityQuery);
         while(members.lenth){
             const batch = members.splice(0, 10);
             const postsQuery = query(

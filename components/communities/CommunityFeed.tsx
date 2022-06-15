@@ -33,15 +33,22 @@ function Community(props: PostProps) : any {
     const [membersInfo, setMembersInfo] = useState<any>();
     let membersSnapshot;
     let members;
+    let temp :any[] = [];
+    let newMembersInfo:any[] = [];
+
     useEffect (() => {
         const getMember = async () => {
             const communityQuery= query(collection(firestore, "communities", slug, "members"));
             membersSnapshot = await getDocs(communityQuery);
             if(membersSnapshot){
                 members = membersSnapshot.docs.map(d => d.id);
-
-                const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-                const newMembersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
+                members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
+                temp = [...members];
+                while(members.length){
+                    const batch = members.splice(0, 10);
+                    const membersQuery = query(collection(firestore, "users"), where("uid", "in", [...batch]))
+                    newMembersInfo.push(...(await getDocs(membersQuery)).docs.map(memberToJSON));
+                }
                 if(newMembersInfo){
                     setMembersInfo(newMembersInfo);
                 }

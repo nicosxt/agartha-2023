@@ -19,7 +19,12 @@ export async function getStaticProps(context:any) {
     const communityDoc = await getCommunityWithSlug(slug);
     let community;
     let path;
-    let members;
+    let members:any[] = [];
+    let temp :any[] = [];
+    let posts:any[] = [];
+    let membersInfo:any[] = [];
+
+    let communityQuery;
 
     if (!communityDoc) {
         return {
@@ -29,21 +34,37 @@ export async function getStaticProps(context:any) {
 
     if (communityDoc) {
         const communityRef = doc(firestore, "communities", slug);
-        const communityQuery= query(collection(firestore, "communities", slug, "members"));
+        communityQuery= query(collection(firestore, "communities", slug, "members"));
         const membersSnapshot = await getDocs(communityQuery);
         members = membersSnapshot.docs.map(d => d.id);
+        members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
+        temp = [...members];
+
         community = communityToJSON(await getDoc(communityRef));
         path = communityRef.path;
     }
 
-    const postsQuery  = query(collectionGroup(firestore, "posts"), where("uid", "in", members), orderBy("createdAt", "desc"), limit(LIMIT));
-    const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
-    const fetchedMembers = members;
+    while(members.length){
+        members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
+
+        const batch = members.splice(0, 10);
+
+        //postQuery
+        const postsQuery  = query(collectionGroup(firestore, "posts"), where("uid", "in", [...batch]), orderBy("createdAt", "desc"), limit(LIMIT));
+        posts.push(...(await getDocs(postsQuery)).docs.map(postToJSON));
+
+        //memberInfoQuery
+        const membersQuery = query(collection(firestore, "users"), where("uid", "in", [...batch]));
+        membersInfo.push(...(await getDocs(membersQuery)).docs.map(memberToJSON));
+
+    }
+    const fetchedMembers = temp;
+
 
 
     return {
-      props: { community, path, posts, username, fetchedMembers},
-      revalidate: 5000,
+      props: { community, path, posts, username, fetchedMembers, membersInfo},
+      revalidate: 0,
     };
   }
 
@@ -69,7 +90,8 @@ export async function getStaticPaths() {
 export default function Community(props:any) {
     const username = props.username;
     const communityRef = doc(firestore, props.path);
-    const fetchedMembers = props.fetchedMembers;
+    let fetchedMembers = props.fetchedMembers;
+    const membersInfo = props.membersInfo;
     const [realtimeCommunity] = useDocumentData(communityRef);
     const community = realtimeCommunity || props.community;
     const [posts, setPosts] = useState(props.posts);
@@ -77,54 +99,34 @@ export default function Community(props:any) {
     const [postsEnd, setPostsEnd] = useState(false);
     const cSlug:string = community.slug;
     const realUsername:string = username!;
+    let temp = [...fetchedMembers];
 
-    // console.log(fetchedMembers);
-    // console.log("check", community.slug)
-    const slug = community.slug;
-    const [membersInfo, setMembersInfo] = useState<any>();
-    let membersSnapshot;
-    let communityQuery;
-    let members;
-    useEffect (() => {
-        const getMember = async () => {
-            communityQuery= query(collection(firestore, "communities", slug, "members"));
-            membersSnapshot = await getDocs(communityQuery);
-            if(membersSnapshot){
-                members = membersSnapshot.docs.map(d => d.id);
-
-                const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-                const newMembersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
-                if(newMembersInfo){
-                    setMembersInfo(newMembersInfo);
-                }
-            }
-        }
-        getMember();
-    }, [communityQuery]);
-        
     const getMorePosts = async () => {
         setLoading(true);
         const last = posts[posts.length - 1];
         // console.log(last)
         // console.log('++++++')
-    
+
+
         const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
         // console.log("cursor", cursor)
-        const postsQuery = query(
-            collectionGroup(firestore, "posts"), 
-            where("uid", "in", fetchedMembers), 
-            orderBy("createdAt", "desc"), 
-            startAfter(cursor),
-            limit(LIMIT));
-    
-        const newPosts = (await getDocs(postsQuery)).docs.map((doc) => doc.data());
-        // console.log(newPosts);
-        setPosts(posts.concat(newPosts));
-        setLoading(false);
-    
-        if (newPosts.length < LIMIT) {
-          setPostsEnd(true);
+        while(fetchedMembers.length){
+            const batch = fetchedMembers.splice(0, 10);
+            const postsQuery = query(
+                collectionGroup(firestore, "posts"), 
+                where("uid", "in", [...batch]), 
+                orderBy("createdAt", "desc"), 
+                startAfter(cursor),
+                limit(LIMIT));
+
+            const newPosts=(await getDocs(postsQuery)).docs.map((doc) => doc.data());
+            setPosts(posts.concat(newPosts));
+            setLoading(false);
+            if (newPosts.length < LIMIT) {
+                setPostsEnd(true);
+              }
         }
+        fetchedMembers = temp;
       };
 
     return (
@@ -177,8 +179,6 @@ export default function Community(props:any) {
                </button>
                 }
             </div>
-        {/* </div> */}
-        {/* </div> */}
         </main>
     );
 }

@@ -81,14 +81,22 @@ export default function Members(props: Props) {
     const [membersInfo, setMembersInfo] = useState<any>();
     let membersSnapshot;
     let members : any[]=[];
+    let newMembersInfo : any[]=[];
+    // let temp : any[]=[];
+
     useEffect (() => {
         const getMember = async () => {
             const communityQuery= query(collection(firestore, "communities", realSlug, "members"));
             membersSnapshot = await getDocs(communityQuery);
             if(membersSnapshot){
                 members = membersSnapshot.docs.map(d => d.id);
-                const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-                const newMembersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
+                // temp = [...members];
+                while(members.length){
+                  const batch = members.splice(0,10);
+                  const membersQuery = query(collection(firestore, "users"), where("uid", "in", [...batch]));
+                  newMembersInfo.push(...(await getDocs(membersQuery)).docs.map(memberToJSON));
+                }
+                // console.log("h",membersInfo)
                 if(newMembersInfo){
                     setMembersInfo(newMembersInfo);
                 }
@@ -96,8 +104,8 @@ export default function Members(props: Props) {
         }
         getMember();
     }, [membersSnapshot]);
-    const isMember =Array.isArray(members)?members.includes(uid):false;
 
+    const isMember =Array.isArray(members)?members.includes(uid):false;
     const[requestInfo, setRequestInfo] = useState<any>();
     let requestSnapshot;
     let requests;

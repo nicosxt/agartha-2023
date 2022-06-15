@@ -11,12 +11,7 @@ export async function getStaticProps(context:any)  {
     const realSlug:string = Array.isArray(slug)?slug[0]:slug!;
     const realUid:string = Array.isArray(uid)?uid[0]:uid!;
 
-    // const communityQuery= query(collection(firestore, "communities", slug, "members"));
-    // const membersSnapshot = await getDocs(communityQuery);
-    // const members = membersSnapshot.docs.map(d => d.id);
-    // const membersQuery = query(collection(firestore, "users"), where("uid", "in", members))
-    // const membersInfo = (await getDocs(membersQuery)).docs.map(memberToJSON);
-    // console.log("slug" + realSlug)
+
     return{
         props: { realSlug, realUid},
         revalidate: 5000,
