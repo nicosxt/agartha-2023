@@ -24,7 +24,7 @@ export async function getStaticProps(context:any) {
 
     return {
         props: {member, slug, path},
-        revalidate: 5000,
+        revalidate: 5,
     };
 }
 

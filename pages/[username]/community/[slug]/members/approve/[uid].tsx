@@ -14,7 +14,7 @@ export async function getStaticProps(context:any)  {
 
     return{
         props: { realSlug, realUid},
-        revalidate: 5000,
+        revalidate: 5,
     };
 
 }

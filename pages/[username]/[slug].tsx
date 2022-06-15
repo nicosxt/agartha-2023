@@ -32,7 +32,7 @@ export async function getStaticProps(context:any) {
   
     return {
       props: { post, path },
-      revalidate: 5000,
+      revalidate: 5,
     };
   }
 

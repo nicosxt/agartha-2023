@@ -22,7 +22,7 @@ export async function getStaticProps(context:any)  {
     // console.log("slug" + realSlug)
     return{
         props: {membersInfo, realSlug},
-        revalidate: 5000,
+        revalidate: 5,
     };
 
 }
