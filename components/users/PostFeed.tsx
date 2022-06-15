@@ -30,7 +30,7 @@ function PostItem(props: PostProps) : any {
                 <li>
                 <Link href={`/${post.username}/${post.slug}`}>
 
-                <a >
+                {/* <a > */}
                     <div className="px-4 py-4 flex items-center sm:px-6">
                     <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                         <div className="truncate">
@@ -64,7 +64,7 @@ function PostItem(props: PostProps) : any {
                         </svg>
                     </div>
                     </div>
-                </a>
+                {/* </a> */}
                 </Link>
 
             </li>
