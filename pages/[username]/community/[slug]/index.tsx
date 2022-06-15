@@ -42,7 +42,7 @@ export async function getStaticProps(context:any) {
 
     return {
       props: { community, path, posts, username, fetchedMembers},
-      revalidate: 5000,
+      revalidate: 0,
     };
   }
 
