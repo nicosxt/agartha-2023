@@ -5,7 +5,6 @@ import { firestore } from '../../lib/firebaseConfig/init' ;
 import { fromMillis } from '../../lib/firebaseConfig/init';
 import Loader from '../../components/misc/loader';
 import {useState, useEffect} from 'react';
-import Link from 'next/link';
 const LIMIT = 5;
 export async function getStaticProps(context:any) {
     const {params} = context;
@@ -54,7 +53,6 @@ export async function getStaticProps(context:any) {
             posts.push(...(await getDocs(postsQuery)).docs.map(postToJSON));
         }
     }
-    // members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
 
     let fetchedMembers = temp;
 
@@ -94,43 +92,37 @@ interface User {
 
 export default function ExchangePage(props: User): any {
 
-    const { user} = props;
     const [posts, setPosts] = useState(props.posts);
-    // console.log(posts);
     const [loading, setLoading] = useState(false);
-    let members=props.fetchedMembers;
-    // members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
-    // console.log(members)
-
+    let fetchedMembers = props.fetchedMembers;
     const [postsEnd, setPostsEnd] = useState(false);
-    let newPosts;
+    let temp = [...fetchedMembers];
+
     const getMorePosts = async () => {
         setLoading(true);
         const last = posts[posts.length - 1];
-    
-        const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
-        const uid = user.uid! 
-        while(members.lenth){
-            const batch = members.splice(0, 10);
-            const postsQuery = query(
-            collectionGroup(firestore, "posts"),
-            where("uid", "in", [...batch]),
-            orderBy('createdAt', 'desc'),
-            startAfter(cursor),
-            limit(LIMIT))
-            newPosts = (await getDocs(postsQuery)).docs.map(postToJSON);
-            setPosts(posts.concat(newPosts));
-            
 
+        const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
+        while(fetchedMembers.length){
+            const batch = fetchedMembers.splice(0, 10);
+            const postsQuery = query(
+                collectionGroup(firestore, "posts"), 
+                where("uid", "in", [...batch]), 
+                orderBy("createdAt", "desc"), 
+                startAfter(cursor),
+                limit(LIMIT));
+
+            const newPosts=(await getDocs(postsQuery)).docs.map(postToJSON);
+            setPosts(posts.concat(newPosts));
+            setLoading(false);
+            
+            if (newPosts.length < LIMIT) {
+                setPostsEnd(true);
+              }
         }
-    
-    
-        setLoading(false);
-    
-        if (newPosts.length < LIMIT) {
-          setPostsEnd(true);
-        }
+        fetchedMembers = temp;
       };
+
 
     return (
     <>
@@ -144,7 +136,7 @@ export default function ExchangePage(props: User): any {
      <PostFeed posts={posts} admin={true} />
      
         <div className="mt-8 min-h-full">
-                {posts && !loading && !postsEnd && posts.length > 0 && 
+                {!loading && !postsEnd && posts.length > 0 && 
                 <button 
                     className=" w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
 
@@ -156,7 +148,7 @@ export default function ExchangePage(props: User): any {
 
                 <Loader show={loading} />
 
-                {posts && (postsEnd || posts.length === 0) && 
+                {(postsEnd || posts.length === 0) && 
               <button className=" w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span className=" w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
               You have reached the end!

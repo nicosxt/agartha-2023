@@ -89,9 +89,10 @@ export default function Community(props:any) {
                 startAfter(cursor),
                 limit(LIMIT));
 
-            const newPosts=(await getDocs(postsQuery)).docs.map((doc) => doc.data());
+            const newPosts=(await getDocs(postsQuery)).docs.map(postToJSON);
             setPosts(posts.concat(newPosts));
             setLoading(false);
+            
             if (newPosts.length < LIMIT) {
                 setPostsEnd(true);
               }
