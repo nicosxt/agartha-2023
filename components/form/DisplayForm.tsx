@@ -45,7 +45,7 @@ export default function DisplayForm(props : any) {
                 <h3 className="text-lg leading-6 font-medium text-gray-900">{post?.title}</h3>
 
                
-                <div className="mt-8 flex items-center flex-shrink-0 px-4">
+                <div className="mt-8 flex items-center px-4">
                 <Link href={`/${post.username}/`}>
                 <a>
                 <img className="h-16 w-16 rounded-full btn" src={postUser.avatarUrl? postUser.avatarUrl : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" }alt=""/>
@@ -59,9 +59,7 @@ export default function DisplayForm(props : any) {
     <a className="text-info"><strong>@{post.username}</strong></a>
 </Link>{' '}
 on {createdAt.toISOString()}</p>
-<div className="flex items-center flex-shrink-0 px-4">
 
-                    </div>
                     </div>
 
             </div>
