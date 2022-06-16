@@ -41,17 +41,19 @@ export default function DisplayForm(props : any) {
     return(
         <>
             <div className="py-10 space-y-8 divide-y divide-gray-200 md:space-x-5 lg:max-w-7xl lg:px-8 md:items-center md:justify-between max-w-3xl mx-auto px-4 sm:px-6 ">
-            <div className="px-4 py-5 sm:px-6">
+            {/* <div className="px-4 py-5 sm:px-6"> */}
+            <div className="mt-8 grid place-items-center" >
+
                 <h3 className="text-lg leading-6 font-medium text-gray-900">{post?.title}</h3>
 
                
-                <div className="grid place-items-center" >
+                <div className="mt-8 grid place-items-center" >
                 <Link href={`/${post.username}/`}>
                 <a>
                 <img className="h-16 w-16 rounded-full btn" src={postUser.avatarUrl? postUser.avatarUrl : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" }alt=""/>
                 </a>
                 </Link>
-                <div className="ml-3">
+                <div className="mt-4">
                 <p className="mt-1 max-w-2xl text-sm text-gray-500">by{' '}
 
 <Link href={`/${post.username}/`}>
