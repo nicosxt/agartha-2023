@@ -21,6 +21,7 @@ export default function EditMemberForm(props : any) {
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
 
     const memberRef = doc(firestore, "communities", slug, "members", defaultValues.uid);
+    const anotherMemberRef = doc(firestore, "users", defaultValues.uid, "communities", slug);
     const communityRef = doc(firestore, "users", defaultValues.uid, "communities", slug);
     const updateMember= async (data:any) => {
         const { admin, titles, responsibilities} = data;
@@ -142,7 +143,7 @@ export default function EditMemberForm(props : any) {
               <button type="button" className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
               </Link>
               <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update Member Info</button>
-              <DeleteMemberButton memberRef={memberRef} slug={slug}/>
+              <DeleteMemberButton memberRef={memberRef} memberRef2={anotherMemberRef} slug={slug}/>
             </div>
           </div>
         </form>
@@ -151,7 +152,7 @@ export default function EditMemberForm(props : any) {
 }
 
 function DeleteMemberButton(props:any):any {
-  const {memberRef, slug} = props;
+  const {memberRef, memberRef2, slug} = props;
   const router = useRouter();
   const {username} = useAuth();
   const deleteMember = async () => {
@@ -160,6 +161,8 @@ function DeleteMemberButton(props:any):any {
       router.push(`/${username}/community/${slug}/members`);
 
       await deleteDoc(memberRef);
+      await deleteDoc(memberRef2);
+
     }
   }
   return(

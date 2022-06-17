@@ -3,8 +3,11 @@ import { useAuth } from '../lib/authContext'
 import React, { useEffect, useState, useCallback, useContext } from 'react';
 import SignInWithGoogle from "../components/button/googleLogin";
 import Link from 'next/link';
-
+import {Text} from '@chakra-ui/react';
+import { doc, getDoc, collection, addDoc, setDoc, getDocs} from 'firebase/firestore';
 import { useRouter } from "next/router";
+import { firestore } from '../lib/firebaseConfig/init';
+import debounce from 'lodash.debounce';
 
 
 export default function Home() {
@@ -17,7 +20,7 @@ export default function Home() {
 
   return (
     <main>
-      {user ?  <ProfilePage/> : <SignInButton />}
+      {user ? !username ? <UsernameForm /> : <ProfilePage/> : <SignInButton />}
     </main>        
   )
   
@@ -188,4 +191,109 @@ function ProfilePage() {
 
   </>
 
+}
+
+function UsernameForm() {
+  const [formValue, setFormValue] = useState(''); //user enter name 
+  const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const {username, user} = useAuth();
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+  const checkUsername = useCallback(
+    debounce(async (username) => {
+      if (username.length >= 3) {        
+        const docRef = doc(firestore, 'usernames', username);
+        const docSnap = await getDoc(docRef)
+        const exists = docSnap.exists();
+        // console.log('Firestore read executed!');
+        setIsValid(!exists);
+        setLoading(false);
+      }
+    }, 500),
+    []
+  );
+  const onChange = (e: React.ChangeEvent<any>) => {
+    // Force form value typed in form to match correct format
+    const val = e.target.value.toLowerCase();
+    const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+
+    // Only set form value if length is < 3 OR it passes regex
+    if (val.length < 3) {
+      setFormValue(val);
+      setLoading(false);
+      setIsValid(false);
+    }
+
+    if (re.test(val)) {
+      setFormValue(val);
+      setLoading(true);
+      setIsValid(false);
+    }
+  };
+
+  useEffect(() => {
+    checkUsername(formValue);
+  }, [formValue]);
+
+  const onSubmit = async (e: React.FormEvent<any>) => {
+    e.preventDefault();
+    await setDoc(doc(firestore, "usernames", formValue), {
+      uid: currentUser?.uid,
+    })    
+    await setDoc(doc(firestore, "users", currentUser!.uid), {
+      uid: currentUser?.uid,
+      email: currentUser?.email,
+      username: formValue
+    })  
+
+  };
+
+  return <>
+  <br></br>
+  <br></br>
+  <br></br>
+  {(
+    !username && (
+      <section>
+          <form onSubmit={onSubmit}>
+
+              <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pick Your Username</label>
+              <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              </div>
+              <input name="username" placeholder="Username (min. 3 characters)"  value={formValue} onChange={onChange} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+              </div>
+
+
+            <button type="submit" className="mt-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" disabled={!isValid}>Choose</button>
+              <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
+          </form>
+      </section>
+    )
+  )}</>;
+
+
+}
+
+interface Props {
+  username: string
+  isValid: boolean
+  loading: any
+}
+
+function UsernameMessage(props:Props): any{
+  const { loading, isValid, username } = props;
+
+  if (loading) {
+    return <p>Checking...</p>;
+  } else if (isValid) {
+    return <Text color='green'>{username} is available!</Text>;
+  } else if (username.length < 3 && username.length> 0) {
+    return <Text color='tomato'>{username} is too short!</Text>;
+  } else if (username && !isValid) {
+    return <Text color='tomato'>{username} is taken!</Text>;
+  } else {
+    return <p></p>;
+  }
 }

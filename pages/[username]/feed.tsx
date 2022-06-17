@@ -6,9 +6,11 @@ import { fromMillis } from '../../lib/firebaseConfig/init';
 import Loader from '../../components/misc/loader';
 import {useState, useEffect} from 'react';
 const LIMIT = 5;
-export async function getStaticProps(context:any) {
+
+export async function getServerSideProps(context:any) {
     const {params} = context;
     const {username} = params; // grab the slug from the url parameters
+    // console.log("username",username);
     const userDoc = await getUserWithUsername(username)
     if (!userDoc) {
         return {
@@ -22,7 +24,7 @@ export async function getStaticProps(context:any) {
     let temp :any[] = [];
     let posts:any[] = [];
     let uid:any;
-
+    // console.log("uid",uid)
     if (userDoc) {
         user = userDoc.data();
         uid = user.uid! 
@@ -33,6 +35,7 @@ export async function getStaticProps(context:any) {
         const communitySnapshot = await getDocs(communityQuery);
         if(communityQuery){
             slugs = communitySnapshot.docs.map(d=>d.id);//get all membered-community
+            // console.log("slugs",slugs);
 
             for (const slug of slugs) {
                 const memberQuery = query(collection(firestore, "communities", slug, "members"))
@@ -59,35 +62,17 @@ export async function getStaticProps(context:any) {
 
 
     return {
-        props: {user, posts, fetchedMembers}
+        props: {user, posts, fetchedMembers, slugs}
     }
     
 
 }
 
-export async function getStaticPaths() {
-    // Improve my using Admin SDK to select empty docs
-    const snapshot = await getDocs(collection(firestore, 'communities'));
-
-    const paths = snapshot.docs.map((doc) => {
-        // const { slug } = doc.data();
-        const username = "123";
-        return {
-        params: {username},
-        };
-    });
-
-    return {
-        paths,
-        fallback: 'blocking',
-    };
-}
-
-
 interface User {
     user: any
     posts: any
     fetchedMembers: any
+    slugs: any
 }
 
 export default function ExchangePage(props: User): any {
