@@ -10,11 +10,26 @@ import { useState, useEffect, useContext} from 'react';
 import { fromMillis } from '../../../../lib/firebaseConfig/init';
 import Loader from '../../../../components/misc/loader';
 import { authContext } from '../../../../lib/authContext'
+import { getUserWithUsername} from '../../../../lib/firebaseConfig/init';
 
 const LIMIT = 10;
 export async function getServerSideProps(context: any) {
     const {params} = context;
     const {slug, username} = params; // grab the slug from the url parameters
+    let isMember = false;
+
+    const userDoc = await getUserWithUsername(username);
+    let userUid;
+    if (!userDoc) {
+        return {
+            notFound: true,
+        };
+    }
+    if (userDoc) {
+        userUid = userDoc.data().uid;
+    }
+  
+
     const communityDoc = await getCommunityWithSlug(slug);
     let community;
     let path;
@@ -38,6 +53,7 @@ export async function getServerSideProps(context: any) {
         members = membersSnapshot.docs.map(d => d.id);
         members = members.filter((v:any, i:any, a:any) => a.indexOf(v) === i);
         temp = [...members];
+        isMember = temp.includes(userUid)
 
         community = communityToJSON(await getDoc(communityRef));
         path = communityRef.path;
@@ -58,8 +74,9 @@ export async function getServerSideProps(context: any) {
     }
     const fetchedMembers = temp;
 
+
     return {
-      props: { community, path, posts, username, fetchedMembers, membersInfo},
+      props: { community, path, posts, username, fetchedMembers, membersInfo, userUid, isMember},
     };
 }
 export default function Community(props:any) {
@@ -75,9 +92,8 @@ export default function Community(props:any) {
     const cSlug:string = community.slug;
     const realUsername:string = username!;
     let temp = [...fetchedMembers];
-    const { uid } = useContext(authContext);
 
-    const isMember = fetchedMembers.includes(uid);
+    const isMember = props.isMember;
     console.log(isMember)
 
     const getMorePosts = async () => {
@@ -85,6 +101,8 @@ export default function Community(props:any) {
         const last = posts[posts.length - 1];
 
         const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
+        console.log("1", fetchedMembers.length)
+
         while(fetchedMembers.length){
             const batch = fetchedMembers.splice(0, 10);
             const postsQuery = query(
@@ -101,8 +119,12 @@ export default function Community(props:any) {
             if (newPosts.length < LIMIT) {
                 setPostsEnd(true);
               }
+              console.log(fetchedMembers.length)
+
         }
+        console.log(fetchedMembers)
         fetchedMembers = temp;
+
       };
 
     return (
@@ -119,7 +141,6 @@ export default function Community(props:any) {
                 <MemberStack slug={community.slug} membersInfo={membersInfo} />
                 </a>
             </Link>
-
 
             </div>
 
@@ -160,7 +181,7 @@ export default function Community(props:any) {
                 }
             
             </div>
-}
+        }
         </main>
     );
 }
