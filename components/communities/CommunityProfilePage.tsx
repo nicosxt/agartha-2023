@@ -93,7 +93,7 @@ export default function CommunityProfilePage(props : any) {
                             </li>
                             <li className="flex items-center space-x-1">
                                 <a href={community.discord}  className="text-sm font-medium text-gray-500">
-                                <img src="https://img.icons8.com/ios-glyphs/30/000000/discord-logo.png"/>{community.discord || 'N/A'}
+                                <img src="https://img.icons8.com/ios-glyphs/30/000000/discord-logo.png"/>{community.discord? "discord": 'N/A'}
                                 </a>
                             </li>
                             <li className="flex items-center space-x-1">

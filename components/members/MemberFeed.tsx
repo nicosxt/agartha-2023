@@ -72,11 +72,18 @@ function MemberItem(props: MemberProps) {
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
               <div className="flex items-center">
                 <div className="h-10 w-10 flex-shrink-0">
+                <Link href={`/${member.username}`}>
+                <a>
+
                   <img className="h-10 w-10 rounded-full" src={member.avatarUrl?member.avatarUrl : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg"} alt=""/>
+                  </a>
+
+                  </Link>
+
                 </div>
                 <div className="ml-4">
                   <Link href={`/${member.username}`}>
-                    <a href='#'>
+                    <a>
                   <div className="font-medium text-gray-900">{member.username}</div>
                   </a>
                   </Link>
