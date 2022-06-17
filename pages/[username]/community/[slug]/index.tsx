@@ -9,6 +9,7 @@ import MemberStack from '../../../../components/members/MemberStack';
 import { useState, useEffect, useContext} from 'react';
 import { fromMillis } from '../../../../lib/firebaseConfig/init';
 import Loader from '../../../../components/misc/loader';
+import { authContext } from '../../../../lib/authContext'
 
 const LIMIT = 10;
 export async function getServerSideProps(context: any) {
@@ -74,6 +75,10 @@ export default function Community(props:any) {
     const cSlug:string = community.slug;
     const realUsername:string = username!;
     let temp = [...fetchedMembers];
+    const { uid } = useContext(authContext);
+
+    const isMember = fetchedMembers.includes(uid);
+    console.log(isMember)
 
     const getMorePosts = async () => {
         setLoading(true);
@@ -92,7 +97,7 @@ export default function Community(props:any) {
             const newPosts=(await getDocs(postsQuery)).docs.map(postToJSON);
             setPosts(posts.concat(newPosts));
             setLoading(false);
-            
+
             if (newPosts.length < LIMIT) {
                 setPostsEnd(true);
               }
@@ -122,14 +127,18 @@ export default function Community(props:any) {
             <br></br>
             <div className="ml-10">
             <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-purple-600 to-blue-500">Member Posts</p>
+            {isMember &&
             <PostFeed posts={posts} admin={false} />
+            }
+            {!isMember &&
+            <p>You must be a member to see posts. Please <b>click on the member tab </b>above and click <b> Join Community</b> button on the top right.</p>}
             
             </div>
            
             </div>
+            {isMember &&
+
             <div className="mt-8 min-h-full">
-          {/* <div className="mt-8 max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8"> */}
-            {/* <div className="flex items-center space-x-5"> */}
                 {!loading && !postsEnd && posts.length > 0 && 
                 <button 
                     className="w-full relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
@@ -149,7 +158,9 @@ export default function Community(props:any) {
               </span>
                </button>
                 }
+            
             </div>
+}
         </main>
     );
 }
