@@ -94,14 +94,14 @@ export default function Community(props:any) {
     let temp = [...fetchedMembers];
 
     const isMember = props.isMember;
-    console.log(isMember)
+    // console.log(isMember)
 
     const getMorePosts = async () => {
         setLoading(true);
         const last = posts[posts.length - 1];
 
         const cursor = typeof last?.createdAt === 'number' ? fromMillis(last.createdAt) : last.createdAt;
-        console.log("1", fetchedMembers.length)
+        // console.log("1", fetchedMembers.length)
 
         while(fetchedMembers.length){
             const batch = fetchedMembers.splice(0, 10);
@@ -119,10 +119,10 @@ export default function Community(props:any) {
             if (newPosts.length < LIMIT) {
                 setPostsEnd(true);
               }
-              console.log(fetchedMembers.length)
+            //   console.log(fetchedMembers.length)
 
         }
-        console.log(fetchedMembers)
+        // console.log(fetchedMembers)
         fetchedMembers = temp;
 
       };
