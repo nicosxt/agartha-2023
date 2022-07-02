@@ -162,7 +162,7 @@ export default function Members(props: Props) {
                           <span className="sr-only">Edit</span>
                         </th>
                       </tr>
-                    </thead>
+                    </thead> 
        <MemberFeed members={membersInfo} slug={realSlug} admin={admin}/>
        </table>
                 </div>
