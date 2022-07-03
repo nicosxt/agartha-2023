@@ -135,7 +135,7 @@ export default function ExchangeForm(props : any) {
                           </div>
                           {/* <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p> */}
                           {/* {defaultValues?.images} */}
-                          <ImageUrlFeed  urls={post?.images}/>
+                          <ImageUrlFeed  urls={post?.images} slug={slug} uid={uid}/>
   
                         </div>
                       </div>

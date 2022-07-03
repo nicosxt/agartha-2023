@@ -89,7 +89,7 @@ on {createdAt.toISOString()}</p>
 
                     <dt className="text-sm font-medium text-gray-500">Photos</dt>
                     <dd className="grid flex items-center mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    <ImageFeed urls={post.images}/>
+                    <ImageFeed urls={post.images} />
                     </dd>
 
                    
