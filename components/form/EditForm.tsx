@@ -109,7 +109,7 @@ export default function EditForm(props : any) {
                           </div>
                           {/* <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p> */}
                           {/* {defaultValues?.images} */}
-                          <ImageUrlFeed urls={defaultValues.images}/>
+                          <ImageUrlFeed urls={defaultValues.images} uid={defaultValues.uid} slug={defaultValues.slug}/>
                           {/* {defaultValues?.images?.map((image:string)=> {
                             <p>
                               <a href={image}> {image} </a>

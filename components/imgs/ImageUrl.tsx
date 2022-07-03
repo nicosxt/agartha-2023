@@ -1,13 +1,22 @@
+import { setDoc,doc } from 'firebase/firestore';
+import { firestore, storage } from '../../lib/firebaseConfig/init';
+
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 
 interface Props{
     url: string
+    urls: string[]
+    slug: any
+    uid:any
 }
 
 // UI component for main post content
 export default function ImageUrl(prop: Props) {
   const url = prop.url;
+  const slug = prop.slug
+  const urls = prop.urls;
+  const uid=prop.uid;
   const shortName = url.substring(url.lastIndexOf('=')+1);
 
   return (
@@ -25,14 +34,34 @@ export default function ImageUrl(prop: Props) {
         </div>
         <div className="ml-4 flex-shrink-0">
         <a href={url} className="font-medium text-indigo-600 hover:text-indigo-500"> View </a>
+        <DeleteImageButton url={url} urls={urls} slug={slug} uid={uid}/>
+        {/* <a href={url} className="font-medium text-red-600 hover:text-red-500"> Delete </a> */}
         </div>
          </li>
-        {/* <div className="card">
-        <a href={url}> {url} </a> */}
-        {/* </div> */}
         </ul>
         </dd>
       </div>
     </>
   );
+}
+
+function DeleteImageButton(props:any):any{
+  const {url, slug, urls, uid} = props;
+  const deleteImage = () => {
+    const index = urls.indexOf(url);
+    if(index>-1){
+      urls.splice(index,1);
+    }
+    setDoc(doc(firestore,"users",uid,"posts",slug),{
+      images:urls
+    },
+    {merge:true}
+    )
+
+  }
+
+return(
+  <button type="button" onClick={deleteImage} className="font-medium text-red-600 hover:text-red-500"> Delete </button>
+
+)
 }

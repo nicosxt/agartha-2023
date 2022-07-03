@@ -17,7 +17,7 @@ export default function ImageUploader(props: any) :any{
     const uid:string = auth?.currentUser?.uid!;
     const {slug, username, defaultValues } = props;
     // const [images, setImages] = useState<Array<string>>(defaultValues?.images || []);
-    let images:any[]=[];
+    let images:any[]=defaultValues.images;
     // console.log("heu")
     
     // const [imageNames, setImageNames] = useState<Array<string>>([]);
