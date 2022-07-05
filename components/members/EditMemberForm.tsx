@@ -24,22 +24,22 @@ export default function EditMemberForm(props : any) {
     const anotherMemberRef = doc(firestore, "users", defaultValues.uid, "communities", slug);
     const communityRef = doc(firestore, "users", defaultValues.uid, "communities", slug);
     const updateMember= async (data:any) => {
-        const { admin, titles, responsibilities} = data;
+        const { admin, reference, reason} = data;
 
         await updateDoc(memberRef, {
             // Tip: give all fields a default value here
             admin,
-            responsibilities,
-            titles,
+            reference,
+            reason,
         });       
 
         await updateDoc(communityRef, {
             admin,
-            titles,
-            responsibilities,
+            reason,
+            reference,
         });
         
-        reset({ admin, titles, responsibilities});
+        reset({ admin, reference, reason});
         router.push(`/${username}/community/${slug}/members`);
 
     };
@@ -102,20 +102,20 @@ export default function EditMemberForm(props : any) {
               </div>
 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Title(s) </label>
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Reference</label>
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <input 
-                      {...register("titles")}
-                      type="text" id="titles" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                      {...register("reference")}
+                      type="text" id="reference" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                   </div>
                 </div>
 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label htmlFor="region" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Responsibilities </label>
+                  <label htmlFor="region" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Reason </label>
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <input 
-                      {...register("responsibilities")}
-                      type="text" id="responsibilities" autoComplete="address-level1" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                      {...register("reason")}
+                      type="text" id="reason" autoComplete="address-level1" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                   </div>
                 </div>
 

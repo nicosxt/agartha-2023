@@ -91,9 +91,17 @@ function MemberItem(props: MemberProps) {
                 </div>
               </div>
             </td>
+            
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              <div className="text-gray-900">{userDoc?.titles}</div>
-              <div className="text-gray-500">{userDoc?.responsibilities}</div>
+              {userDoc?.reference && (
+              <div className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">{userDoc?.reference}</div>
+              )}
+              {!userDoc?.reference && (
+                <div className="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800">{'n/a'}</div>
+
+              )}
+
+              {/* <div className="text-gray-500">{userDoc?.responsibilities}</div> */}
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{memberAdmin? "Admin" : 'Member'}</td>
 

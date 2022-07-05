@@ -4,8 +4,8 @@ import { useContext, useState } from 'react';
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import { useForm } from 'react-hook-form';
 import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { firestore } from '../../lib/firebaseConfig/init'
+import { doc, setDoc, getDoc, query, collection, getDocs} from 'firebase/firestore';
+import { firestore, memberToJSON } from '../../lib/firebaseConfig/init'
 import {Text} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import debounce from 'lodash.debounce';
@@ -15,10 +15,75 @@ import Link from 'next/dist/client/link';
 export default function JoinCommunityForm(props : any) {
   const [formValue, setFormValue] = useState(''); //user enter name 
   // Set values
-  const [member, setMember] = useState('');
+  // const [member, setMember] = useState('');
+  //get members 
   const { username } = useContext(authContext);
   const [reference, setReference] = useState('');
-  const [reason, setReason] = useState('');
+  const [reason, setReason] = useState('');   
+
+  const [member, setMember] = useState('');
+  const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [uid, setUid] = useState(' ');
+  const [user, setUser] = useState();
+  // console.log("1", isValid);
+  let info = "n/a"
+
+  //use effect get uid by username
+  //useEffect with async function
+
+  
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await getUserWithUsername(formValue);
+      if(user){
+        info = memberToJSON(user).uid;
+        // console.log("info", info);
+        setUid(info);
+        if(info){
+          const docRef = doc(firestore, 'communities', slug, 'members', info);
+          const docSnap = await getDoc(docRef)
+          const exists = docSnap.exists();
+          // console.log("uid", uid);
+          setIsValid(exists);
+          setReference(formValue);
+          // console.log("hhhh", isValid);
+        }
+
+      } else {
+        setUid(' ');
+        setIsValid(false);
+      }
+    }
+    getUser();
+
+  }, [formValue]);
+  // console.log("formValue", formValue)
+
+
+
+  const onChange = (e: React.ChangeEvent<any>) => {
+    // Force form value typed in form to match correct format
+    const val = e.target.value.toLowerCase();
+    const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+
+    // Only set form value if length is < 3 OR it passes regex
+    if (val.length < 3) {
+      setFormValue(val);
+      setLoading(false);
+      setIsValid(false);
+      // console.log("5", isValid);
+
+    }
+
+    if (re.test(val)) {
+      setFormValue(val);
+      setLoading(false);
+      setIsValid(false);
+      // console.log("6", isValid);
+
+    }
+  };
 
 
   const router = useRouter();
@@ -76,12 +141,15 @@ export default function JoinCommunityForm(props : any) {
             <div className="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Do you know anyone in this community?</label>
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Please enter the <strong>username </strong>who referenced you to this community, if no one referenced you, please leave a blank.</label>
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <input 
-                      value={reference}
-                      onChange={(e) => setReference(e.target.value)}
+                      value={formValue}
+                      // onChange={(e) => setReference(e.target.value)}
+                      onChange={onChange}
                       type="text" name="city" id="city" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                      <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
+
                   </div>
                 </div>
 
@@ -110,4 +178,27 @@ export default function JoinCommunityForm(props : any) {
         </form>
       </>
   );
+}
+
+interface Props {
+  username: string
+  isValid: boolean
+  loading: any
+}
+
+function UsernameMessage(props:Props): any{
+  const { loading, isValid, username } = props;
+  // console.log("hum", isValid);
+
+  if (loading) {
+    return <p>Checking...</p>;
+  } else if (!isValid && username.length > 0) {//if member does not exist
+    return <Text color='tomato'>{username} does not exist in this community!</Text>;
+  } else if (username.length <= 3 && username.length> 0) {
+    return <Text color='tomato'>{username} is too short!</Text>;
+  } else if (username && isValid) {
+    return <Text color='green'>{username} exists in this community!</Text>;
+  } else {
+    return <p></p>;
+  }
 }

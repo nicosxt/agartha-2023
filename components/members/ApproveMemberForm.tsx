@@ -21,12 +21,15 @@ export default function ApproveMemberForm(props : any) {
   const [addBy, setAddBy] = useState('');
   const [titles, setTitles] = useState('');
   const [responsibilities, setResponsibilities] = useState('');
+  const [reference, setReference] = useState('');
+  const [reason, setReason] = useState('');
 
   const router = useRouter();
 
 
   const {slug, uid} = props;
 //   console.log(uid)
+  // check if requests document exits or not, if so set reference and reason. 
 
 
   let newMemberUsername;
@@ -35,14 +38,22 @@ export default function ApproveMemberForm(props : any) {
     const getUsername = async () => {
 
         if(uid){
-            const newMemberRef = doc(firestore, 'users', uid);
-            const newMemberDoc = await getDoc(newMemberRef);
-            if(newMemberDoc){
+          const newMemberRef = doc(firestore, 'users', uid);
+          const newMemberDoc = await getDoc(newMemberRef);
+          if(newMemberDoc){
             newMemberUsername = newMemberDoc.data()?.username;
             setMember(newMemberUsername);
-            }
+          }
+          const request = doc(firestore, 'communities', slug, 'requests', uid);
+          const requestDoc = await getDoc(request);
+          if(requestDoc){
+            setReference(requestDoc.data()?.reference);
+            setReason(requestDoc.data()?.reason);
+          }
+
         }
-        }
+        
+      }
     getUsername();
     }, []);
 
@@ -62,8 +73,10 @@ export default function ApproveMemberForm(props : any) {
         uid: user.data().uid,
         admin: admin,
         addBy: username,
-        titles: titles,
-        responsibilities: responsibilities,
+        reference: reference,
+        reason: reason,
+        // titles: titles,
+        // responsibilities: responsibilities,
         slug: slug,
         communityName: communityName,
       }, { merge: true }
@@ -74,8 +87,10 @@ export default function ApproveMemberForm(props : any) {
         communitySlug: slug,
         admin: admin,
         addBy: username,
-        titles: titles,
-        responsibilities: responsibilities,
+        reference: reference,
+        reason: reason,
+        // titles: titles,
+        // responsibilities: responsibilities,
         communityName: communityName,
       }, { merge: true }
       );
@@ -150,21 +165,21 @@ export default function ApproveMemberForm(props : any) {
               </div>
 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Title(s) </label>
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Reference </label>
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <input 
-                      value={titles}
-                      onChange={(e) => setTitles(e.target.value)}
+                      value={reference}
+                      onChange={(e) => setReference(e.target.value)}
                       type="text" name="city" id="city" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                   </div>
                 </div>
 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                  <label htmlFor="region" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Responsibilities </label>
+                  <label htmlFor="region" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Reason</label>
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <input 
-                      value={responsibilities}
-                      onChange={(e) => setResponsibilities(e.target.value)}
+                      value={reason}
+                      onChange={(e) => setReason(e.target.value)}
                       type="text" name="region" id="region" autoComplete="address-level1" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                   </div>
                 </div>

@@ -18,7 +18,6 @@ interface PostProps{
 
 function PostItem(props: PostProps) : any {
     const post = props.post;
-    const admin = props.admin;
     const createdAt = typeof post?.createdAt === 'number' ? new Date(post.createdAt) : post.createdAt.toDate();
 
     return (
