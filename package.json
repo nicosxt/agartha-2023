@@ -15,7 +15,7 @@
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.6",
     "@mui/material": "^5.5.3",
-    "firebase": "^9.8.3",
+    "firebase": "^9.11.0",
     "firebase-admin": "^9.11.1",
     "flowbite": "^1.4.2",
     "framer-motion": "^5",

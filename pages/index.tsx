@@ -55,7 +55,7 @@ export default function Home(props:Props): any {
 
       <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="sm:text-center lg:text-center">
-                <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                <h1 className="text-4xl font-extrabold text-[#0000FF] sm:text-5xl md:text-6xl">
                   <span className="block xl:inline">Find Meaningful</span>
                   
                 </h1>
@@ -73,7 +73,7 @@ export default function Home(props:Props): any {
                     </h1>
                 </div>
                 <div className='w-1/2'>
-                <h1 className="text-4xl pb-4 font-extrabold text-left sm:text-5xl md:text-6xl">
+                <h1 className="text-4xl text-[#0000FF] pb-4 font-extrabold text-left sm:text-5xl md:text-6xl">
                   Communities</h1>
                 </div>
 
