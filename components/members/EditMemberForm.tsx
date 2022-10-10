@@ -1,16 +1,9 @@
-
-import { authContext } from '../../lib/authContext'
-import { useContext, useState } from 'react';
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import { useForm } from 'react-hook-form';
-import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
 import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
 import { firestore } from '../../lib/firebaseConfig/init'
-import {Text} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import debounce from 'lodash.debounce';
 import React, { useEffect, useCallback } from 'react';
-import { getUserWithUsername } from '../../lib/firebaseConfig/init';
 import Link from 'next/dist/client/link';
 import { useAuth } from '../../lib/authContext'
 
