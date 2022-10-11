@@ -213,7 +213,7 @@ const Map: NextPage = () => {
 
 <label htmlFor="large-toggle" className="inline-flex relative items-center cursor-pointer">
 <input type="checkbox" value="" id="large-toggle" className="sr-only peer" onClick={toggleList}/>
-<div className="w-14 h-7 bg-[#FFDDED] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0000FF] dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+<div className="w-14 h-7 bg-[#FFDDED] ring-4 ring-[#0000FF] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0000FF] dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
 </label>
 </div>
         </>

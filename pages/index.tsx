@@ -83,13 +83,16 @@ export default function Home(props:Props): any {
                   {!user && (<>
                   <div>
                     <Link href='/map'>
+                    <a style={{ cursor: "pointer" }}>
+
                       <img className="h-14 pr-8" src='https://s2.loli.net/2022/10/11/V97Me48usdEH3PA.png'/>
+                    </a>
                     </Link>
                   </div>
                   <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <Link href='/signin'>
+                    <a href='https://discord.gg/UAjzAx62Ug' target="_blank" rel="noreferrer">
                       <img className="h-14" src="https://s2.loli.net/2022/10/11/5lqZgjMQpfX3ThN.png" />
-                    </Link>
+                    </a>
                   </div>
                   </>
                   )}
