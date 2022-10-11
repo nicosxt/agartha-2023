@@ -4,9 +4,26 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState, useEffect, useRef } from 'react';
 import markers from './api/markers.json';
 import GeoJSON  from 'geojson';
+import Router from 'next/router'
+import CommunityList from '../components/list';
+
 const Map: NextPage = () => {
     const mapContainer = useRef<any>(null);
     const map = useRef<mapboxgl.Map | null>(null);
+    const [isListOpen, setIsListOpen] = useState(false);
+    const toggleList = () => {
+        const x = !isListOpen
+        setIsListOpen(x);
+
+        if(x===false){
+        Router.reload()
+        }
+
+    } 
+    useEffect(() => {
+    }, [isListOpen]);
+
+
     useEffect(() => {
  
         mapboxgl.accessToken=process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN??'';
@@ -178,11 +195,30 @@ const Map: NextPage = () => {
 
     return (
         <>
+              
+        {!isListOpen && (<>
         <main>
         <div style={{width: 2000, height: 700}} ref={mapContainer} />
       </main>
+
+
       </>
-    );
-  };
+    )}
+    {isListOpen && (<>  
+        <CommunityList />
+        </>
+    )}
+
+<div className="fixed z-90 bottom-10 right-8 drop-shadow-lg flex justify-center items-center text-white text-4xl">
+
+<label htmlFor="large-toggle" className="inline-flex relative items-center cursor-pointer">
+<input type="checkbox" value="" id="large-toggle" className="sr-only peer" onClick={toggleList}/>
+<div className="w-14 h-7 bg-[#FFDDED] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0000FF] dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+</label>
+</div>
+        </>
+    )
+    
+}
 
   export default Map;
