@@ -55,7 +55,7 @@ export default function Home(props:Props): any {
 
       <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="sm:text-center lg:text-center">
-                <h1 className="text-4xl font-extrabold text-[#0000FF] sm:text-5xl md:text-6xl">
+                <h1 className="text-4xl pb-4 font-extrabold text-[#0000FF] sm:text-5xl md:text-6xl">
                   <span className="block xl:inline">Find Meaningful</span>
                   
                 </h1>
@@ -82,7 +82,7 @@ export default function Home(props:Props): any {
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-center">
                   {!user && (<>
                   <div>
-                    <Link href='/signup'>
+                    <Link href='/map'>
                       <img className="h-14 pr-8" src='https://s2.loli.net/2022/10/11/V97Me48usdEH3PA.png'/>
                     </Link>
                   </div>
