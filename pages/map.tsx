@@ -27,7 +27,7 @@ const Map: NextPage = () => {
       map.current?.on('load', () => {
     // Add an image to use as a custom marker
     map.current?.loadImage(
-        'https://s2.loli.net/2022/10/11/RgPfSKw71WT2dbM.png',
+        'https://s2.loli.net/2022/10/11/agEyvQIZ942q3zK.png',
         (error, image) => {
             if (error) throw error;
             map.current?.addImage('flower', image!);
@@ -44,22 +44,23 @@ const Map: NextPage = () => {
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [
-                                    -77.03238901390978
-                                    , 38.913188059745586
+                                    -115.729622,
+                                    33.350616,
                                 ]
                             },
                             "properties": {
-                                "title": "Mapbox DC"
+                                "title": "Mars College"
+                                // "title": "Mars College, Bombay Beach, CA"
                             }
                         },
                         {
                             "type": "Feature",
                             "geometry": {
                                 "type": "Point",
-                                "coordinates": [-122.414, 37.776]
+                                "coordinates": [-73.9497211, 40.6526006]
                             },
                             "properties": {
-                                "title": "Mapbox SF"
+                                "title": "706 NY"
                             }
                         }
                     ]
@@ -88,7 +89,7 @@ const Map: NextPage = () => {
         }
     );
     map.current?.loadImage(
-        'https://s2.loli.net/2022/10/11/M43uqZgWncsDN5f.png',
+        'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
         (error, image) => {
             if (error) throw error;
             map.current?.addImage('green', image!);
@@ -105,23 +106,39 @@ const Map: NextPage = () => {
                             "geometry": {
                                 "type": "Point",
                                 "coordinates": [
-                                    -9.136592,
-                                    38.707751,
-                                    
+                                   
+                                    -8.5667,
+                                    38,
                                 ]
                             },
                             "properties": {
-                                "title": "Lisbon"
+                                "title": "Traditional Dream Factory"
+                                // "title": "Traditional Dream Factory, Setúbal, Portugal"
+
                             }
                         },
                         {
                             "type": "Feature",
                             "geometry": {
                                 "type": "Point",
-                                "coordinates": [52.3676, 4.9041]
+                                "coordinates": [-97.7431, 30.2672, ]
                             },
                             "properties": {
-                                "title": "Mapbox SF"
+                                "title": "CabinDAO"
+                                // "title": "CabinDAO, Austin, TX"
+
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [-85.65194, 9.98017 ]
+                            },
+                            "properties": {
+                                "title": "Panchamama"
+                                // "title": "CabinDAO, Austin, TX"
+
                             }
                         }
                     ]
