@@ -18,7 +18,6 @@ export default function Community(props:any) {
     const [community, setCommunity] = useState<any>(null);
     const realSlug = props.slug;
     console.log(realSlug)
-    //get community document 
 
     useEffect(() => {
         const getCommunityData = async () => {
@@ -33,13 +32,12 @@ export default function Community(props:any) {
 
     return (
         <main>
-            <div className="container pt-10 pl-10 pr-10 md:pt-20 md:pt-20 md:pt-20 lg:pt-20 lg:pl-32 lg:pr-32">
+            <div className="pt-10 pl-10 pr-10 md:pt-20 md:pt-20 md:pt-20 lg:pt-20 lg:pl-32 lg:pr-32">
             <img src='/community/card.png' alt="banner" />
-            </div>
-
             {community && <CommunityProfilePage community={community} />}
-            {/* <CommunityProfilePage community={community}/> */}
 
+            </div>
+            {/* {community && <CommunityProfilePage community={community} />} */}
         </main>
     );
 }
