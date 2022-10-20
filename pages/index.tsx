@@ -17,20 +17,20 @@ import FrontPage from '../components/layout/frontpage'
 import Typewriter from 'typewriter-effect'
 
 const LIMIT = 10;
-export async function getServerSideProps(){
-  const postsQuery = query(
-    collectionGroup(firestore, 'posts'),
-    where('published','==', true),
-    orderBy('createdAt','desc'),
-    limit(LIMIT)
-    )
-  const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
+// export async function getServerSideProps(){
+//   const postsQuery = query(
+//     collectionGroup(firestore, 'posts'),
+//     where('published','==', true),
+//     orderBy('createdAt','desc'),
+//     limit(LIMIT)
+//     )
+//   const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
 
-  return {
-    props: { posts }, // will be passed to the page component as props
-  };
+//   return {
+//     props: { posts }, // will be passed to the page component as props
+//   };
 
-}
+// }
 
 interface Props {
   posts: any
@@ -40,10 +40,7 @@ export default function Home(props:Props): any {
   const [posts, setPosts] = useState(props.posts);
   const [loading, setLoading] = useState(false);
   const [postsEnd, setPostsEnd] = useState(false);  
-  const { user} = useAuth()
-
-
-
+  const { user} = useAuth();
 
   return (
     <>

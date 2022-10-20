@@ -20,52 +20,59 @@ export default function EditCommunityProfile(props : any) {
         // console.log("is is ")
         const { communityName, city, state, country, phone,
             discord, email, instagram, intro,
-            twitter, website, wechat} = data;
+            twitter, website, wechat, longitude, latitude, github} = data;
         // console.log(communityRef)
         await updateDoc(communityRef, {
             // Tip: give all fields a default value here
             communityName,
             // avatarUrl,
-            discord,
-            email,
-            instagram,
+            longitude,
+            latitude,
+            city,
+            country,
+            state,
+            // slug,
             intro,
+            instagram,
             twitter,
             website,
+            github,
             wechat,
-            city,
-            state,
-            country,
+            discord,
+            email,
             phone
-        },
+        }        
         )
 
         // also need to update communities/slug/members/uid.communityname
-        // meed to update for all members shit.
-        communityMemberSnap.docs.map(async (d:any) => {
-            await updateDoc(d.ref, {
-              communityName,
-            },)
-            // and users/uid/communities/slug/.communityname
-            // need to update community name for all users.
-            const uid = d.data().uid;
-            const slug = d.data().slug;
-            const userCommunityRef = doc(firestore, "users", uid, "communities", slug);
-            await updateDoc(userCommunityRef, {
-              communityName,
-            },)
+        // meed to update for all members.
+
+        // communityMemberSnap.docs.map(async (d:any) => {
+        //     await updateDoc(d.ref, {
+        //       communityName,
+        //     },)
+        //     // and users/uid/communities/slug/.communityname
+        //     // need to update community name for all users.
+        //     const uid = d.data().uid;
+        //     const slug = d.data().slug;
+        //     const userCommunityRef = doc(firestore, "users", uid, "communities", slug);
+        //     await updateDoc(userCommunityRef, {
+        //       communityName,
+        //     },)
      
-          });   
+        //   });   
+
   
         // and users/uid/communities/slug/.communityname
         // need to update community name for all users.
-        await updateDoc(userCommunityRef, {
-          communityName,
-        },)
+
+        // await updateDoc(userCommunityRef, {
+        //   communityName,
+        // },)
 
         reset({ communityName,phone, city, state, country, discord, email, instagram, intro,
-          twitter, website, wechat});
-        router.push(`/${username}/community/${defaultValues.slug}`);
+          twitter, website, wechat, longitude, latitude, github});
+        router.push(`/community/${defaultValues.slug}`);
 
     };
     return (
@@ -81,7 +88,7 @@ export default function EditCommunityProfile(props : any) {
                 </div>
                 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="username" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Username</label>
+                    <label htmlFor="communityName" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Username</label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
                         {...register("communityName")}
@@ -124,6 +131,25 @@ export default function EditCommunityProfile(props : any) {
                   <h3 className="text-lg leading-6 font-medium text-gray-900">Details</h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">Getting to know more about the specifications.</p>
                 </div>
+
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Latitude </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                          {...register("latitude")}
+                        type="text" name="latitude" id="latitude" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+  
+
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Longitude </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                        {...register("longitude")}
+                        type="text" name="longitude" id="longitude" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
   
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> City </label>
@@ -192,6 +218,16 @@ export default function EditCommunityProfile(props : any) {
                       <input 
                         {...register("discord")}
                         type="text" id="discord" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="github" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Github</label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                       {...register("wechat")}
+                        type="text" id="github" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
 

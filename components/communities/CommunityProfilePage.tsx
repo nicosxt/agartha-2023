@@ -10,33 +10,9 @@ import { firestore } from '../../lib/firebaseConfig/init'
 
 export default function CommunityProfilePage(props : any) {
     const community = props.community;
-    const { uid } = useContext(authContext);
-    // console.log("uhhhh")
-
-    // console.log("uid", uid)
-    const [userCommunityDoc, setUserCommunityDoc] = useState<any>()
     const [admin, setAdmin] = useState<boolean>(false);
-    let newUserCommunityDoc:any;
-    // console.log("1", newUserCommunityDoc);
-    useEffect(() => {
-        const getUser = async () => {
-            // const newUser = memberToJSON(user);
-                if(uid) {
-                const userCommunityRef = doc(firestore, "users", uid, "communities", community.slug);
-                const data = await getDoc(userCommunityRef);
-                newUserCommunityDoc = communityToJSON(data);
-                setUserCommunityDoc(newUserCommunityDoc);
-                const realAdmin = newUserCommunityDoc.admin;
-                setAdmin(realAdmin);
-                    if (userCommunityDoc) {
-                        setAdmin(userCommunityDoc.admin);
-                        // console.log("ADMIN", userCommunityDoc.admin)
-                    }
-            }
-        }
-    getUser();
-}, [uid])
-        
+    console.log("community is", community);
+   
 
     return(
         <>
@@ -49,7 +25,7 @@ export default function CommunityProfilePage(props : any) {
                                 <div className="relative">
                                     {/* <AvatarUploader /> */}
                                     {/* <button onClick={() => changeAvatar(true)}> */}
-                                    <img className="h-16 w-16 rounded-full btn" src={community.avatarUrl? community.avatarUrl : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" }alt=""/>
+                                    <img className="h-16 w-16 rounded-full btn" src={community.cover? community.cover : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" }alt=""/>
                                     <span className="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
                                     {/* </button> */}
                                 </div>
@@ -58,11 +34,11 @@ export default function CommunityProfilePage(props : any) {
 
                         <div className="flex space-x-2">
                         <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-pink-500">{community.communityName} </h1>
-                        {admin &&
+                        {/* {admin && */}
                         <Link href={`/communityAdmin/${community.slug}`}>
                             Edit
                             </Link>
-                        }
+                        {/* } */}
                         </div>
                         <p className="text-sm font-medium text-gray-500">{community.intro}</p>
                         {/* <div className="mt-6"></div> */}
@@ -71,7 +47,7 @@ export default function CommunityProfilePage(props : any) {
                         <div className="mt-2">
                         <ul className="flex space-x-4">
                         <li className="flex items-center space-x-1">
-                                <a href={community.instagram} className="text-sm font-medium text-gray-500">
+                                <a className="text-sm font-medium text-gray-500">
                                 <img src="https://img.icons8.com/material-outlined/30/000000/home--v2.png"/>{community.city? (community.city + ", "+ community.state + ", "+ community.country) : 'N/A'}
                                 </a>
                             </li>

@@ -18,6 +18,8 @@ export default function CommunityPostForm(props : any) {
     const [intro, setIntro] = useState('');
 
     //Set addresses
+    const [longitude, setLongitude] = useState('');
+    const [latitude, setLatitude] = useState('');
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
@@ -27,23 +29,14 @@ export default function CommunityPostForm(props : any) {
     const [instagram, setInstagram] = useState(''); 
     const [wechat , setWechat] = useState('');
     const [twitter , setTwitter] = useState('');
+    const [github, setGithub] = useState('');
     const [email , setEmail] = useState('');
     const [website , setWebsite] = useState('');
     const [phone , setPhone] = useState('');
     const [discord  , setDiscord] = useState('');
     
-    // type AdminCheck = {
-    //   communitySlug: string
-    //   admin: boolean
-    // }
-
-    //Set community for users using slug
-    // const [community, setCommunity] = useState<AdminCheck[]>([]);
-
-    // Ensure slug is URL safe
     const {slug} = props;
-    // console.log("slug1"+slug)
-    // console.log(post)
+
     const auth = getAuth();
     const uid:string = auth?.currentUser?.uid!;
 
@@ -56,6 +49,8 @@ export default function CommunityPostForm(props : any) {
             // Tip: give all fields a default value here
             communityName ,
             avatarUrl,
+            longitude,
+            latitude,
             city,
             country,
             state,
@@ -64,6 +59,7 @@ export default function CommunityPostForm(props : any) {
             instagram,
             twitter,
             website,
+            github,
             wechat,
             discord,
             email,
@@ -72,41 +68,37 @@ export default function CommunityPostForm(props : any) {
         },
         { merge: true })
 
-        const memberRef = doc(firestore, "communities", slug, "members", uid);
-        await setDoc(memberRef, {
-          uid: uid,
-          admin: true,
-          slug: slug,
-          addBy: "Genesis",
-          username: username,
-          communityName: communityName,
+        // const memberRef = doc(firestore, "communities", slug, "members", uid);
+        // await setDoc(memberRef, {
+        //   uid: uid,
+        //   admin: true,
+        //   slug: slug,
+        //   addBy: "Genesis",
+        //   username: username,
+        //   communityName: communityName,
 
-        })
-        // Imperative navigation after doc is set
-        const communitySlug:string = Array.isArray(slug)?slug[0]:slug!;
+        // })
 
-        const userCommunityRef = doc(firestore, "users", uid, "communities", communitySlug);
-        // setCommunity([...community, {communityName, admin: true }]);
-        // community.push({communitySlug, admin: true });
-        // console.log(community)
+        // const communitySlug:string = Array.isArray(slug)?slug[0]:slug!;
 
-        await setDoc(userCommunityRef, {
-            communitySlug: communitySlug,
-            admin: true,
-            communityName: communityName,
-            addBy: "Genesis",
-            username: username,
-        },
-        { merge: true });
+        // const userCommunityRef = doc(firestore, "users", uid, "communities", communitySlug);
 
-        router.push(`/${username}/community/${slug}`);
+        // await setDoc(userCommunityRef, {
+        //     communitySlug: communitySlug,
+        //     admin: true,
+        //     communityName: communityName,
+        //     addBy: "Genesis",
+        //     username: username,
+        // },
+        // { merge: true });
+
+        // router.push(`/community/${slug}`);
 
     };
     
     return (
         <>
-          {/* <script src="../path/to/flowbite/dist/flowbite.js"></script> */}
-          {/* <script src="../path/to/flowbite/dist/datepicker.js"></script> */}
+
   
           <form className="py-10 space-y-8 divide-y divide-gray-200" onSubmit={createCommunity}>
               
@@ -124,7 +116,7 @@ export default function CommunityPostForm(props : any) {
                         value={communityName} 
                         onChange={(e) => setCommunityName(e.target.value)} 
                         placeholder="My Community"
-                        type="text" name="street-address" id="street-address" autoComplete="street-address" className="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"/>
+                        type="text" name="communityName" id="street-address" autoComplete="street-address" className="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                 </div>
   
@@ -149,9 +141,6 @@ export default function CommunityPostForm(props : any) {
                       <div className="max-w-lg flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                         <div className="space-y-1 text-center">
                           <div className="space-y-1 text-center">
-                          {/* <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />`
-                          </svg> */}
                           <div className="flex text-sm text-gray-600">
                             <CommunityAvatarUploader slug={slug} defaultValues={null} />
                           </div>
@@ -167,6 +156,28 @@ export default function CommunityPostForm(props : any) {
                   <h3 className="text-lg leading-6 font-medium text-gray-900">Details</h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">Getting to know more about the specifications.</p>
                 </div>
+
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Latitude </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                        value={latitude}
+                        onChange={(e) => setLatitude(e.target.value)}
+                        type="text" name="latitude" id="latitude" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+  
+
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Longitude </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                        value={longitude}
+                        onChange={(e) => setLongitude(e.target.value)}
+                        type="text" name="longitude" id="longitude" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+  
   
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> City </label>
@@ -237,12 +248,23 @@ export default function CommunityPostForm(props : any) {
                   </div>
   
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="discord" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Discord Handle </label>
+                    <label htmlFor="discord" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Discord</label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
                         value={discord}
                         onChange={(e) => setDiscord(e.target.value)}
                         type="text" id="discord" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+
+
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="github" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Github</label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                        value={github}
+                        onChange={(e) => setGithub(e.target.value)}
+                        type="text" id="github" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
 
@@ -285,7 +307,9 @@ export default function CommunityPostForm(props : any) {
                 <Link href={`/${username}/community/manage`}>
                 <button type="button" className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
                 </Link>
+                <Link href={`/community/${slug}`}>
                 <button type="submit" className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create New Community</button>
+                </Link>
               </div>
             </div>
           </form>

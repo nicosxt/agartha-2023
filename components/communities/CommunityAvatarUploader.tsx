@@ -11,10 +11,11 @@ import { doc, getDoc, collection, addDoc, setDoc, getDocs, query, where, limit, 
 export default function CommunityAvatarUploader(props: any) :any{
     const auth = getAuth();
     const [uploading, setUploading] = useState(false);
+    const [uploaded, setUploaded] = useState(false);
     const [progress, setProgress] = useState(0);
     const [downloadURL, setDownloadURL] = useState('');
     const {slug, username, defaultValues } = props;
-    const [avatarUrl, setAvatarUrl] = useState<Array<string>>(defaultValues?.avatarUrl || []);
+    const [avatarUrl, setAvatarUrl] = useState<Array<string>>([defaultValues?.avatarUrl] || []);
 
 
 
@@ -59,6 +60,7 @@ export default function CommunityAvatarUploader(props: any) :any{
             },
             { merge: true }
             )
+            setUploaded(true);
         });
       }
     );
@@ -71,7 +73,7 @@ export default function CommunityAvatarUploader(props: any) :any{
         <Loader show={uploading} />
         {uploading && <h3>{progress}%</h3>}
 
-        {!uploading && (
+        {!uploading && !uploaded &&(
             <>
             <label className="btn">
                 {/* 📸 Upload Img */}
@@ -79,6 +81,14 @@ export default function CommunityAvatarUploader(props: any) :any{
             </label>
             
             </>
+        )}
+
+        {uploaded && (
+            <>
+            <p>Uploaded</p>
+            <img src={downloadURL} />
+            </>
+
         )}
         </div>
 

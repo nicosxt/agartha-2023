@@ -12,39 +12,39 @@ interface Props{
     username: string
 }
 const LIMIT = 5;
-export async function getServerSideProps(context:any) {
-    const {query:qr} = context;
-    const {username} = qr;
-    const userDoc = await getUserWithUsername(username)
-    if (!userDoc) {
-        return {
-            notFound: true,
-        };
-    }
+// export async function getServerSideProps(context:any) {
+//     const {query:qr} = context;
+//     const {username} = qr;
+//     const userDoc = await getUserWithUsername(username)
+//     if (!userDoc) {
+//         return {
+//             notFound: true,
+//         };
+//     }
 
-    let user = null;
-    let posts = null;
-    // console.log('hi')
+//     let user = null;
+//     let posts = null;
+//     // console.log('hi')
 
-    if (userDoc) {
-        user = userDoc.data();
-        const uid = user.uid! 
-        const postsQuery = query(
-            collection(firestore, "users", uid, "posts"), 
-            orderBy('createdAt','desc'),
-            limit(LIMIT)
-            );
+//     if (userDoc) {
+//         user = userDoc.data();
+//         const uid = user.uid! 
+//         const postsQuery = query(
+//             collection(firestore, "users", uid, "posts"), 
+//             orderBy('createdAt','desc'),
+//             limit(LIMIT)
+//             );
 
-        posts = (await getDocs(postsQuery)).docs.map(postToJSON);
-    }
+//         posts = (await getDocs(postsQuery)).docs.map(postToJSON);
+//     }
     
 
-    return {
-        props: {user, posts, username}
-    }
+//     return {
+//         props: {user, posts, username}
+//     }
     
 
-}
+// }
 
 interface User {
     user: any
