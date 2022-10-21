@@ -1,23 +1,7 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Button, ButtonGroup } from '@chakra-ui/react'
-import { collectionGroup, query, where, getDocs, orderBy, limit, startAfter, getDoc} from "firebase/firestore";  
-import { firestore } from '../lib/firebaseConfig/init'
-import { getUserWithUsername, postToJSON } from '../lib/firebaseConfig/init';
-import PostFeed from '../components/users/PostFeed';
-import { useState } from 'react';
-import Loader from '../components/misc/loader';
-import { fromMillis } from '../lib/firebaseConfig/init';
-import Card from '@mui/material/Card';
 import Link from 'next/link'
 import { useAuth,signOut } from '../lib/authContext'
-import type { ReactElement } from 'react'
-import Layout from '../components/layout'
-import FrontPage from '../components/layout/frontpage'
-import Typewriter from 'typewriter-effect'
 import { useRouter } from 'next/router';
-const LIMIT = 10;
-
 
 export default function Home(): any {
 

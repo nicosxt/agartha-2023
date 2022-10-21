@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 
 
     return (
-      <div className="bg-[#FFF8F1]">
+      <div className="min-h-screen bg-white">
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           <h1 className="text-4xl text-center pb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#47FF43] via-[#6184FF] to-[#FF43EC] font-extrabold sm:text-4xl md:text-4xl">
             Explore Meaningful Communities

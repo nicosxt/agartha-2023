@@ -32,10 +32,12 @@ export default function Community(props:any) {
 
     return (
         <main>
-            <div className=" grid grid-flow-row-dense grid-cols-3 grid-rows-3 pt-10 pl-10 pr-10 md:pt-20 md:pt-20 md:pt-20 lg:pt-20 lg:pl-32 lg:pr-32">
+            <div className="min-h-screen bg-white">
+            <div className=" grid grid-flow-row-dense grid-cols-3 grid-rows-3 pt-10 pl-10 pr-10 pb-10 md:pt-20  lg:pt-20 lg:pl-32 lg:pr-32">
             <img className=" w-5/6 absolute justify-center" src='/community/card.png' alt="banner" />
             {community && <CommunityProfilePage community={community} />}
 
+            </div>
             </div>
             {/* {community && <CommunityProfilePage community={community} />} */}
         </main>

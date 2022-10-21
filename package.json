@@ -37,6 +37,7 @@
     "react-leaflet": "^4.1.0",
     "react-map-gl": "^7.0.19",
     "react-markdown": "^8.0.0",
+    "react-matrix-effect": "^1.1.0",
     "typescript": "^4.7.3",
     "typewriter-effect": "^2.19.0"
   },
