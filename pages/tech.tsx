@@ -1,26 +1,12 @@
-import type { NextPage } from 'next'
+
 import Head from 'next/head'
-import { Button, ButtonGroup } from '@chakra-ui/react'
-import { collectionGroup, query, where, getDocs, orderBy, limit, startAfter, getDoc} from "firebase/firestore";  
-import { firestore } from '../lib/firebaseConfig/init'
-import { getUserWithUsername, postToJSON } from '../lib/firebaseConfig/init';
-import PostFeed from '../components/users/PostFeed';
 import { useState } from 'react';
-import Loader from '../components/misc/loader';
-import { fromMillis } from '../lib/firebaseConfig/init';
-import Card from '@mui/material/Card';
 import Link from 'next/link'
-import { useAuth,signOut } from '../lib/authContext'
-import type { ReactElement } from 'react'
-import Layout from '../components/layout'
-import FrontPage from '../components/layout/frontpage'
-import Typewriter from 'typewriter-effect'
+import { useAuth } from '../lib/authContext'
 import { useRouter } from 'next/router';
-const LIMIT = 10;
 
 
 export default function Home(): any {
-
   const { user} = useAuth();
   const router = useRouter();
   const sleep = (ms:number) => new Promise(r => setTimeout(r, ms));
@@ -49,7 +35,6 @@ export default function Home(): any {
     await sleep(500);
     router.push('/tech');
   };
-
   return (
     <>
       <Head>
@@ -61,13 +46,19 @@ export default function Home(): any {
       <main className=" min-h-screen  bg-white">
               <div className="sm:text-center lg:text-center">
                 <div className="px-4  pt-32 ">
-                <h1 className="text-4xl pb-4 pt-10 font-mono  font-medium text-[#0000FF] sm:text-5xl md:text-6xl ">
-                  <span className="block xl:inline ">Your Gate to </span>
-                  <p className="break-all pb-8"/>
-                  <span className="block xl:inline">Meaningful Communities</span>
-
-                  
-                </h1>
+                    <div className="pl-48 items-left pr-48">
+                        <h1 className="text-5xl pb-4 pt-4 font-mono tracking-wider font-medium text-[#0000FF]  text-left">
+                        <span className="block xl:inline pb-4">Tech-centric</span>
+                        </h1>
+                        <div className='text-left font-mono text-[#0000FF] leading-loose pr-10'>
+                        <p >{"We believe adapting to the lattest technology makes us resilient. Technology is here to serve mankinds’ overall wellbeing, not the other way around."}
+                        </p>
+                        <p>Automation empowers us and simplification liberates us.
+                        </p>
+                        <p>
+                        We are solution driven, tech-centric, building a society of innovators and creating softwares as a service.                         </p>
+                </div>
+                </div>
                 <div className="flex justify-center gap-x-20 pt-14">
                   <a style={{ cursor: "pointer" }}>
                     <img onMouseEnter={enterUnite}  className="h-16 w-16 hover:scale-125" src='/balls/unite.png'  />
@@ -85,25 +76,6 @@ export default function Home(): any {
                   <img onMouseEnter={enterTech} className="h-16 w-16 hover:scale-125" src='/balls/technical.png'  />
                   </a>
                 </div>
-                {/* <div className='flex'> */}
-                  {/* <div className='w-1/2'>
-                    <h1 className="text-4xl text-right pb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#47FF43] via-[#6184FF] to-[#FF43EC] font-extrabold sm:text-5xl md:text-6xl">
-                          <Typewriter
-                            options={{
-                            strings: ['Solarpunk', 'Regenerative','Communal','Decentralized'],
-                            autoStart: true,
-                            loop: true,
-                            delay: 100
-                            }}
-                          />
-                    </h1>
-                </div> */}
-                {/* <div className='w-1/2'>
-                <h1 className="text-4xl text-[#0000FF] pb-4 font-extrabold text-left sm:text-5xl md:text-6xl">
-                  Communities</h1>
-                </div> */}
-
-                {/* </div> */}
 
                 <div className=" pt-6 sm:mt-8 sm:flex justify-center gap-x-14 sm:justify-center lg:justify-center">
                   {!user && (<>
@@ -130,10 +102,3 @@ export default function Home(): any {
   )
 }
 
-// Home.getLayout = function getLayout(page: ReactElement) {
-//   return (
-//       <FrontPage>{page}</FrontPage>
-//       // <Layout>{page}</Layout>
-
-//   )
-// }
