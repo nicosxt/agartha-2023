@@ -54,9 +54,9 @@ export default function CommunityAvatarUploader(props: any) :any{
             setDownloadURL(downloadURL);
             setUploading(false);
             avatarUrl.push(downloadURL);
+            console.log("avatarUrl", avatarUrl);
             setDoc(doc(firestore, "communities", slug), {
-              avatarUrl: avatarUrl[0]
-              // imageNames
+              avatarUrl: avatarUrl[avatarUrl.length-1]
             },
             { merge: true }
             )

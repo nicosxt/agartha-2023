@@ -16,86 +16,46 @@ export default function CommunityProfilePage(props : any) {
 
     return(
         <>
-        <div className='h-32 w-32 absolute bg-[#0000FF]'>
+        <div className='  ml-4 mt-4 md:h-50 md:w-50 sm:ml-4 sm:mt-4 sm:h-52 sm:w-52 lg:h-64 lg:w-64 lg:ml-14 lg:mt-20 absolute bg-[#0000FF]'>
+        </div>
+        <div className='  ml-4 mt-4 md:h-50 md:w-50 sm:ml-4 sm:mt-4 sm:h-52 sm:w-52 lg:h-64 lg:w-64 lg:ml-10 lg:mt-16 absolute border-2 border-[#0000FF]'>
+            <img className="absolute w-full h-full" src={community.avatarUrl? community.avatarUrl : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" }alt=""/>
+            <div className='flex pt-72 gap-x-3'>
+                <a target="_blank" rel="noreferrer" href={community.website}>
+                <img src='/icons/Icon-link.png'/>
+                </a>
+                <a target="_blank" rel="noreferrer" href={community.twitter}>
+                <img src='/icons/Icon-twitter.png'/>
+                </a>
+                <a target="_blank" rel="noreferrer" href={community.github}>
+                <img src='/icons/Icon-github.png'/>
+                </a>
+                <a target="_blank" rel="noreferrer" href={community.instagram}>
+                <img src='/icons/Icon-ig.png'/>
+                </a>
+            </div>
 
         </div>
-            <div className="min-h-full">
-                <main className="py-10">
-                    <div className="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
+        <div className='absolute lg:ml-96 lg:mt-16 lg:mb-10'>
+            <h1 className='text-5xl font-mono font-bold text-[#0000FF]'>
+            {community.communityName}
+            </h1>
+            <img className="mt-4 w-5/6" src='/community/line.png' /> 
+            <img className="mt-4 w-5/6" src='/community/dots.png' />
+            <div className='flex'>
+                <img className="mt-4 " src='/community/pin.png' />
+                <p className='ml-4 mt-4 text-[#0000FF] font-mono font-thin '>{community.city}, {community.state}, {community.country}</p>
+            </div>
 
-                        <div className="flex items-center space-x-5">
-                            <div className="flex-shrink-0">
-                                <div className="relative">
-                                    {/* <AvatarUploader /> */}
-                                    {/* <button onClick={() => changeAvatar(true)}> */}
-                                    <img className="h-16 w-16 rounded-full btn" src={community.cover? community.cover : "https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" }alt=""/>
-                                    <span className="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
-                                    {/* </button> */}
-                                </div>
-                            </div>
-                        <div>
+            <div className='  ml-4 mt-4 mb-4 md:h-50 md:w-50 sm:ml-4 sm:mt-4 sm:h-52 sm:w-52 lg:h-7/8 lg:w-full absolute bg-[#0000FF]'>
+                <p className='mt-4 mx-8 text-white font-mono '>
+                    {community.description}
+                </p>
+            </div>
 
-                        <div className="flex space-x-2">
-                        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-pink-500">{community.communityName} </h1>
-                        {/* {admin && */}
-                        <Link href={`/communityAdmin/${community.slug}`}>
-                            Edit
-                            </Link>
-                        {/* } */}
-                        </div>
-                        <p className="text-sm font-medium text-gray-500">{community.intro}</p>
-                        {/* <div className="mt-6"></div> */}
 
-                        
-                        <div className="mt-2">
-                        <ul className="flex space-x-4">
-                        <li className="flex items-center space-x-1">
-                                <a className="text-sm font-medium text-gray-500">
-                                <img src="https://img.icons8.com/material-outlined/30/000000/home--v2.png"/>{community.city? (community.city + ", "+ community.state + ", "+ community.country) : 'N/A'}
-                                </a>
-                            </li>
-
-                            <li className="flex items-center space-x-1">
-                                <a href={community.instagram} className="text-sm font-medium text-gray-500">
-                                <img src="https://img.icons8.com/ios-glyphs/30/000000/instagram-new.png"/>{community.instagram? "ins" : 'N/A'}
-                                </a>
-                            </li>
-                            <li className="flex items-center space-x-1">
-                                <a href={community.twitter} className="text-sm font-medium text-gray-500">
-                                <img src="https://img.icons8.com/ios-glyphs/30/000000/twitter--v1.png"/>{community.twitter? "twi" : 'N/A'}
-                                </a>
-                            </li>
-                            <li className="flex items-center space-x-1">
-                                <a href={community.website} className="text-sm font-medium text-gray-500">
-                                <img src="https://img.icons8.com/material-outlined/30/000000/globe--v3.png"/>{community.website? "web" : 'N/A'}
-                                </a>
-                            </li>
-                            <li className="flex items-center space-x-1">
-                                <a href={community.discord}  className="text-sm font-medium text-gray-500">
-                                <img src="https://img.icons8.com/ios-glyphs/30/000000/discord-logo.png"/>{community.discord? "discord": 'N/A'}
-                                </a>
-                            </li>
-                            <li className="flex items-center space-x-1">
-                                <a href="#" className="text-sm font-medium text-gray-500">
-                                <img src="https://img.icons8.com/ios-glyphs/30/000000/weixing.png"/>{community.wechat || 'N/A'}
-                                </a>
-                            </li>
-
-                            <li className="flex items-center space-x-1">
-                                <a href="#" className="text-sm font-medium text-gray-500">
-                                <img src="https://img.icons8.com/ios-filled/30/000000/apple-mail.png"/>{community.email || 'N/A'}
-                                </a>
-                            </li>
-
-                    
-                        </ul>
-                    </div>
-
-                    </div>
-                    </div>
-          </div>
-</main>
-</div>
+        </div>
+        
         </>
     );
 

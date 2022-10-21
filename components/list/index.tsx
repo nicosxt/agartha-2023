@@ -1,47 +1,3 @@
-
-const products = [
-
-    {
-        id: 2,
-        name: 'CabinDAO',
-        href: '#',
-        imageSrc: 'https://s2.loli.net/2022/10/11/pY7Xx93WwqmHjIl.png',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'Texas, Puerto Rico',
-      },
-      {
-        id: 3,
-        name: 'Traditional Dream Factory',
-        href: '#',
-        imageSrc: 'https://s2.loli.net/2022/10/11/wINU8E5MgrTCQad.png',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'Abelle, Portugal',
-      },
-      {
-        id: 4,
-        name: 'Panchamama',
-        href: '#',
-        imageSrc: 'https://s2.loli.net/2022/10/11/wAfCI1ge4Wbjs2N.png',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'Costa Rica',
-      },
-      {
-        id: 5,
-        name: '706 青年空间',
-        href: '#',
-        imageSrc: 'https://s2.loli.net/2022/10/11/PJeqltKdns36ChB.png',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '$35',
-        color: 'New York, San Francisco, Berlin...',
-      },
-      
-
-
-  ]
-
 import { collectionGroup,collection, query, where, getDocs, orderBy, limit, startAfter, getDoc} from "firebase/firestore";  
 
 import { firestore } from '../../lib/firebaseConfig/init'
@@ -90,10 +46,10 @@ import { useEffect, useState } from "react";
                     <h3 className="text-md font-bold font-inter text-[#0000FF] text-center">
                       <a href={`/community/${community.slug}`}>
                         <span aria-hidden="true" className="absolute inset-0" />
-                        {community.name}
+                        {community.communityName}
                       </a>
                     </h3>
-                    <p className=" text-sm font-inter text-[#0000FF] text-center">{community.location}</p>
+                    <p className=" text-sm font-inter text-[#0000FF] text-center">{community.city}, {community.state}, {community.country}</p>
                   </div>
                 </div>
   

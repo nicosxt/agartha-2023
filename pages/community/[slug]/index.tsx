@@ -32,8 +32,8 @@ export default function Community(props:any) {
 
     return (
         <main>
-            <div className="pt-10 pl-10 pr-10 md:pt-20 md:pt-20 md:pt-20 lg:pt-20 lg:pl-32 lg:pr-32">
-            <img src='/community/card.png' alt="banner" />
+            <div className=" grid grid-flow-row-dense grid-cols-3 grid-rows-3 pt-10 pl-10 pr-10 md:pt-20 md:pt-20 md:pt-20 lg:pt-20 lg:pl-32 lg:pr-32">
+            <img className=" w-5/6 absolute justify-center" src='/community/card.png' alt="banner" />
             {community && <CommunityProfilePage community={community} />}
 
             </div>
