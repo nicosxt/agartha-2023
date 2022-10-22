@@ -20,11 +20,12 @@ export default function EditCommunityProfile(props : any) {
         // console.log("is is ")
         const { communityName, city, state, country, phone,
             discord, email, instagram, intro,
-            twitter, website, wechat, longitude, latitude, github} = data;
+            twitter, website, wechat, longitude, latitude, label, github} = data;
         // console.log(communityRef)
         await updateDoc(communityRef, {
             // Tip: give all fields a default value here
             communityName,
+            label,
             // avatarUrl,
             longitude,
             latitude,
@@ -71,7 +72,7 @@ export default function EditCommunityProfile(props : any) {
         // },)
 
         reset({ communityName,phone, city, state, country, discord, email, instagram, intro,
-          twitter, website, wechat, longitude, latitude, github});
+          twitter, website, wechat, longitude, latitude, github, label});
         router.push(`/community/${defaultValues.slug}`);
 
     };
@@ -131,6 +132,16 @@ export default function EditCommunityProfile(props : any) {
                   <h3 className="text-lg leading-6 font-medium text-gray-900">Details</h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">Getting to know more about the specifications.</p>
                 </div>
+
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="label" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Label </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                          {...register("label")}
+                        type="text" name="label" id="label" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+  
 
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Latitude </label>
@@ -226,7 +237,7 @@ export default function EditCommunityProfile(props : any) {
                     <label htmlFor="github" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Github</label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
-                       {...register("wechat")}
+                       {...register("github")}
                         type="text" id="github" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>

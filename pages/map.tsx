@@ -1,13 +1,106 @@
 import type { NextPage } from 'next';
+import { collectionGroup,collection, query, where, getDocs, orderBy, limit, startAfter, getDoc} from "firebase/firestore";  
+import { firestore } from '../lib/firebaseConfig/init'
+import { getUserWithUsername, communityToJSON } from '../lib/firebaseConfig/init';
+
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState, useEffect, useRef } from 'react';
-import markers from './api/markers.json';
-import GeoJSON  from 'geojson';
 import Router from 'next/router'
 import CommunityList from '../components/list';
-
+import { FeatureCollection } from 'geojson';
 const Map: NextPage = () => {
+    //get the list of communities
+    const [geoJsonFlower, setGeoJsonFlower] = useState<any>(null);
+    const [geoJsonGreen, setGeoJsonGreen] = useState<any>(null);
+
+    const [communities, setcommunities] = useState<any>(null);
+    useEffect(() => {
+      const getCommunities = async () => {
+      const communitiesQuery = query(
+        collection(firestore, 'communities'),
+        )
+      setcommunities((await getDocs(communitiesQuery)).docs.map(communityToJSON));
+      console.log("communities", communities);
+      // setcommunities(communities);
+      }
+      getCommunities();
+    
+    }, []);
+
+    useEffect(() => {
+        if(communities){
+            const transformedData = transformFlowerCommunities();
+            console.log("transformedData Flower", transformedData);
+            setGeoJsonFlower(transformedData);
+        }
+    }, [communities]);
+
+
+    useEffect(() => {
+        if(communities){
+            const transformedData = transformGreenCommunities();
+            console.log("transformedData Green", transformedData);
+            setGeoJsonGreen(transformedData);
+        }
+    }, [communities]);
+
+
+    const transformFlowerCommunities = (): FeatureCollection => {
+        const flowerCommunities = communities.filter((community:any) => community.label==="flower");
+        const features = flowerCommunities.map(
+            (community:any) => {
+                const longitude: number = +community.longitude;
+                const latitude: number = +community.latitude;
+                console.log("community Flower");
+
+                return {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [longitude, latitude]
+                    },
+                    "properties": {
+                        "title": community.communityName
+                    }
+                }
+            }
+            
+        )
+        return {
+            "type": "FeatureCollection",
+            "features": features
+        }
+    }
+
+    const transformGreenCommunities = (): FeatureCollection => {
+        const greenCommunities = communities.filter((community:any) => community.label==="green");
+        const features = greenCommunities.map(
+            (community:any) => {
+                console.log("community Green");
+                const longitude: number = +community.longitude;
+                const latitude: number = +community.latitude;
+                return {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [longitude, latitude]
+                    },
+                    "properties": {
+                        "title": community.communityName
+                    }
+                }
+                
+            }
+        )
+        return {
+            "type": "FeatureCollection",
+            "features": features
+        }
+    }
+
+
+
     const mapContainer = useRef<any>(null);
     const map = useRef<mapboxgl.Map | null>(null);
     const [isListOpen, setIsListOpen] = useState(false);
@@ -23,8 +116,9 @@ const Map: NextPage = () => {
     useEffect(() => {
     }, [isListOpen]);
 
-
+    
     useEffect(() => {
+
  
         mapboxgl.accessToken=process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN??'';
         // if (map.current) return; // initialize map only once
@@ -43,6 +137,10 @@ const Map: NextPage = () => {
 
       map.current?.on('load', () => {
     // Add an image to use as a custom marker
+    if (map.current?.getLayer("points")) {
+        map.current?.removeLayer("points");
+    }
+    
     map.current?.loadImage(
         'https://s2.loli.net/2022/10/11/agEyvQIZ942q3zK.png',
         (error, image) => {
@@ -52,41 +150,11 @@ const Map: NextPage = () => {
             // Add a GeoJSON source with 2 points
             map.current?.addSource('points', {
                 type: 'geojson',
-                data: {
-                    "type": "FeatureCollection",
-                    "features":
-                        [
-                        {
-                            "type": "Feature",
-                            "geometry": {
-                                "type": "Point",
-                                "coordinates": [
-                                    -115.729622,
-                                    33.350616,
-                                ]
-                            },
-                            "properties": {
-                                "title": "Mars College"
-                                // "title": "Mars College, Bombay Beach, CA"
-                            }
-                        },
-                        {
-                            "type": "Feature",
-                            "geometry": {
-                                "type": "Point",
-                                "coordinates": [-73.9497211, 40.6526006]
-                            },
-                            "properties": {
-                                "title": "706 NY"
-                            }
-                        }
-                    ]
-                
-                
-                }
+                data: geoJsonFlower
             });
 
             // Add a symbol layer
+            
             map.current?.addLayer({
                 'id': 'points',
                 'type': 'symbol',
@@ -105,6 +173,11 @@ const Map: NextPage = () => {
             });
         }
     );
+
+    if (map.current?.getLayer("points2")) {
+        map.current?.removeLayer("points2");
+    }
+    
     map.current?.loadImage(
         'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
         (error, image) => {
@@ -114,77 +187,32 @@ const Map: NextPage = () => {
             // Add a GeoJSON source with 2 points
             map.current?.addSource('points2', {
                 type: 'geojson',
-                data: {
-                    "type": "FeatureCollection",
-                    "features":
-                        [
-                        {
-                            "type": "Feature",
-                            "geometry": {
-                                "type": "Point",
-                                "coordinates": [
-                                   
-                                    -8.5667,
-                                    38,
-                                ]
-                            },
-                            "properties": {
-                                "title": "Traditional Dream Factory"
-                                // "title": "Traditional Dream Factory, Setúbal, Portugal"
-
-                            }
-                        },
-                        {
-                            "type": "Feature",
-                            "geometry": {
-                                "type": "Point",
-                                "coordinates": [-97.7431, 30.2672, ]
-                            },
-                            "properties": {
-                                "title": "CabinDAO"
-                                // "title": "CabinDAO, Austin, TX"
-
-                            }
-                        },
-                        {
-                            "type": "Feature",
-                            "geometry": {
-                                "type": "Point",
-                                "coordinates": [-85.65194, 9.98017 ]
-                            },
-                            "properties": {
-                                "title": "Panchamama"
-                                // "title": "CabinDAO, Austin, TX"
-
-                            }
-                        }
-                    ]
-                
-                
-                }
+                data: geoJsonGreen
             });
 
             // Add a symbol layer
-            map.current?.addLayer({
-                'id': 'points2',
-                'type': 'symbol',
-                'source': 'points2',
-                'layout': {
-                    'icon-image': 'green',
-                    // get the title name from the source's "title" property
-                    'text-field': ['get', 'title'],
-                    'text-font': [
-                        'Open Sans Semibold',
-                        'Arial Unicode MS Bold'
-                    ],
-                    'text-offset': [0, 1.25],
-                    'text-anchor': 'top'
-                }
-            });
+            if(!map.current?.getLayer('points2')){
+                map.current?.addLayer({
+                    'id': 'points2',
+                    'type': 'symbol',
+                    'source': 'points2',
+                    'layout': {
+                        'icon-image': 'green',
+                        // get the title name from the source's "title" property
+                        'text-field': ['get', 'title'],
+                        'text-font': [
+                            'Open Sans Semibold',
+                            'Arial Unicode MS Bold'
+                        ],
+                        'text-offset': [0, 1.25],
+                        'text-anchor': 'top'
+                    }
+                });
+            }
         }
     );
 });
-    }, []);
+    }, [geoJsonFlower, geoJsonGreen]);
 
 
 
