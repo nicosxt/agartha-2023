@@ -119,7 +119,7 @@ const Map: NextPage = () => {
     
     useEffect(() => {
 
- 
+
         mapboxgl.accessToken=process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN??'';
         // if (map.current) return; // initialize map only once
         map.current = new mapboxgl.Map({
@@ -137,21 +137,31 @@ const Map: NextPage = () => {
 
       map.current?.on('load', () => {
     // Add an image to use as a custom marker
-    if (map.current?.getLayer("points")) {
-        map.current?.removeLayer("points");
-    }
-    
+
+
+
     map.current?.loadImage(
         'https://s2.loli.net/2022/10/11/agEyvQIZ942q3zK.png',
         (error, image) => {
             if (error) throw error;
+            if(map.current?.hasImage("flower")){
+                map.current?.removeImage("flower");
+            }
             map.current?.addImage('flower', image!);
             console.log("image", image)
             // Add a GeoJSON source with 2 points
-            map.current?.addSource('points', {
-                type: 'geojson',
-                data: geoJsonFlower
-            });
+            if(map.current?.getLayer('points')){
+                map.current?.removeLayer("points");
+            }
+            if(map.current?.getSource('points')){
+                map.current?.removeSource("points");
+            }
+            if(!map.current?.getSource('points')){
+                map.current?.addSource('points', {
+                    type: 'geojson',
+                    data: geoJsonFlower
+                });
+            }
 
             // Add a symbol layer
             
@@ -173,22 +183,31 @@ const Map: NextPage = () => {
             });
         }
     );
-
-    if (map.current?.getLayer("points2")) {
-        map.current?.removeLayer("points2");
-    }
     
+
+
     map.current?.loadImage(
         'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
         (error, image) => {
             if (error) throw error;
+            if(map.current?.hasImage("green")){
+                map.current?.removeImage("green");
+            }
             map.current?.addImage('green', image!);
             console.log("image", image)
             // Add a GeoJSON source with 2 points
-            map.current?.addSource('points2', {
-                type: 'geojson',
-                data: geoJsonGreen
-            });
+            if(map.current?.getLayer('points2')){
+                map.current?.removeLayer("points2");
+            }
+            if(map.current?.getSource('points2')){
+                map.current?.removeSource("points2");
+            }
+            if(!map.current?.getSource('points2')){
+                map.current?.addSource('points2', {
+                    type: 'geojson',
+                    data: geoJsonGreen
+                });
+            }
 
             // Add a symbol layer
             if(!map.current?.getLayer('points2')){
@@ -210,7 +229,8 @@ const Map: NextPage = () => {
                 });
             }
         }
-    );
+    )
+    ;
 });
     }, [geoJsonFlower, geoJsonGreen]);
 

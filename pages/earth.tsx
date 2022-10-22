@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link'
 import { useAuth } from '../lib/authContext'
 import { useRouter } from 'next/router';
+import ParticlesCustom from '../components/layout/particles'
 
 
 export default function Home(): any {
@@ -12,27 +13,22 @@ export default function Home(): any {
   const sleep = (ms:number) => new Promise(r => setTimeout(r, ms));
 
   const enterUnite = async() => {
-    await sleep(500);
     router.push('/unite');
   };
 
   const enterEarth = async() => {
-    await sleep(500);
     router.push('/earth');
   };
 
   const enterPersonal = async() => {
-    await sleep(500);
     router.push('/personal');
   };
 
   const enterPlayful= async() => {
-    await sleep(500);
     router.push('/playful');
   };
 
   const enterTech= async() => {
-    await sleep(500);
     router.push('/tech');
   };
 
@@ -42,7 +38,7 @@ export default function Home(): any {
         <title>Home</title>
         
       </Head>
-      {/* <div className="bg-[#FFF8F1]"> */}
+      <ParticlesCustom />
 
       <main className=" min-h-screen  bg-white">
               <div className="sm:text-center lg:text-center">
@@ -64,19 +60,19 @@ export default function Home(): any {
                 
                 <div className="flex justify-center gap-x-20 pt-14">
                   <a style={{ cursor: "pointer" }}>
-                    <img onMouseEnter={enterUnite}  className="h-16 w-16 hover:scale-125" src='/balls/unite.png'  />
+                    <img onClick={enterUnite}  className="h-16 w-16 hover:scale-125" src='/balls/unite.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onMouseEnter={enterEarth} className="h-16 w-16 hover:scale-125" src='/balls/earth.png'  />
+                  <img onClick={enterEarth} className="h-16 w-16 hover:scale-125" src='/balls/earth.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onMouseEnter={enterPersonal} className="h-16 w-16 hover:scale-125" src='/balls/personal.png'  />
+                  <img onClick={enterPersonal} className="h-16 w-16 hover:scale-125" src='/balls/personal.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onMouseEnter={enterPlayful} className="h-16 w-16 hover:scale-125" src='/balls/playful.png'  />
+                  <img onClick={enterPlayful} className="h-16 w-16 hover:scale-125" src='/balls/playful.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onMouseEnter={enterTech} className="h-16 w-16 hover:scale-125" src='/balls/technical.png'  />
+                  <img onClick={enterTech} className="h-16 w-16 hover:scale-125" src='/balls/technical.png'  />
                   </a>
                 </div>
 
