@@ -29,11 +29,11 @@ export default function ParticlesCustom(props : any){
           events: {
             onClick: {
               enable: true,
-              mode: "push",
+              mode: "attract",
             },
             onHover: {
               enable: true,
-              mode: "repulse",
+              mode: "attract",
             },
             resize: true,
           },

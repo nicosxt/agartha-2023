@@ -16,7 +16,7 @@ export default function FrontPage({children} : Props){
                     <Link href='/'>
                     <a>
                       <span className="sr-only">Agartha</span>
-                      <img className="h-14 w-auto sm:h-14" src="https://s2.loli.net/2022/10/11/lGUY8a3xMwtIZuB.png"/>
+                      <img className="h-14 w-auto sm:h-14" src="https://s2.loli.net/2022/10/24/U2uwF43q5IeXtYL.png"/>
                     </a>
                     </Link>
 

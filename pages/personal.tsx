@@ -38,7 +38,7 @@ export default function Home(): any {
       </Head>
       <ParticlesCustom />
 
-      <main className=" min-h-screen  bg-white">
+      <main className=" min-h-screen mx-auto bg-white">
               <div className="sm:text-center lg:text-center">
                 <div className="px-4  pt-32 ">
                     <div className="pl-48 items-left pr-24">
@@ -54,38 +54,39 @@ export default function Home(): any {
                         We aim to provide inspiring solutions with an excellent support network, so you are not alone.
                         </p>
                 </div>
+                
                 </div>
-                <div className="flex justify-center gap-x-20 pt-14">
+                <div className="flex justify-center pt-4 lg:gap-x-20 md:pt-10 lg:pt-14 sm:gap-x-4">
                   <a style={{ cursor: "pointer" }}>
-                    <img onClick={enterUnite}  className="h-16 w-16 hover:scale-125" src='/balls/unite.png'  />
+                    <img onClick={enterUnite}  className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/unite.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onClick={enterEarth} className="h-16 w-16 hover:scale-125" src='/balls/earth.png'  />
+                  <img onClick={enterEarth} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/earth.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onClick={enterPersonal} className="h-16 w-16 hover:scale-125" src='/balls/personal.png'  />
+                  <img onClick={enterPersonal} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/personal.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onClick={enterPlayful} className="h-16 w-16 hover:scale-125" src='/balls/playful.png'  />
+                  <img onClick={enterPlayful} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/playful.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onClick={enterTech} className="h-16 w-16 hover:scale-125" src='/balls/technical.png'  />
+                  <img onClick={enterTech} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/technical.png'  />
                   </a>
                 </div>
 
-                <div className=" pt-6 sm:mt-8 sm:flex justify-center gap-x-14 sm:justify-center lg:justify-center">
+                <div className=" pt-6 flex gap-x-6 sm:mt-8 sm:flex  justify-center lg:gap-x-14 justify-center">
                   {!user && (<>
                   <div>
                     <Link href='/map'>
                     <a style={{ cursor: "pointer" }}>
 
-                      <img className="h-14 " src='/buttons/explore.png'/>
+                      <img className="h-10 sm:h-14 md:h-14 lg:h-14 " src='/buttons/explore.png'/>
                     </a>
                     </Link>
                   </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
+                  <div>
                     <a href='https://discord.gg/UAjzAx62Ug' target="_blank" rel="noreferrer">
-                      <img className="h-14" src='/buttons/join.png'/>
+                      <img className="h-10 sm:h-14 md:h-14 lg:h-14" src='/buttons/join.png'/>
                     </a>
                   </div>
                   </>
