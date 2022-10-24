@@ -7,7 +7,11 @@ import { doc, getDoc, collection, addDoc, setDoc,updateDoc} from 'firebase/fires
 import { firestore } from '../../lib/firebaseConfig/init'
 import CommunityAvatarUploader from './CommunityAvatarUploader';
 import Link from 'next/link';
+import { TagsInput } from "react-tag-input-component";
+
 export default function CommunityPostForm(props : any) {
+  const [tags, setTags] = useState<string[]>([]);
+
 
     const router = useRouter();
     const { username } = useContext(authContext);
@@ -50,6 +54,7 @@ export default function CommunityPostForm(props : any) {
             // Tip: give all fields a default value here
             communityName ,
             // avatarUrl,
+            tags,
             longitude,
             latitude,
             label,
@@ -159,7 +164,12 @@ export default function CommunityPostForm(props : any) {
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">Getting to know more about the specifications.</p>
                 </div>
 
-
+                <TagsInput
+        value={tags}
+        onChange={setTags}
+        name="tags"
+        placeHolder="enter tags"
+      />
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="label" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> label </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">

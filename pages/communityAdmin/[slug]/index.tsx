@@ -1,16 +1,8 @@
-
-import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
 import { firestore } from '../../../lib/firebaseConfig/init'
 import { doc, getDoc, getDocs,collection, query } from 'firebase/firestore';
-import { useDocumentData } from 'react-firebase-hooks/firestore';
-import AuthCheck from "../../../components/misc/authcheck";
 import EditCommunityProfile from "../../../components/communities/EditCommunityProfile";
-import { getCommunityWithSlug } from "../../../lib/firebaseConfig/init";
-import { communityToJSON } from "../../../lib/firebaseConfig/init";
-import { useRouter } from 'next/router';
 import { useEffect, useState} from "react";
-import { useContext } from 'react';
-import { authContext } from '../../../lib/authContext'
+import { TagsInput } from "react-tag-input-component";
 
 export async function getServerSideProps(context:any){
     const {query:qr} = context;

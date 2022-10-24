@@ -158,8 +158,11 @@ const Map: NextPage = () => {
             if(map.current?.hasImage("flower")){
                 map.current?.removeImage("flower");
             }
-            map.current?.addImage('flower', image!);
-            console.log("image", image)
+            if(map.current){
+                map.current?.addImage('flower', image!);
+
+            }
+         
             // Add a GeoJSON source with 2 points
             if(map.current?.getLayer('points')){
                 map.current?.removeLayer("points");

@@ -5915,6 +5915,11 @@ react-style-singleton@^2.1.0, react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
+react-tag-input-component@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-tag-input-component/-/react-tag-input-component-2.0.1.tgz#dae6b990afc1ad5838fb481213f31f51c518db6b"
+  integrity sha512-bBKgV7h6QdX8WWrqMPftE1qhrFVsj5Ydr6ugt7bV7SFgEh+Y5efm7grJ7KzJ0oncS/iPw/Fcn4ZN2GjOJI9wbw==
+
 react-transition-group@^4.4.5:
   version "4.4.5"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"

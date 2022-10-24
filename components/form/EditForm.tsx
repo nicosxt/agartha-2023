@@ -53,16 +53,10 @@ export default function EditForm(props : any) {
         )
         reset({  content, title, published, movein, moveout,
             street, city, state, zipcode, price, currency, country });
-
-        router.push(`/${username}/${slug}`);
-
-        
-
+        router.push(`/${username}/${slug}`);       
     };
     return (
         <>
-          {/* <script src="../path/to/flowbite/dist/flowbite.js"></script> */}
-          {/* <script src="../path/to/flowbite/dist/datepicker.js"></script> */}
           <form className="py-10 space-y-8 divide-y divide-gray-200"  onSubmit={handleSubmit(updatePost)}>
             <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 md:ml-10 pt-8">
               <div>

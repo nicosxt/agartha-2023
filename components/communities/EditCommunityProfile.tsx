@@ -9,6 +9,7 @@ import { firestore } from '../../lib/firebaseConfig/init'
 import { useRouter } from 'next/router';
 import CommunityAvatarUploader from './CommunityAvatarUploader';
 
+import { TagsInput } from "react-tag-input-component";
 
 export default function EditCommunityProfile(props : any) {
     const {communityRef, userCommunityRef, username, communityMemberRef, communityMemberSnap, defaultValues} =props;
@@ -18,7 +19,7 @@ export default function EditCommunityProfile(props : any) {
     // console.log(communityRef);
     const updateCommunity = async (data:any) => {
         // console.log("is is ")
-        const { communityName, city, state, country, phone,
+        const { communityName, tags, city, state, country, phone,
             discord, email, instagram, intro,
             twitter, website, wechat, longitude, latitude, label, github} = data;
         // console.log(communityRef)
@@ -29,6 +30,7 @@ export default function EditCommunityProfile(props : any) {
             // avatarUrl,
             longitude,
             latitude,
+            tags: tags.split(',').map((tag:any) => tag.trim()),
             city,
             country,
             state,
@@ -71,15 +73,13 @@ export default function EditCommunityProfile(props : any) {
         //   communityName,
         // },)
 
-        reset({ communityName,phone, city, state, country, discord, email, instagram, intro,
+        reset({ communityName,phone, tags,city, state, country, discord, email, instagram, intro,
           twitter, website, wechat, longitude, latitude, github, label});
         router.push(`/community/${defaultValues.slug}`);
 
     };
     return (
         <>
-          {/* <script src="../path/to/flowbite/dist/flowbite.js"></script> */}
-          {/* <script src="../path/to/flowbite/dist/datepicker.js"></script> */}
           <form className="space-y-8 divide-y divide-gray-200"  onSubmit={handleSubmit(updateCommunity)}>
             <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 md:ml-10 pt-8">
               <div>
@@ -132,7 +132,15 @@ export default function EditCommunityProfile(props : any) {
                   <h3 className="text-lg leading-6 font-medium text-gray-900">Details</h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">Getting to know more about the specifications.</p>
                 </div>
-
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="label" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Tags </label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                <input
+        {...register("tags")}
+        name="tags"
+        // placeHolder="enter tags"
+      /> </div>
+      </div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="label" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Label </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
