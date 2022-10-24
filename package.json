@@ -20,7 +20,7 @@
     "firebase": "^9.11.0",
     "firebase-admin": "^9.11.1",
     "flowbite": "^1.4.2",
-    "framer-motion": "^7.6.1",
+    "framer-motion": "6.2.4",
     "geojson": "^0.5.0",
     "heroicons-react": "^1.4.1",
     "lodash.debounce": "^4.0.8",
