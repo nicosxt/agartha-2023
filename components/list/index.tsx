@@ -35,7 +35,7 @@ import { useEffect, useState } from "react";
 
             {communities && communities.map((community:any) => (
               <div key={community.slug} className="group relative">
-                <div className="border-4 border-[#0000FF] h-full w-60 overflow-hidden  bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                <div className="border-4 border-[#0000FF] h-full w-65 overflow-hidden  bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
                     <div className="h-48 w-48 lg:h-60 lg:w-60 mt-4 ml-4 mr-4 mb-2 border-4 border-[#0000FF] rounded-3xl">
                   <img
                     src={community.avatarUrl}
