@@ -47,7 +47,7 @@ export default function CommunityProfilePage(props : any) {
             <img className="mt-4 w-5/6" src='/community/line.png' /> 
             <div className='mt-6'>
                 {community.tags && community.tags.map((tag:any) => (
-                    <span className='text-[#FFDDED] bg-[#0000FF] rounded-3xl py-2 px-4  font-mono font-medium text-xl mr-2'>#{tag}</span>
+                    <span className='text-[#FFDDED] bg-[#0000FF] rounded-3xl py-2 px-4  font-mono font-medium text-xl mr-2' key={tag}>#{tag}</span>
                 ))}
             </div>
             <div className='flex'>
