@@ -26,17 +26,17 @@ import { useEffect, useState } from "react";
 
     return (
       <div className="min-h-screen bg-white ">
-        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-full lg:px-0">
           <h1 className="text-4xl text-center pb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#47FF43] via-[#6184FF] to-[#FF43EC] font-extrabold sm:text-4xl md:text-4xl">
             Explore Meaningful Communities
             </h1>
 
-          <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          <div className="-mx-px mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 mx-4 lg:mr-32 lg:grid-cols-4 ">
 
             {communities && communities.map((community:any) => (
               <div key={community.slug} className="group relative">
-                <div className="border-4 border-[#0000FF] h-full w-65 overflow-hidden  bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                    <div className="h-48 w-48 lg:h-60 lg:w-60 mt-4 ml-4 mr-4 mb-2 border-4 border-[#0000FF] rounded-3xl">
+                <div className="border-4 border-[#0000FF] lg:h-96 lg:w-72 w-72 h-96  mx-20 bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                    <div className="h-60 w-60  mt-4 mx-5  lg:mx-5 mb-2 border-4 border-[#0000FF] rounded-3xl">
                   <img
                     src={community.avatarUrl}
                     className="h-full w-full rounded-3xl object-cover object-center lg:h-full lg:w-full"
