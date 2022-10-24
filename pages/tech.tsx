@@ -47,8 +47,8 @@ export default function Home(): any {
                 <motion.div initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}>
-                    <div className="pl-48 items-left pr-48">
-                        <h1 className="text-5xl pb-4 pt-4 font-mono tracking-wider font-medium text-[#0000FF]  text-left">
+                    <div className="px-4 lg:pl-48 items-left lg:pr-24">
+                        <h1 className="lg:text-5xl lg:pb-4 lg:pt-4 font-mono tracking-wider text-2xl font-bold text-[#0000FF]  text-left">
                         <span className="block xl:inline pb-4">Tech-centric</span>
                         </h1>
                         <div className='text-left font-mono text-[#0000FF] leading-loose pr-10'>

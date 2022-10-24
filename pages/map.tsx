@@ -143,7 +143,11 @@ const Map: NextPage = () => {
     map.current?.loadImage(
         'https://s2.loli.net/2022/10/11/agEyvQIZ942q3zK.png',
         (error, image) => {
+            try{
             if (error) throw error;
+            }catch(error){
+                console.log(error);
+            }
             if(map.current?.hasImage("flower")){
                 map.current?.removeImage("flower");
             }
@@ -189,7 +193,11 @@ const Map: NextPage = () => {
     map.current?.loadImage(
         'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
         (error, image) => {
-            if (error) throw error;
+            try{
+                if (error) throw error;
+                }catch(error){
+                    console.log(error);
+                }
             if(map.current?.hasImage("green")){
                 map.current?.removeImage("green");
             }
