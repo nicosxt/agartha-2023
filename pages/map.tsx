@@ -9,7 +9,9 @@ import { useState, useEffect, useRef } from 'react';
 import Router from 'next/router'
 import CommunityList from '../components/list';
 import { FeatureCollection } from 'geojson';
+import { useRouter } from 'next/router';
 const Map: NextPage = () => {
+    const router = useRouter();
     //get the list of communities
     const [geoJsonFlower, setGeoJsonFlower] = useState<any>(null);
     const [geoJsonGreen, setGeoJsonGreen] = useState<any>(null);
@@ -47,7 +49,8 @@ const Map: NextPage = () => {
 
 
     const transformFlowerCommunities = (): FeatureCollection => {
-        const flowerCommunities = communities.filter((community:any) => community.label==="flower");
+        // const flowerCommunities = communities.filter((community:any) => community.label==="flower");
+        const flowerCommunities = communities;
         const features = flowerCommunities.map(
             (community:any) => {
                 const longitude: number = +community.longitude;
@@ -61,7 +64,9 @@ const Map: NextPage = () => {
                         "coordinates": [longitude, latitude]
                     },
                     "properties": {
-                        "title": community.communityName
+                        "title": community.communityName,
+                        "slug": community.slug
+
                     }
                 }
             }
@@ -78,6 +83,7 @@ const Map: NextPage = () => {
         const features = greenCommunities.map(
             (community:any) => {
                 console.log("community Green");
+                console.log("slug tho", community.slug);
                 const longitude: number = +community.longitude;
                 const latitude: number = +community.latitude;
                 return {
@@ -87,7 +93,8 @@ const Map: NextPage = () => {
                         "coordinates": [longitude, latitude]
                     },
                     "properties": {
-                        "title": community.communityName
+                        "title": community.communityName,
+                        "slug": community.slug
                     }
                 }
                 
@@ -141,7 +148,7 @@ const Map: NextPage = () => {
 
 
     map.current?.loadImage(
-        'https://s2.loli.net/2022/10/11/agEyvQIZ942q3zK.png',
+        'https://s2.loli.net/2022/10/25/fbt6uYgSUCTdGK4.png',
         (error, image) => {
             try{
             if (error) throw error;
@@ -187,57 +194,83 @@ const Map: NextPage = () => {
             });
         }
     );
-    
-
-
-    map.current?.loadImage(
-        'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
-        (error, image) => {
-            try{
-                if (error) throw error;
-                }catch(error){
-                    console.log(error);
-                }
-            if(map.current?.hasImage("green")){
-                map.current?.removeImage("green");
-            }
-            map.current?.addImage('green', image!);
-            console.log("image", image)
-            // Add a GeoJSON source with 2 points
-            if(map.current?.getLayer('points2')){
-                map.current?.removeLayer("points2");
-            }
-            if(map.current?.getSource('points2')){
-                map.current?.removeSource("points2");
-            }
-            if(!map.current?.getSource('points2')){
-                map.current?.addSource('points2', {
-                    type: 'geojson',
-                    data: geoJsonGreen
-                });
-            }
-
-            // Add a symbol layer
-            if(!map.current?.getLayer('points2')){
-                map.current?.addLayer({
-                    'id': 'points2',
-                    'type': 'symbol',
-                    'source': 'points2',
-                    'layout': {
-                        'icon-image': 'green',
-                        // get the title name from the source's "title" property
-                        'text-field': ['get', 'title'],
-                        'text-font': [
-                            'Open Sans Semibold',
-                            'Arial Unicode MS Bold'
-                        ],
-                        'text-offset': [0, 1.25],
-                        'text-anchor': 'top'
-                    }
-                });
-            }
+    map.current?.on('mouseenter', 'points', () => {
+        map.current!.getCanvas().style.cursor = 'pointer'
+      })
+    map.current?.on('mouseleave', 'points', () => {
+        map.current!.getCanvas().style.cursor = ''
+      })
+    map.current?.on('click', 'points', (e:any) => {
+        // Copy coordinates array.
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const description = e.features[0].properties.slug;
+        const slug = e.features[0].properties.slug;
+        router.push(`/community/${slug}`);
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
-    )
+         
+        // new mapboxgl.Popup()
+        // .setLngLat(coordinates)
+        // .setHTML(description)
+        // .addTo(map.current!);
+        });
+    
+// https://s2.loli.net/2022/10/11/agEyvQIZ942q3zK.png
+//'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
+
+
+    // map.current?.loadImage(
+    //     'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
+    //     (error, image) => {
+    //         try{
+    //             if (error) throw error;
+    //             }catch(error){
+    //                 console.log(error);
+    //             }
+    //         if(map.current?.hasImage("green")){
+    //             map.current?.removeImage("green");
+    //         }
+    //         map.current?.addImage('green', image!);
+    //         console.log("image", image)
+    //         // Add a GeoJSON source with 2 points
+    //         if(map.current?.getLayer('points2')){
+    //             map.current?.removeLayer("points2");
+    //         }
+    //         if(map.current?.getSource('points2')){
+    //             map.current?.removeSource("points2");
+    //         }
+    //         if(!map.current?.getSource('points2')){
+    //             map.current?.addSource('points2', {
+    //                 type: 'geojson',
+    //                 data: geoJsonGreen
+    //             });
+    //         }
+
+    //         // Add a symbol layer
+    //         if(!map.current?.getLayer('points2')){
+    //             map.current?.addLayer({
+    //                 'id': 'points2',
+    //                 'type': 'symbol',
+    //                 'source': 'points2',
+    //                 'layout': {
+    //                     'icon-image': 'green',
+    //                     // get the title name from the source's "title" property
+    //                     'text-field': ['get', 'title'],
+    //                     'text-font': [
+    //                         'Open Sans Semibold',
+    //                         'Arial Unicode MS Bold'
+    //                     ],
+    //                     'text-offset': [0, 1.25],
+    //                     'text-anchor': 'top'
+    //                 }
+    //             });
+    //         }
+    //     }
+    // )
     ;
 });
     }, [geoJsonFlower, geoJsonGreen]);

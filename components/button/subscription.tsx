@@ -24,7 +24,7 @@ export default function Subscription() {
         <div className=" px-2 sm:px-2 lg:flex lg:items-center lg:py-0  lg:px-2">
           <div className="mx-2 sm:py-2  lg:mt-0 lg:w-0 lg:flex-1">
             <h2 className="pt-2 lg:pt-0 text-sm text-center font-mono font-medium tracking-tight text-[#0000FF] sm:text-base lg:text-xl " id="newsletter-headline">
-              Want to Connect?
+            Talk to You Soon~
             </h2>
            
           </div>
