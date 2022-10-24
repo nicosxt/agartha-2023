@@ -3,7 +3,6 @@ import { firestore, storage } from '../../lib/firebaseConfig/init';
 import Loader from '../misc/loader';
 import { getAuth, GoogleAuthProvider , signInWithPopup } from "firebase/auth";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll} from "firebase/storage";
-import { Item } from 'framer-motion/types/components/Reorder/Item';
 import { doc, getDoc, collection, addDoc, setDoc, getDocs, query, where, limit, orderBy} from 'firebase/firestore';
 
 

@@ -25,7 +25,7 @@ import { useEffect, useState } from "react";
 
 
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white ">
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           <h1 className="text-4xl text-center pb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#47FF43] via-[#6184FF] to-[#FF43EC] font-extrabold sm:text-4xl md:text-4xl">
             Explore Meaningful Communities
@@ -35,11 +35,11 @@ import { useEffect, useState } from "react";
 
             {communities && communities.map((community:any) => (
               <div key={community.slug} className="group relative">
-                <div className="border-4 border-[#0000FF] min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden  bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                    <div className="h-60 w-60 mt-4 ml-4 mr-4 mb-2 border-4 border-[#0000FF] rounded-3xl">
+                <div className="border-4 border-[#0000FF] h-full w-60 overflow-hidden  bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+                    <div className="h-48 w-48 lg:h-60 lg:w-60 mt-4 ml-4 mr-4 mb-2 border-4 border-[#0000FF] rounded-3xl">
                   <img
                     src={community.avatarUrl}
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                    className="h-full w-full rounded-3xl object-cover object-center lg:h-full lg:w-full"
                   />
                   </div>
                   <div>
