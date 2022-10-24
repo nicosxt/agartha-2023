@@ -5,6 +5,8 @@ import FrontPage from './frontpage'
 type Props = {
     children: React.ReactNode;
 };
+import {Banner, Container} from '../styles/styles';
+
 
 export default function Layout({children} : Props){
     const {user, username} = useAuth();
@@ -12,6 +14,7 @@ export default function Layout({children} : Props){
 
     return (
         <>
+        <Banner>
         <div className=" h-16 ">
             {username && (
             <Header>{children}</Header>
@@ -20,6 +23,7 @@ export default function Layout({children} : Props){
                 <FrontPage>{children}</FrontPage> 
             )}
         </div>
+        </Banner>
         </>
     );
 }

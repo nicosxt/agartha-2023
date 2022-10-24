@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { useAuth,signOut } from '../lib/authContext'
 import { useRouter } from 'next/router';
 import ParticlesCustom from '../components/layout/particles'
+import { motion } from "framer-motion"
+import {Banner, Container, Body} from '../components/styles/styles';
+import Subscription from '../components/button/subscription';
 export default function Home(): any {
   const { user} = useAuth();
   const router = useRouter();
@@ -39,16 +42,24 @@ export default function Home(): any {
         <title>Home</title>
         
       </Head>
-      <ParticlesCustom />
+    
+        <Container>
+        <ParticlesCustom />
+
+      </Container>
+      <Body>
       <main className=" min-h-screen  bg-white">
+
+
+      <motion.div initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}>
               <div className="sm:text-center lg:text-center">
-                <div className="px-4  pt-32 ">
+                <div className="px-4   pt-32 ">
                 <h1 className="text-2xl text-center pb-4 pt-10 font-mono font-medium text-[#0000FF] sm:text-3xl md:text-4xl lg:text-6xl ">
                   <span className="block xl:inline ">Your Gate to </span>
                   <p className="break-all pb-8"/>
                   <span className="block xl:inline">Meaningful Communities</span>
-
-                  
                 </h1>
                 <div className="flex justify-center pt-4 lg:gap-x-20 md:pt-10 lg:pt-14 sm:gap-x-4">
                   <a style={{ cursor: "pointer" }}>
@@ -67,25 +78,8 @@ export default function Home(): any {
                   <img onClick={enterTech} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/technical.png'  />
                   </a>
                 </div>
-                {/* <div className='flex'> */}
-                  {/* <div className='w-1/2'>
-                    <h1 className="text-4xl text-right pb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#47FF43] via-[#6184FF] to-[#FF43EC] font-extrabold sm:text-5xl md:text-6xl">
-                          <Typewriter
-                            options={{
-                            strings: ['Solarpunk', 'Regenerative','Communal','Decentralized'],
-                            autoStart: true,
-                            loop: true,
-                            delay: 100
-                            }}
-                          />
-                    </h1>
-                </div> */}
-                {/* <div className='w-1/2'>
-                <h1 className="text-4xl text-[#0000FF] pb-4 font-extrabold text-left sm:text-5xl md:text-6xl">
-                  Communities</h1>
-                </div> */}
+                <Subscription/>
 
-                {/* </div> */}
 
                 <div className=" pt-6 flex gap-x-6 sm:mt-8 sm:flex  justify-center lg:gap-x-14 justify-center">
                   {!user && (<>
@@ -107,15 +101,11 @@ export default function Home(): any {
                 </div>
                 </div>
               </div>
+              </motion.div>
+
           </main>
+          </Body>
+
     </>
   )
 }
-
-// Home.getLayout = function getLayout(page: ReactElement) {
-//   return (
-//       <FrontPage>{page}</FrontPage>
-//       // <Layout>{page}</Layout>
-
-//   )
-// }

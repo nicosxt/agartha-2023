@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useAuth } from '../lib/authContext'
 import { useRouter } from 'next/router';
 import ParticlesCustom from '../components/layout/particles'
+import { motion } from "framer-motion"
 
 
 export default function Home(): any {
@@ -39,8 +40,12 @@ export default function Home(): any {
       <ParticlesCustom />
 
       <main className=" min-h-screen mx-auto bg-white">
+
               <div className="sm:text-center lg:text-center">
                 <div className="px-4  pt-32 ">
+                <motion.div initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}>
                     <div className="pl-48 items-left pr-24">
                         <h1 className="text-5xl pb-4 pt-4 font-mono tracking-wider font-medium text-[#0000FF]  text-left">
                         <span className="block xl:inline pb-4">Sovereign Individuals</span>
@@ -54,8 +59,10 @@ export default function Home(): any {
                         We aim to provide inspiring solutions with an excellent support network, so you are not alone.
                         </p>
                 </div>
-                
+
                 </div>
+                </motion.div>
+
                 <div className="flex justify-center pt-4 lg:gap-x-20 md:pt-10 lg:pt-14 sm:gap-x-4">
                   <a style={{ cursor: "pointer" }}>
                     <img onClick={enterUnite}  className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/unite.png'  />

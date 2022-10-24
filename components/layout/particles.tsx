@@ -4,7 +4,6 @@ import Particles from "react-tsparticles";
 import type { Container, Engine } from "tsparticles-engine";
 import { loadFull } from "tsparticles";
 import { useCallback } from "react";
-
 export default function ParticlesCustom(props : any){
     const particlesInit = useCallback(async (engine) => {
         console.log(engine);
@@ -19,6 +18,7 @@ export default function ParticlesCustom(props : any){
       }, []);
     return <>
     <Particles
+      className='-z-999'
       id="tsparticles"
       init={particlesInit}
       loaded={particlesLoaded}

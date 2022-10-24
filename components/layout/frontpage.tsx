@@ -1,14 +1,17 @@
 import { useAuth,signOut } from '../../lib/authContext'
 import Link from 'next/link'
 import Footer from '../layout/footer'
+import {Banner, Container, Body} from '../styles/styles';
+
 type Props = {
   children: React.ReactNode;
 };
 export default function FrontPage({children} : Props){
    
     return <>
- <div className="flex flex-col min-h-screen  bg-[#FFDDED] 
-    divide-y-2 divide-[#0000FF]">
+    <Banner>
+ <div className="relative flex flex-col min-h-screen  bg-[#FFDDED] 
+    divide-y-2 divide-[#0000FF] ">
 
               <nav className="mt-4 mb-4 ml-4 relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
                 <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
@@ -40,6 +43,7 @@ export default function FrontPage({children} : Props){
         
     </div>
     </div>
+    </Banner>
 
     </>
 

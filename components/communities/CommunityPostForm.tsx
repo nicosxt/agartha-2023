@@ -45,7 +45,6 @@ export default function CommunityPostForm(props : any) {
     const createCommunity = async (e:any) => {
         //create community and update user profile
         e.preventDefault();
-        console.log("I'm here", slug)
         const ref = doc(firestore, "communities", slug);
         await setDoc(ref, {
             // Tip: give all fields a default value here
