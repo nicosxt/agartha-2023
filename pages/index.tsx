@@ -81,7 +81,7 @@ export default function Home(): any {
                 <Subscription/>
 
 
-                <div className=" pt-6 flex gap-x-6 sm:mt-8 sm:flex  justify-center lg:gap-x-14 justify-center">
+                <div className=" pt-6 flex gap-x-6 sm:mt-8 sm:flex  lg:gap-x-14 justify-center">
                   {!user && (<>
                   <div>
                     <Link href='/map'>

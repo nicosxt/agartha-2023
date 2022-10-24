@@ -7,14 +7,14 @@ const Banner = styled.div`
 
 const Body = styled.div`
 position: fixed
-z-index: 0;
+z-index: 100;
 `;
 
 const Container = styled.div`
 position: fixed;
 width: 50%;
 height: 50%;
-z-index: -1;
+z-index: 100;
 `;
 
 export  {Banner, Container, Body};
