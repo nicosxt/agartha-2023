@@ -20,43 +20,19 @@ export default function Home(props:Props): any {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>About</title>
         
       </Head>
-      {/* <div className="bg-[#FFF8F1]"> */}
 
-      <main className=" min-h-screen  bg-white">
-              <div className="sm:text-center lg:text-center">
-                <div className="px-4  pt-32 ">
-                <h1 className="text-4xl pb-4 pt-10 font-mono  font-medium text-[#0000FF] sm:text-5xl md:text-6xl">
-                  <span className="block xl:inline pb-4">About</span>
-
-                  
-                </h1>
-                
-               
-
-
-                <div className=" pt-6 sm:mt-8 sm:flex justify-center gap-x-14 sm:justify-center lg:justify-center">
-                  {!user && (<>
-                  <div>
-                    <Link href='/map'>
-                    <a style={{ cursor: "pointer" }}>
-
-                      <img className="h-14 " src='/buttons/explore.png'/>
-                    </a>
-                    </Link>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <a href='https://discord.gg/UAjzAx62Ug' target="_blank" rel="noreferrer">
-                      <img className="h-14" src='/buttons/join.png'/>
-                    </a>
-                  </div>
-                  </>
-                  )}
-                </div>
-                </div>
-              </div>
+      <main className=" min-h-screen  relative bg-white">
+      <div className="relative">
+  <img className="w-full" src="/about.jpg" alt="" />
+  <a style={{ cursor: "pointer" }} target="_blank" rel="noreferrer" href='https://www.notion.so/Mission-Paper-ec7cd6959bce4437ad0a3417bf01ef6b'>
+  <img src='/buttons/readManifesto.png'className="h-10 lg:h-16 mt-4 sm:h-14 md:h-20 md:mt-16 lg:mt-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-2/4 "/>
+  </a> 
+</div>
+<img src='/about-2.jpg'className=""/>
+          
           </main>
     </>
   )

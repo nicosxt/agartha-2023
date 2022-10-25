@@ -27,7 +27,11 @@ export default function FrontPage({children} : Props){
                 </div>
 
                 <div className="mr-4 items-center justify-end md:flex md:flex-1 lg:w-0">
-                  <Link href={'/about'}>
+              
+                   <a target="_blank" rel="noreferrer" href='https://www.notion.so/Agartha-4e4dcfd1584f420f87daf46ca2aaf25c'>
+                   <p className='font-mono text-[#0000FF]  pr-8'>Wiki</p>
+                   </a>
+                   <Link href={'/about'}>
                     <a style={{ cursor: "pointer" }}>
                    <p className='font-mono text-[#0000FF]  pr-4'>About</p>
                    </a>

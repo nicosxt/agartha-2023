@@ -29,11 +29,11 @@ import { useEffect, useState } from "react";
         <div className=" py-16 px-4 sm:py-24 sm:px-6 lg:max-w-full lg:px-0">
 
 
-          <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-col-3 lg:mr-32 lg:grid-cols-4 ">
+          <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2  md:grid-col-3 lg:mr-32 lg:grid-cols-3 xl:grid-cols-4">
 
             {communities && communities.map((community:any) => (
               <div key={community.slug} className=" ">
-                <div className="mx-10 border-2  border-[#0000FF] bg-[#EAFFF4] lg:h-96 lg:w-72 w-72 h-96   bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 bg-[#DDFFF3]">
+                <div className="mx-10 border-2  border-[#0000FF] bg-[#EAFFF4] lg:h-full pb-4 lg:w-72 w-72 h-96   bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 bg-[#DDFFF3]">
                     <div className="h-60 w-60  mt-6 mx-5 lg:mx-5 mb-2 border-2 border-[#0000FF] ">
                   <img
                     src={community.avatarUrl}
