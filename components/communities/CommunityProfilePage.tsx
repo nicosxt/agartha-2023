@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import { useContext, useState, useEffect} from 'react';
+import { useForm } from 'react-hook-form';
 
 
 export default function CommunityProfilePage(props : any) {
     const [isMobile, setIsMobile] = useState(false)
     const [isReadMore, setIsReadMore] = useState(false)
+    const defaultValues = props.community;
+    const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
 
     useEffect(() => {
     }, [isReadMore]);
@@ -123,6 +126,7 @@ export default function CommunityProfilePage(props : any) {
                     <>
                         <p className='my-4 mx-8 text-white font-mono line-clamp-6 md:line-clamp-4 lg:line-clamp-2 '>
                             {community.intro}
+
                         </p>
                         <button onClick={()=> setIsReadMore(!isReadMore) }>
                         <p className='mb-2 mx-8 text-white font-mono'> 

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
   export default function CommunityList() {
     const [communityQuery, setCommunityQuery] = useState('');
     const [communities, setcommunities] = useState<any>();
+    
+
     const tags = ["Regen","Techy","Artsy","Coliving","Solarpunk","Family"];
     useEffect(() => {
       const getCommunities = async () => {
@@ -23,13 +25,14 @@ import { useEffect, useState } from "react";
       keys: ['communityName', 'intro', 'tags', 'city', 'state', 'country'],
       // threshold: 0.3,
     });
-    let searchResults;
+    let searchResults = null;
+  
     if(communities){
 
       const results = fuse.search(communityQuery);
       
       console.log("results", results);
-      searchResults = communityQuery? results.map(( item:any  ) => <div key={item?.communityName!}>item</div>) : communities;
+      searchResults = communityQuery? results.map(( result:any  ) =>result.item) : communities;
     }
 
     function handleOnSearch({ currentTarget ={} }:any) {
