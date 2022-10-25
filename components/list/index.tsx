@@ -29,7 +29,7 @@ import { useEffect, useState } from "react";
       const results = fuse.search(communityQuery);
       
       console.log("results", results);
-      searchResults = communityQuery? results.map(({ item }) => item) : communities;
+      searchResults = communityQuery? results.map(( item:any  ) => <div key={item?.communityName!}>item</div>) : communities;
     }
 
     function handleOnSearch({ currentTarget ={} }:any) {
@@ -49,7 +49,7 @@ import { useEffect, useState } from "react";
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
             <div className="relative">
                 <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                    <svg aria-hidden="true" className="w-5 h-5 text-[#0000FF] dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <svg aria-hidden="true" className="w-5 h-5 text-[#0000FF] dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
                 <input type="search" value={communityQuery} onChange={handleOnSearch} id="default-search" className="block p-4 pl-10 w-full text-lg text-gray-900 bg-[#FFDDED] border border-2 border-[#0000FF] focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:text-[#0000FF] placeholder:italic dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Keywords..." required />
             </div>
@@ -67,7 +67,7 @@ import { useEffect, useState } from "react";
           <div className="mt-0 grid grid-cols-1 gap-8 sm:grid-cols-2  md:grid-col-3 lg:mr-32 lg:grid-cols-3 xl:grid-cols-4">
 
             {searchResults && searchResults.map((community:any) => (
-              <a href={`/community/${community.slug}`}>
+              <a key={community.slug} href={`/community/${community.slug}`}>
 
               <div key={community.slug} className=" ">
                 <div className="mx-10 border-2  border-[#0000FF] bg-[#EAFFF4]  pb-4  lg:w-72 lg:h-96 w-72 h-96 bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 bg-[#DDFFF3]">
