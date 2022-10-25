@@ -132,8 +132,8 @@ const Map: NextPage = () => {
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/light-v10',
-            center: [0, 0],
-            zoom: 1.8,
+            center: [-39.4629, 35.7465],
+            zoom: 2.8,
 
         });
 

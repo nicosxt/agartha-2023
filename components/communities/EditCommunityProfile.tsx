@@ -30,7 +30,7 @@ export default function EditCommunityProfile(props : any) {
             // avatarUrl,
             longitude,
             latitude,
-            tags: tags.split(',').map((tag:any) => tag.trim()),
+            tags: tags.toString().split(',').map((tag:any) => tag.trim()),
             city,
             country,
             state,
