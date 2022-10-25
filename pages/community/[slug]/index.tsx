@@ -15,6 +15,22 @@ export async function getServerSideProps(context:any){
 
 
 export default function Community(props:any) {
+    const [isMobile, setIsMobile] = useState(false)
+    const handleResize = () => {
+        if (window.innerWidth < 768) {
+            setIsMobile(true)
+        } else {
+            setIsMobile(false)
+        }
+    }
+    useEffect(() => {
+        window.addEventListener('resize', handleResize)
+        handleResize()
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+
+
     const [community, setCommunity] = useState<any>(null);
     const realSlug = props.slug;
     console.log(realSlug)
@@ -34,7 +50,12 @@ export default function Community(props:any) {
         <main>
             <div className="min-h-screen bg-white">
             <div className=" grid grid-flow-row-dense grid-cols-3 grid-rows-3 pt-10 pl-10 pr-10 pb-10 md:pt-20  lg:pt-20 lg:pl-32 lg:pr-32">
-            <img className=" w-5/6 absolute justify-center" src='/community/card.png' alt="banner" />
+                {isMobile ? (
+                    <img className="w-5/6 absolute justify-center" src='/community/card-mobile.png' alt="banner" />
+                ) : (
+                    <img className="lg:w-5/6  absolute justify-center" src='/community/card.png' alt="banner" />
+
+                )}
             {community && <CommunityProfilePage community={community} />}
 
             </div>

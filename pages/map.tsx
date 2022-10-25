@@ -155,13 +155,18 @@ const Map: NextPage = () => {
             }catch(error){
                 console.log(error);
             }
-            if(map.current?.hasImage("flower")){
-                map.current?.removeImage("flower");
-            }
-            if(map.current){
-                map.current?.addImage('flower', image!);
+            try{
+                if(map.current?.hasImage("flower")){
+                    map.current?.removeImage("flower");
+                }
+                if(map.current){
+                    map.current?.addImage('flower', image!);
 
+                }
+            }catch(error){
+                console.log(error);
             }
+
          
             // Add a GeoJSON source with 2 points
             if(map.current?.getLayer('points')){
@@ -170,31 +175,41 @@ const Map: NextPage = () => {
             if(map.current?.getSource('points')){
                 map.current?.removeSource("points");
             }
-            if(!map.current?.getSource('points')){
-                map.current?.addSource('points', {
-                    type: 'geojson',
-                    data: geoJsonFlower
-                });
+            try{
+                if(!map.current?.getSource('points')){
+                    map.current?.addSource('points', {
+                        type: 'geojson',
+                        data: geoJsonFlower
+                    });
+                }
+            }catch(error){
+                console.log(error);
             }
 
+
             // Add a symbol layer
+            try{
             
-            map.current?.addLayer({
-                'id': 'points',
-                'type': 'symbol',
-                'source': 'points',
-                'layout': {
-                    'icon-image': 'flower',
-                    // get the title name from the source's "title" property
-                    'text-field': ['get', 'title'],
-                    'text-font': [
-                        'Open Sans Semibold',
-                        'Arial Unicode MS Bold'
-                    ],
-                    'text-offset': [0, 1.25],
-                    'text-anchor': 'top'
-                }
-            });
+                map.current?.addLayer({
+                    'id': 'points',
+                    'type': 'symbol',
+                    'source': 'points',
+                    'layout': {
+                        'icon-image': 'flower',
+                        // get the title name from the source's "title" property
+                        'text-field': ['get', 'title'],
+                        'text-font': [
+                            'Open Sans Semibold',
+                            'Arial Unicode MS Bold'
+                        ],
+                        'text-offset': [0, 1.25],
+                        'text-anchor': 'top'
+                    }
+                });
+            }catch(error){
+                console.log(error);
+            }
+
         }
     );
     map.current?.on('mouseenter', 'points', () => {
