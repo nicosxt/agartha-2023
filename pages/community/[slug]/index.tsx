@@ -47,8 +47,8 @@ export default function Community(props:any) {
     }, []);
 
     return (
-        <main>
-            <div className="min-h-screen bg-white">
+        <main className='overflow-x-hidden'>
+            <div className="min-h-screen bg-white overflow-x-hidden">
             <div className=" grid grid-flow-row-dense grid-cols-3 grid-rows-3 pt-10 pl-10 pr-10 pb-10 md:pt-20  lg:pt-20 lg:pl-32 lg:pr-32">
                 {isMobile ? (
                     <img className="w-5/6 absolute justify-center" src='/community/card-mobile.png' alt="banner" />

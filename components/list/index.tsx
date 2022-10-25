@@ -35,21 +35,21 @@ import { useEffect, useState } from "react";
 
             {communities && communities.map((community:any) => (
               <div key={community.slug} className="group relative">
-                <div className="border-2 border-[#0000FF] bg-[#EAFFF4] lg:h-96 lg:w-72 w-72 h-96  mx-20 bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
-                    <div className="h-60 w-60  mt-6 mx-10  lg:mx-5 mb-2 border-2 border-[#0000FF] ">
+                <div className="border-2 border-[#0000FF] bg-[#EAFFF4] lg:h-96 lg:w-72 w-72 h-96  mx-20 bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80 bg-[#DDFFF3]">
+                    <div className="h-60 w-60  mt-6 mx-5 lg:mx-5 mb-2 border-2 border-[#0000FF] ">
                   <img
                     src={community.avatarUrl}
                     className="h-full w-full  object-cover object-center lg:h-full lg:w-full"
                   />
                   </div>
                   <div>
-                    <h3 className="text-md font-bold font-inter text-[#0000FF] text-center">
+                    <h3 className="text-md mt-4 font-bold font-inter text-[#0000FF] text-center">
                       <a href={`/community/${community.slug}`}>
-                        <span aria-hidden="true" className="absolute inset-0" />
+                        <span aria-hidden="true" className="absolute  inset-0" />
                         {community.communityName}
                       </a>
                     </h3>
-                    <p className=" text-sm font-inter text-[#0000FF] text-center">{community.city}, {community.state}, {community.country}</p>
+                    <p className=" text-sm pt-2 font-inter text-[#0000FF] text-center">{community.city}, {community.state}, {community.country}</p>
                   </div>
                 </div>
   
