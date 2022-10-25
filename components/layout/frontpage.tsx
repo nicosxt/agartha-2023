@@ -26,7 +26,7 @@ export default function FrontPage({children} : Props){
                   </div>
                 </div>
 
-                <div className="mr-4 items-center justify-end md:flex md:flex-1 lg:w-0">
+                <div className="mr-4 items-center flex justify-end sm:flex md:flex md:flex-1 lg:w-0">
               
                    <a target="_blank" rel="noreferrer" href='https://www.notion.so/Agartha-4e4dcfd1584f420f87daf46ca2aaf25c'>
                    <p className='font-mono text-[#0000FF]  pr-8'>Wiki</p>
