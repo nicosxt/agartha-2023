@@ -50,7 +50,7 @@ export default function CommunityProfilePage(props : any) {
             <div className="absolute w-full h-full object-cover object-center bg-[#0000FF] " />
             </div>
             {!isMobile && 
-                <div className='flex pt-52  gap-x-8 lg:gap-x-3 '>
+                <div className='flex pt-52 lg:pt-44 md:pt-28 md:gap-x-2 gap-x-8 lg:gap-x-4 '>
                     <a target="_blank" rel="noreferrer" href={community.website}>
                     <img src='/icons/Icon-link.png'/>
                     </a>
@@ -70,14 +70,14 @@ export default function CommunityProfilePage(props : any) {
 
         <div className='absolute mt-8 mx-4 lg:ml-96 lg:mt-16 lg:mb-10'>
             {!isMobile && <>
-            <h1 className='text-5xl  font-mono font-bold pr-20 lg:mr-0  text-[#0000FF]  line-clamp-2'>
+            <h1 className='text-5xl lg:ml-4 pb-2 md:text-4xl md:ml-72 font-mono font-bold pr-20 lg:mr-0  text-[#0000FF]  line-clamp-2'>
             {community.communityName}
             </h1>
             
-            <img className="mt-4 w-5/6" src='/community/line.png' /> 
+            <img className="mt-4 md:mt-2 w-5/6 lg:ml-4 md:ml-72 md:w-1/2" src='/community/line.png' /> 
             </>}
             
-            <div className='pt-40 lg:pt-0'>
+            <div className='pt-40 md:pt-0 lg:pt-0'>
             {isMobile &&
                 <div className='flex pt-72 gap-x-6 lg:gap-x-3 '>
                     <a target="_blank" rel="noreferrer" href={community.website}>
@@ -95,19 +95,19 @@ export default function CommunityProfilePage(props : any) {
                 </div>
             }
             {community.tags && 
-            <div className='flex flex-wrap mt-8 mx-8 lg:mt-6 '>
+            <div className='flex flex-wrap mt-8 mx-8 lg:mt-1 lg:ml-4 md:ml-72 md:mt-2 '>
                 {community.tags.map((tag:any) => (
-                    <span className=' mt-2 text-[#FFDDED] bg-[#0000FF] rounded-3xl py-2 px-4  font-mono font-medium lg:text-xl mr-2' key={tag}>#{tag}</span>
+                    <span className=' mt-2 text-[#FFDDED] bg-[#0000FF] rounded-3xl py-1 px-4  font-mono font-medium lg:text-xl mr-2' key={tag}>#{tag}</span>
                 ))}
             </div>
         }
             </div>
             <div className='flex pt-4'>
-                <img className="mt-4 w-4 h-6 " src='/community/pin.png' />
-                <p className='mx-4 mt-4 text-[#0000FF] font-mono font-thin '>{community.city}, {community.state}, {community.country}</p>
+                <img className="mt-0 w-4 h-6 lg:ml-4 md:ml-72" src='/community/pin.png' />
+                <p className='mx-4 mt-0 text-[#0000FF] font-mono font-thin '>{community.city}, {community.state}, {community.country}</p>
             </div>
 
-            <div className=' w-72  flex flex-wrap mx-2 my-4 md:h-50 md:w-50 sm:ml-4 sm:mt-4 sm:h-52 sm:w-52 lg:h-7/8 lg:w-10/12 absolute bg-[#0000FF]'>
+            <div className=' w-72 lg:ml-4 md:ml-72 flex flex-wrap mx-2 my-4 md:h-50 md:w-96 sm:ml-4 sm:mt-4 sm:h-52 sm:w-52 lg:h-7/8 lg:w-10/12 absolute bg-[#0000FF]'>
                 {isReadMore? 
                     <>
                         <p className='my-4 mx-8 text-white font-mono '>
@@ -121,7 +121,7 @@ export default function CommunityProfilePage(props : any) {
                     </>
                     : 
                     <>
-                        <p className='my-4 mx-8 text-white font-mono line-clamp-6 '>
+                        <p className='my-4 mx-8 text-white font-mono line-clamp-6 md:line-clamp-4 lg:line-clamp-2 '>
                             {community.intro}
                         </p>
                         <button onClick={()=> setIsReadMore(!isReadMore) }>
