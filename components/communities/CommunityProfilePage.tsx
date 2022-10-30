@@ -114,25 +114,25 @@ export default function CommunityProfilePage(props : any) {
                 <p className='mx-4 mt-0 text-[#0000FF] font-mono font-thin sm:text-xs lg:text-lg '>{community.city}, {community.state}, {community.country}</p>
             </div>
 
-            <div className=' mt-4 w-72 h-fit lg:ml-4 md:ml-60 flex flex-wrap mx-2  md:w-96 sm:ml-60 sm:mt-4  sm:w-64  md:w-6/12 lg:w-10/12 2xl:w-full absolute bg-[#0000FF]'>
+            <div className=' mt-4 w-72 h-fit lg:ml-4 md:ml-60  mx-2  md:w-96 sm:ml-60 sm:mt-4  sm:w-64  md:w-6/12 lg:w-10/12 2xl:w-full absolute bg-[#0000FF]'>
                 {isReadMore? 
                     <>
-                        <p className='my-4 mx-8 text-white font-mono '>
+                        <p className='my-4 mx-8 text-sm text-white font-mono sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg'>
                         {community.intro}
                         </p>
                         <button onClick={()=> setIsReadMore(!isReadMore) }>
-                        <p className='mb-2 mx-8 text-white font-mono'> 
+                        <p className='mb-2 mx-8 text-sm text-white font-mono sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg'> 
                             Read Less...
                         </p>
                         </button>
                     </>
                     : 
                     <>
-                        <p className='my-4 mx-8  text-white font-mono line-clamp-6 md:line-clamp-4 lg:line-clamp-4 2xl:line-clamp-none sm:line-clamp-4 sm:text-xs md:text-md lg:text-lg text-2xl'>
+                        <p className='my-4 mx-8 text-sm text-white font-mono line-clamp-6 md:line-clamp-4 lg:line-clamp-4 2xl:line-clamp-none sm:line-clamp-4 sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg'>
                             {community.intro}
 
                         </p>
-                        <p className=' mb-2 sm:mb-2 mx-8 text-white font-mono sm:text-xs md:text-md lg:text-lg' onClick={()=> setIsReadMore(!isReadMore) }>
+                        <p className=' mb-2 text-sm sm:mb-2 mx-8 text-white font-mono sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg' onClick={()=> setIsReadMore(!isReadMore) }>
                             Read More...
                     
                         </p>
