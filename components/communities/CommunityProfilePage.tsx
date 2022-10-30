@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useContext, useState, useEffect} from 'react';
 import { useForm } from 'react-hook-form';
-
+import ReactMarkdown from 'react-markdown';
 
 export default function CommunityProfilePage(props : any) {
     const [isMobile, setIsMobile] = useState(false)
@@ -56,18 +56,52 @@ export default function CommunityProfilePage(props : any) {
             </div>
             {!isMobile && 
                 <div className='flex pt-52 sm:pt-14 lg:pt-36 md:pt-20 md:gap-x-2 gap-x-8 lg:gap-x-4 sm:gap-x-2 '>
-                    <a target="_blank" rel="noreferrer" href={community.website}>
-                    <img src='/icons/Icon-link.png'/>
-                    </a>
-                    <a target="_blank" rel="noreferrer" href={community.twitter}>
-                    <img src='/icons/Icon-twitter.png'/>
-                    </a>
-                    <a target="_blank" rel="noreferrer" href={community.github}>
-                    <img src='/icons/Icon-github.png'/>
-                    </a>
-                    <a target="_blank" rel="noreferrer" href={community.instagram}>
-                    <img src='/icons/Icon-ig.png'/>
-                    </a>
+                    {community.website && 
+                        <a target="_blank" rel="noreferrer" href={community.website}>
+                        <img src='/icons/Icon-link.png'/>
+                        </a>
+                    }
+                    {community.twitter && 
+                        <a target="_blank" rel="noreferrer" href={community.twitter}>
+                        <img src='/icons/Icon-twitter.png'/>
+                        </a>
+                    }
+                    {community.github && 
+
+                        <a target="_blank" rel="noreferrer" href={community.github}>
+                        <img src='/icons/Icon-github.png'/>
+                        </a>
+                    }
+                    {community.instagram &&
+                        <a target="_blank" rel="noreferrer" href={community.instagram}>
+                        <img src='/icons/Icon-ig.png'/>
+                        </a>
+                    }
+
+                    {community.discord &&
+                        <a target="_blank" rel="noreferrer" href={community.discord}>
+                        <img src='/icons/discord.png'/>
+                        </a>
+                    }
+
+                    {community.wechat &&
+                        <a target="_blank" rel="noreferrer" href={community.wechat}>
+                        <img src='/icons/wechat.png'/>
+                        </a>
+                    }
+
+                    {community.email &&
+                        <a target="_blank" rel="noreferrer" href={community.email}>
+                        <img src='/icons/email.png'/>
+                        </a>
+                    }
+
+                    {community.phone &&
+                        <a target="_blank" rel="noreferrer" href={community.phone}>
+                        <img src='/icons/phone.png'/>
+                        </a>
+                    }
+
                 </div>
             }
 
@@ -86,18 +120,52 @@ export default function CommunityProfilePage(props : any) {
             {isMobile && <>
             <div className='pt-40 ' />
                 <div className='flex pt-72 gap-x-6 lg:gap-x-3 '>
-                    <a target="_blank" rel="noreferrer" href={community.website}>
-                    <img src='/icons/Icon-link.png'/>
-                    </a>
-                    <a target="_blank" rel="noreferrer" href={community.twitter}>
-                    <img src='/icons/Icon-twitter.png'/>
-                    </a>
-                    <a target="_blank" rel="noreferrer" href={community.github}>
-                    <img src='/icons/Icon-github.png'/>
-                    </a>
-                    <a target="_blank" rel="noreferrer" href={community.instagram}>
-                    <img src='/icons/Icon-ig.png'/>
-                    </a>
+                {community.website && 
+                        <a target="_blank" rel="noreferrer" href={community.website}>
+                        <img src='/icons/Icon-link.png'/>
+                        </a>
+                    }
+                    {community.twitter && 
+                        <a target="_blank" rel="noreferrer" href={community.twitter}>
+                        <img src='/icons/Icon-twitter.png'/>
+                        </a>
+                    }
+                    {community.github && 
+
+                        <a target="_blank" rel="noreferrer" href={community.github}>
+                        <img src='/icons/Icon-github.png'/>
+                        </a>
+                    }
+                    {community.instagram &&
+                        <a target="_blank" rel="noreferrer" href={community.instagram}>
+                        <img src='/icons/Icon-ig.png'/>
+                        </a>
+                    }
+
+                    {community.discord &&
+                        <a target="_blank" rel="noreferrer" href={community.discord}>
+                        <img src='/icons/discord.png'/>
+                        </a>
+                    }
+
+                    {community.wechat &&
+                        <a target="_blank" rel="noreferrer" href={community.wechat}>
+                        <img src='/icons/wechat.png'/>
+                        </a>
+                    }
+
+                    {community.email &&
+                        <a target="_blank" rel="noreferrer" href={community.email}>
+                        <img src='/icons/email.png'/>
+                        </a>
+                    }
+
+                    {community.phone &&
+                        <a target="_blank" rel="noreferrer" href={community.phone}>
+                        <img src='/icons/phone.png'/>
+                        </a>
+                    }
+
                 </div>
                 </>
             }
@@ -118,7 +186,7 @@ export default function CommunityProfilePage(props : any) {
                 {isReadMore? 
                     <>
                         <p className='my-4 mx-8 text-sm text-white font-mono sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg'>
-                        {community.intro}
+                        <ReactMarkdown>{community.intro}</ReactMarkdown>
                         </p>
                         <button onClick={()=> setIsReadMore(!isReadMore) }>
                         <p className='mb-2 mx-8 text-sm text-white font-mono sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg'> 
@@ -128,10 +196,10 @@ export default function CommunityProfilePage(props : any) {
                     </>
                     : 
                     <>
-                        <p className='my-4 mx-8 text-sm text-white font-mono line-clamp-6 md:line-clamp-4 lg:line-clamp-4 2xl:line-clamp-none sm:line-clamp-4 sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg'>
-                            {community.intro}
+                        <div className='my-4 mx-8 text-sm text-white font-mono line-clamp-6 md:line-clamp-4 lg:line-clamp-4 2xl:line-clamp-none sm:line-clamp-4 sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg'>
+                        <ReactMarkdown>{community.intro}</ReactMarkdown>
 
-                        </p>
+                        </div>
                         <p className=' mb-2 text-sm sm:mb-2 mx-8 text-white font-mono sm:text-xs md:text-md lg:text-lg xl:text-lg 2xl:text-lg' onClick={()=> setIsReadMore(!isReadMore) }>
                             Read More...
                     

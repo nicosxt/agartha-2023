@@ -19,7 +19,7 @@ export default function EditCommunityProfile(props : any) {
     // console.log(communityRef);
     const updateCommunity = async (data:any) => {
         // console.log("is is ")
-        const { communityName, tags, city, state, country, phone,
+        const { communityName, tags, city, state, country, phone, facebook,
             discord, email, instagram, intro,
             twitter, website, wechat, longitude, latitude, label, github} = data;
         // console.log(communityRef)
@@ -41,40 +41,14 @@ export default function EditCommunityProfile(props : any) {
             website,
             github,
             wechat,
+            facebook,
             discord,
             email,
             phone
         }        
         )
-
-        // also need to update communities/slug/members/uid.communityname
-        // meed to update for all members.
-
-        // communityMemberSnap.docs.map(async (d:any) => {
-        //     await updateDoc(d.ref, {
-        //       communityName,
-        //     },)
-        //     // and users/uid/communities/slug/.communityname
-        //     // need to update community name for all users.
-        //     const uid = d.data().uid;
-        //     const slug = d.data().slug;
-        //     const userCommunityRef = doc(firestore, "users", uid, "communities", slug);
-        //     await updateDoc(userCommunityRef, {
-        //       communityName,
-        //     },)
-     
-        //   });   
-
-  
-        // and users/uid/communities/slug/.communityname
-        // need to update community name for all users.
-
-        // await updateDoc(userCommunityRef, {
-        //   communityName,
-        // },)
-
-        reset({ communityName,phone, tags,city, state, country, discord, email, instagram, intro,
-          twitter, website, wechat, longitude, latitude, github, label});
+        reset({ communityName,phone, tags,city, state, country, discord, email, instagram, intro, 
+          twitter, website, wechat, facebook, longitude, latitude, github, label});
         router.push(`/community/${defaultValues.slug}`);
 
     };
@@ -259,6 +233,16 @@ export default function EditCommunityProfile(props : any) {
                     </div>
                   </div>
 
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="facebook" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Facebook</label>
+                    <div className="mt-1 sm:mt-0 sm:col-span-2">
+                      <input 
+                        {...register("facebook")}
+                        type="text" id="facebook" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                    </div>
+                  </div>
+
+
 
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Email</label>
@@ -311,14 +295,6 @@ function DeleteCommunityButton(props:any):any {
         await deleteDoc(userCommunityRef);
         });    
 
-
-      // const client = require('firebase-tools');
-      //   await client.firestore
-      //     .delete(communityRef, {
-      //       project: process.env.GCLOUD_PROJECT,
-      //       recursive: true,
-      //       yes: true
-      //     });
       router.push(`/${username}/community`);
     }
   }
