@@ -87,7 +87,7 @@ import { useEffect, useState } from "react";
                         {community.communityName}
                       </a>
                     </h3>
-                    <p className=" text-sm pt-2 font-inter text-[#0000FF] text-center">{community.city}, {community.state}, {community.country}</p>
+                    <p className=" text-sm pt-2 font-inter text-[#0000FF] text-center">{community.location}</p>
                   </div>
                 </div>
   

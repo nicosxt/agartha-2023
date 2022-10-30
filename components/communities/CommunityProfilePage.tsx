@@ -179,7 +179,7 @@ export default function CommunityProfilePage(props : any) {
          
             <div className='flex pt-4'>
                 <img className="mt-0 w-4 h-6 lg:ml-4 md:ml-60 sm:ml-60 sm:w-2 sm:h-3 lg:h-6 lg:w-4" src='/community/pin.png' />
-                <p className='mx-4 mt-0 text-[#0000FF] font-mono font-thin sm:text-xs lg:text-lg '>{community.city}, {community.state}, {community.country}</p>
+                <p className='mx-4 mt-0 text-[#0000FF] font-mono font-thin sm:text-xs lg:text-lg '>{community.location}</p>
             </div>
 
             <div className=' mt-4 w-72 h-fit lg:ml-4 md:ml-60  mx-2  md:w-96 sm:ml-60 sm:mt-4  sm:w-64  md:w-6/12 lg:w-10/12 2xl:w-full absolute bg-[#0000FF]'>

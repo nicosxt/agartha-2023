@@ -1,5 +1,4 @@
 import { authContext } from '../../lib/authContext'
-import { useContext, useState } from 'react';
 import { updateDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
 import { useForm } from 'react-hook-form';
 import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
@@ -8,28 +7,77 @@ import { firestore } from '../../lib/firebaseConfig/init'
 
 import { useRouter } from 'next/router';
 import CommunityAvatarUploader from './CommunityAvatarUploader';
+import { useState, useEffect, useRef } from 'react';
 
 import { TagsInput } from "react-tag-input-component";
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import mapboxgl from 'mapbox-gl'
 
 export default function EditCommunityProfile(props : any) {
     const {communityRef, userCommunityRef, username, communityMemberRef, communityMemberSnap, defaultValues} =props;
     const router = useRouter();
     const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
-    // console.log('hey')
-    // console.log(communityRef);
+    const mapContainer = useRef<any>(null);
+   
+    const map = useRef<mapboxgl.Map | null>(null);
+    const [longitude2, setLongitude2] = useState<any>(defaultValues.longitude);
+    const [latitude2, setLatitude2] = useState<any>(defaultValues.latitude);
+    const [location2, setLocation2] = useState<any>(defaultValues.location);
+
+
+    mapboxgl.accessToken=process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN??'';
+    useEffect(() => {
+      map.current = new mapboxgl.Map({
+        container:  mapContainer.current,
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-79.4512, 43.6568],
+        zoom: 13
+      });
+      const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false,
+      });
+      map.current?.addControl(geocoder);
+      geocoder.on('results', function(results) {
+        console.log(results);
+        console.log("coordinates", results.features[0].center);
+        defaultValues.latitude = results.features[0].center[1];
+        console.log("latitude", defaultValues.latitude);
+        defaultValues.longitude = results.features[0].center[0];
+        console.log("longitude", defaultValues.longitude);
+        setLatitude2(defaultValues.latitude);
+        setLongitude2(defaultValues.longitude);
+        setLocation2(results.features[0].place_name);
+
+     })
+    }, []);
+
+    useEffect(() => {
+
+      
+    }, [defaultValues.latitude, defaultValues.longitude, latitude2, longitude2, location2, defaultValues.location]);
+
+    useEffect(() => {
+    },[defaultValues]);
+
+
     const updateCommunity = async (data:any) => {
         // console.log("is is ")
         const { communityName, tags, city, state, country, phone, facebook,
             discord, email, instagram, intro,
-            twitter, website, wechat, longitude, latitude, label, github} = data;
+            twitter, website, wechat, longitude, latitude, label, github, location} = data;
         // console.log(communityRef)
         await updateDoc(communityRef, {
             // Tip: give all fields a default value here
             communityName,
             label,
             // avatarUrl,
-            longitude,
-            latitude,
+            longitude: longitude2,
+            latitude: latitude2,
+            location: location2,
             tags: tags.toString().split(',').map((tag:any) => tag.trim()),
             city,
             country,
@@ -48,12 +96,12 @@ export default function EditCommunityProfile(props : any) {
         }        
         )
         reset({ communityName,phone, tags,city, state, country, discord, email, instagram, intro, 
-          twitter, website, wechat, facebook, longitude, latitude, github, label});
+          twitter, website, wechat, facebook, longitude, location, latitude:latitude, github, label});
         router.push(`/community/${defaultValues.slug}`);
 
     };
     return (
-        <>
+        <>        
           <form className="space-y-8 divide-y divide-gray-200"  onSubmit={handleSubmit(updateCommunity)}>
             <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5 md:ml-10 pt-8">
               <div>
@@ -123,13 +171,18 @@ export default function EditCommunityProfile(props : any) {
                         type="text" name="label" id="label" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
-  
+                  <div className='pt-10'></div>
 
+                  <div className="w-full justify-center mx-60" style={{width:500, height: 500}} ref={mapContainer} />
+
+                  <div className='pt-40'></div>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Latitude </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
+                      value={latitude2}
                           {...register("latitude")}
+
                         type="text" name="latitude" id="latitude" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
@@ -139,37 +192,23 @@ export default function EditCommunityProfile(props : any) {
                     <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Longitude </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
+                        value={longitude2}
+
                         {...register("longitude")}
                         type="text" name="longitude" id="longitude" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
-  
-                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> City </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                      <input 
-                        {...register("city")}
-                        type="text" name="city" id="city" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
-                    </div>
-                  </div>
-  
-                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="region" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> State / Province </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                      <input 
-                        {...register("state")}
-                        type="text" name="state" id="state" autoComplete="address-level1" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
-                    </div>
-                  </div>
 
-                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Country </label>
+                      <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+                    <label htmlFor="location" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Location </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
-                        {...register("country")}
-                        type="text" name="country" id="country" autoComplete="country" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                        value={location2}
+                        {...register("location")}
+                        type="text" name="location" id="location" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
+  
               </div> 
   
               <div className="pt-8 space-y-6 sm:pt-10 sm:space-y-5">

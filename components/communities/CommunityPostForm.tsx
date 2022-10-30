@@ -1,6 +1,8 @@
 import React from 'react'
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
 import { authContext } from '../../lib/authContext'
 import { getAuth,onAuthStateChanged, signOut as signout } from "firebase/auth";
 import { doc, getDoc, collection, addDoc, setDoc,updateDoc} from 'firebase/firestore';
@@ -8,7 +10,9 @@ import { firestore } from '../../lib/firebaseConfig/init'
 import CommunityAvatarUploader from './CommunityAvatarUploader';
 import Link from 'next/link';
 import { TagsInput } from "react-tag-input-component";
-
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import mapboxgl from 'mapbox-gl'
 export default function CommunityPostForm(props : any) {
   const [tags, setTags] = useState<string[]>([]);
 
@@ -28,6 +32,7 @@ export default function CommunityPostForm(props : any) {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [avatarUrl, setAvatarUrl] = useState('');
+    const [location, setLocation] = useState('');
 
     //Social Media
     const [instagram, setInstagram] = useState(''); 
@@ -58,6 +63,7 @@ export default function CommunityPostForm(props : any) {
             tags,
             longitude,
             latitude,
+            location,
             label,
             city,
             country,
@@ -77,33 +83,41 @@ export default function CommunityPostForm(props : any) {
         },
         { merge: true })
 
-        // const memberRef = doc(firestore, "communities", slug, "members", uid);
-        // await setDoc(memberRef, {
-        //   uid: uid,
-        //   admin: true,
-        //   slug: slug,
-        //   addBy: "Genesis",
-        //   username: username,
-        //   communityName: communityName,
-
-        // })
-
-        // const communitySlug:string = Array.isArray(slug)?slug[0]:slug!;
-
-        // const userCommunityRef = doc(firestore, "users", uid, "communities", communitySlug);
-
-        // await setDoc(userCommunityRef, {
-        //     communitySlug: communitySlug,
-        //     admin: true,
-        //     communityName: communityName,
-        //     addBy: "Genesis",
-        //     username: username,
-        // },
-        // { merge: true });
-
         router.push(`/community/${slug}`);
 
-    };
+    }; 
+    const mapContainer = useRef<any>(null);
+   
+    const map = useRef<mapboxgl.Map | null>(null);
+
+    mapboxgl.accessToken=process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN??'';
+    useEffect(() => {
+      map.current = new mapboxgl.Map({
+        container:  mapContainer.current,
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [-79.4512, 43.6568],
+        zoom: 13
+      });
+      const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false,
+      });
+      map.current?.addControl(geocoder);
+      geocoder.on('results', function(results) {
+        console.log(results);
+        console.log("coordinates", results.features[0].center);
+        setLongitude(results.features[0].center[0]);
+        setLatitude(results.features[0].center[1]);
+        setLocation(results.features[0].place_name);
+     })
+    }, []);
+
+    useEffect(() => {
+      
+    }, [latitude, longitude, location]);
+
     
     return (
         <>
@@ -182,6 +196,12 @@ export default function CommunityPostForm(props : any) {
                     </div>
                   </div>
 
+                  <div className='pt-10'></div>
+
+<div className="w-full justify-center " style={{width:500, height: 500}} ref={mapContainer} />
+
+<div className='pt-40'></div>
+
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
                     <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Latitude </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
@@ -205,34 +225,17 @@ export default function CommunityPostForm(props : any) {
   
   
                   <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> City </label>
+                    <label htmlFor="location" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> location </label>
                     <div className="mt-1 sm:mt-0 sm:col-span-2">
                       <input 
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        type="text" name="city" id="city" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        type="text" name="location" id="location" autoComplete="address-level2" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
                     </div>
                   </div>
   
-                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="region" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> State / Province </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                      <input 
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
-                        type="text" name="region" id="region" autoComplete="address-level1" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
-                    </div>
-                  </div>
 
-                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Country </label>
-                    <div className="mt-1 sm:mt-0 sm:col-span-2">
-                      <input 
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
-                        type="text" name="country" id="country" autoComplete="country" className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"/>
-                    </div>
-                  </div>
+               
                 </div>
               </div>
 
