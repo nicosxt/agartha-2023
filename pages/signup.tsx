@@ -237,15 +237,15 @@ function UsernameForm() {
       <section>
           <form onSubmit={onSubmit}>
 
-              <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pick Your Username</label>
+              <label htmlFor="email-address-icon" className="block mb-2 text-sm font-medium text-gray-900 ">Pick Your Username</label>
               <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               </div>
-              <input name="username" placeholder="Username (min. 3 characters)"  value={formValue} onChange={onChange} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+              <input name="username" placeholder="Username (min. 3 characters)"  value={formValue} onChange={onChange} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  " />
               </div>
 
 
-            <button type="submit" className="mt-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" disabled={!isValid}>Choose</button>
+            <button type="submit" className="mt-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" disabled={!isValid}>Choose</button>
               <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
           </form>
       </section>
