@@ -1,0 +1,44 @@
+
+    
+    .toggleSwitch {
+    width: 115px;
+    height: 50px;
+    border-radius: 100px;
+    border: #0000FF 4px solid;
+    padding: 0px;
+    display: flex;
+    cursor: pointer;
+    z-index: 2;
+    position: relative;
+    z-index: -1;
+    }
+    
+    /* CSS for switch when "on"*/
+    .toggleSwitch.on {
+    background-color: #FFDDED;
+    justify-content: flex-end;
+    /* for smooth transition*/
+    transition: 0.5s ease-in-out;
+    }
+    
+    /*CSS for switch when "off"*/
+    .toggleSwitch.off {
+    background-color: #FFDDED;
+    justify-content: flex-start;
+
+  
+    }
+    
+    .toggleSwitch div {
+    width: 62px;
+    height: 43px;
+    border-radius: 20px;
+
+    }
+    
+    .ToggleImg {
+    width: 15px;
+    height: 15px;
+    }
+
+    

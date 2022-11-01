@@ -49,12 +49,12 @@ import { useEffect, useState } from "react";
 
         <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6 md:px-8 lg:max-w-7xl lg:px-8">
           <form>   
-            <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+            <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
             <div className="relative">
                 <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                    <svg aria-hidden="true" className="w-5 h-5 text-[#0000FF] dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <svg aria-hidden="true" className="w-5 h-5 text-[#0000FF] " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-                <input type="search" value={communityQuery} onChange={handleOnSearch} id="default-search" className="block p-4 pl-10 w-full text-lg text-gray-900 bg-[#FFDDED] border border-2 border-[#0000FF] focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 placeholder:text-[#0000FF] placeholder:italic dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Keywords..." required />
+                <input type="search" value={communityQuery} onChange={handleOnSearch} id="default-search" className="block p-4 pl-10 w-full text-lg text-gray-900 bg-[#FFDDED] border border-2 border-[#0000FF] focus:ring-blue-500 focus:border-blue-500 placeholder:text-[#0000FF] placeholder:italic" placeholder="Search Keywords..." required />
             </div>
         </form>
         <div className='flex flex-wrap mt-8 mx-8 lg:mt-1 lg:ml-4 md:mx-5 md:mt-2 '>
