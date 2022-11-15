@@ -22,6 +22,7 @@
     "@types/mapbox__mapbox-gl-geocoder": "^4.7.3",
     "@types/mapbox__mapbox-sdk": "^0.13.4",
     "@types/marked": "^4.0.7",
+    "@types/react-dom": "^18.0.8",
     "@types/styled-components": "^5.1.26",
     "firebase": "^9.11.0",
     "firebase-admin": "^9.11.1",

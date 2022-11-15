@@ -3,6 +3,10 @@ import { collectionGroup,collection, query, where, getDocs, orderBy, limit, star
 import { firestore } from '../lib/firebaseConfig/init'
 import { getUserWithUsername, communityToJSON } from '../lib/firebaseConfig/init';
 
+import React from "react";
+import ReactDOM from "react-dom";
+import { motion } from "framer-motion";
+// import "../style/App.css";
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState, useEffect, useRef } from 'react';
@@ -10,7 +14,19 @@ import Router from 'next/router'
 import CommunityList from '../components/list';
 import { FeatureCollection } from 'geojson';
 import { useRouter } from 'next/router';
+
+  
 const Map: NextPage = () => {
+    const [isOn, setIsOn] = useState<any>(false);
+    useEffect(() => {
+        // background-color changes every time "isOn" 
+        // changes using JavaScript DOM methods
+        document.body.style.backgroundColor = 
+                  isOn ? "#1c1c1c" : "#ffffff";
+      }, [isOn]);
+      
+
+
     const router = useRouter();
     //get the list of communities
     const [geoJsonFlower, setGeoJsonFlower] = useState<any>(null);
@@ -231,64 +247,9 @@ const Map: NextPage = () => {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
          
-        // new mapboxgl.Popup()
-        // .setLngLat(coordinates)
-        // .setHTML(description)
-        // .addTo(map.current!);
+
         });
     
-// https://s2.loli.net/2022/10/11/agEyvQIZ942q3zK.png
-//'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
-
-
-    // map.current?.loadImage(
-    //     'https://s2.loli.net/2022/10/11/wBgnIM64aebP8rs.png',
-    //     (error, image) => {
-    //         try{
-    //             if (error) throw error;
-    //             }catch(error){
-    //                 console.log(error);
-    //             }
-    //         if(map.current?.hasImage("green")){
-    //             map.current?.removeImage("green");
-    //         }
-    //         map.current?.addImage('green', image!);
-    //         console.log("image", image)
-    //         // Add a GeoJSON source with 2 points
-    //         if(map.current?.getLayer('points2')){
-    //             map.current?.removeLayer("points2");
-    //         }
-    //         if(map.current?.getSource('points2')){
-    //             map.current?.removeSource("points2");
-    //         }
-    //         if(!map.current?.getSource('points2')){
-    //             map.current?.addSource('points2', {
-    //                 type: 'geojson',
-    //                 data: geoJsonGreen
-    //             });
-    //         }
-
-    //         // Add a symbol layer
-    //         if(!map.current?.getLayer('points2')){
-    //             map.current?.addLayer({
-    //                 'id': 'points2',
-    //                 'type': 'symbol',
-    //                 'source': 'points2',
-    //                 'layout': {
-    //                     'icon-image': 'green',
-    //                     // get the title name from the source's "title" property
-    //                     'text-field': ['get', 'title'],
-    //                     'text-font': [
-    //                         'Open Sans Semibold',
-    //                         'Arial Unicode MS Bold'
-    //                     ],
-    //                     'text-offset': [0, 1.25],
-    //                     'text-anchor': 'top'
-    //                 }
-    //             });
-    //         }
-    //     }
-    // )
     ;
 });
     }, [geoJsonFlower, geoJsonGreen]);
@@ -316,13 +277,52 @@ const Map: NextPage = () => {
         </>
     )}
 
-<div className="fixed z-90 bottom-10 right-8 drop-shadow-lg flex justify-center items-center text-white text-4xl">
+<div onClick={toggleList} className="fixed z-90 bottom-10 right-8 drop-shadow-lg flex justify-center items-center text-white text-4xl">
 
-<label htmlFor="large-toggle" className="inline-flex relative items-center cursor-pointer">
-<input type="checkbox" value="" id="large-toggle" className="sr-only peer" onClick={toggleList}/>
-<div className="w-14 h-7 bg-[#FFDDED] ring-4 ring-[#0000FF] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0000FF] dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-</label>
+<motion.div animate className=
+          { `toggleSwitch ${isListOpen? "on " : "off"} `} >
+        <motion.div animate>
+            <div className="bg-[#0000FF] ">
+            <div className='toggleImg'>
+
+          <img className=
+          {isListOpen ?
+        
+          "ml-6 py-3.5 "
+          :
+            "mx-5 py-2.5"
+          }
+          src={isListOpen
+      ? 
+      "https://s2.loli.net/2022/11/01/dYSHOGi8PcfyklQ.png"
+      : 
+"https://s2.loli.net/2022/11/01/RFmEylD2h7dAa3x.png"
+
+  } />
 </div>
+
+  </div>
+        </motion.div>
+      </motion.div>
+      <div className='toggleImg'>
+      <img className= 
+          {isListOpen ?
+        
+          "absolute bottom-3.5 right-20 "
+          :
+            "absolute bottom-4 right-6"
+          }
+          src={isListOpen
+      ? 
+      "https://s2.loli.net/2022/11/01/wYF7zAv6J3bHQLD.png"
+
+      : 
+      "https://s2.loli.net/2022/11/01/ZaAnoLSQXl14zpf.png"
+
+  } />
+  </div>
+</div>
+
         </>
     )
     
