@@ -14,8 +14,6 @@ import Router from 'next/router'
 import CommunityList from '../components/list';
 import { FeatureCollection } from 'geojson';
 import { useRouter } from 'next/router';
-
-  
 const Map: NextPage = () => {
     const [isOn, setIsOn] = useState<any>(false);
     useEffect(() => {
@@ -126,25 +124,28 @@ const Map: NextPage = () => {
 
     const mapContainer = useRef<any>(null);
     const map = useRef<mapboxgl.Map | null>(null);
-    const [isListOpen, setIsListOpen] = useState(false);
+    const [isListOpen, setIsListOpen] = useState(true);
     const toggleList = () => {
         const x = !isListOpen
         setIsListOpen(x);
-
-        if(x===false){
-        Router.reload()
-        }
+        console.log("yo",x)
+        // if(x===false){
+        // Router.reload()
+        // }
 
     } 
     useEffect(() => {
+        console.log("I'm here", isListOpen);
+        console.log("container", mapContainer.current);
     }, [isListOpen]);
 
     
     useEffect(() => {
 
-
+        if(isListOpen===false){
         mapboxgl.accessToken=process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN??'';
         // if (map.current) return; // initialize map only once
+        
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/light-v10',
@@ -208,39 +209,6 @@ const Map: NextPage = () => {
                 router.reload();
             }
 
-
-            // map.current?.addLayer({
-            //     id: 'clusters',
-            //     type: 'circle',
-            //     source: 'earthquakes',
-            //     filter: ['has', 'point_count'],
-            //     paint: {
-            //     // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-            //     // with three steps to implement three types of circles:
-            //     //   * Blue, 20px circles when point count is less than 100
-            //     //   * Yellow, 30px circles when point count is between 100 and 750
-            //     //   * Pink, 40px circles when point count is greater than or equal to 750
-            //     'circle-color': [
-            //     'step',
-            //     ['get', 'point_count'],
-            //     '#51bbd6',
-            //     100,
-            //     '#f1f075',
-            //     750,
-            //     '#f28cb1'
-            //     ],
-            //     'circle-radius': [
-            //     'step',
-            //     ['get', 'point_count'],
-            //     20,
-            //     100,
-            //     30,
-            //     750,
-            //     40
-            //     ]
-            //     }
-            //     });
-
             // Add a symbol layer
             try{
             
@@ -292,14 +260,7 @@ const Map: NextPage = () => {
     
     ;
 });
-    }, [geoJsonFlower, geoJsonGreen]);
-
-
-
-
-
-
-
+}}, [geoJsonFlower, geoJsonGreen, isListOpen]);
 
     return (
         <>
