@@ -9,7 +9,9 @@ import { useEffect, useState } from "react";
     const [communities, setcommunities] = useState<any>();
     
 
-    const tags = ["Regen","Techy","Artsy","Coliving","Solarpunk","Family"];
+    const tags = ["Regen","Techy","Artsy",
+    "DAO", "Coliving", "Earthship", "Farm",
+    "Solarpunk","Family","Buddhism"];
     useEffect(() => {
       const getCommunities = async () => {
       const communitiesQuery = query(
