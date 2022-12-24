@@ -24,6 +24,7 @@
     "@types/marked": "^4.0.7",
     "@types/react-dom": "^18.0.8",
     "@types/styled-components": "^5.1.26",
+    "antd": "^5.0.0",
     "firebase": "^9.11.0",
     "firebase-admin": "^9.11.1",
     "flowbite": "^1.4.2",

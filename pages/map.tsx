@@ -14,8 +14,6 @@ import Router from 'next/router'
 import CommunityList from '../components/list';
 import { FeatureCollection } from 'geojson';
 import { useRouter } from 'next/router';
-
-  
 const Map: NextPage = () => {
     const [isOn, setIsOn] = useState<any>(false);
     useEffect(() => {
@@ -126,25 +124,28 @@ const Map: NextPage = () => {
 
     const mapContainer = useRef<any>(null);
     const map = useRef<mapboxgl.Map | null>(null);
-    const [isListOpen, setIsListOpen] = useState(false);
+    const [isListOpen, setIsListOpen] = useState(true);
     const toggleList = () => {
         const x = !isListOpen
         setIsListOpen(x);
-
-        if(x===false){
-        Router.reload()
-        }
+        console.log("yo",x)
+        // if(x===false){
+        // Router.reload()
+        // }
 
     } 
     useEffect(() => {
+        console.log("I'm here", isListOpen);
+        console.log("container", mapContainer.current);
     }, [isListOpen]);
 
     
     useEffect(() => {
 
-
+        if(isListOpen===false){
         mapboxgl.accessToken=process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN??'';
         // if (map.current) return; // initialize map only once
+        
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/light-v10',
@@ -170,6 +171,7 @@ const Map: NextPage = () => {
             if (error) throw error;
             }catch(error){
                 console.log(error);
+                router.reload();
             }
             try{
                 if(map.current?.hasImage("flower")){
@@ -181,6 +183,7 @@ const Map: NextPage = () => {
                 }
             }catch(error){
                 console.log(error);
+                router.reload();
             }
 
          
@@ -195,13 +198,16 @@ const Map: NextPage = () => {
                 if(!map.current?.getSource('points')){
                     map.current?.addSource('points', {
                         type: 'geojson',
-                        data: geoJsonFlower
+                        data: geoJsonFlower,
+                        // cluster: true,
+                        // clusterMaxZoom: 14, 
+                        // clusterRadius: 50 
                     });
                 }
             }catch(error){
                 console.log(error);
+                router.reload();
             }
-
 
             // Add a symbol layer
             try{
@@ -219,11 +225,13 @@ const Map: NextPage = () => {
                             'Arial Unicode MS Bold'
                         ],
                         'text-offset': [0, 1.25],
-                        'text-anchor': 'top'
+                        'text-anchor': 'top',
+                       
                     }
                 });
             }catch(error){
                 console.log(error);
+                router.reload();
             }
 
         }
@@ -252,14 +260,7 @@ const Map: NextPage = () => {
     
     ;
 });
-    }, [geoJsonFlower, geoJsonGreen]);
-
-
-
-
-
-
-
+}}, [geoJsonFlower, geoJsonGreen, isListOpen]);
 
     return (
         <>
