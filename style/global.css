@@ -264,3 +264,15 @@ input[type="file"] {
 }
 
 .hidden { display:  none; }
+
+.delay-150 {
+  animation-delay: 150ms !important;
+}
+
+.delay-300 {
+  animation-delay: 300ms !important;
+}
+
+.delay-700 {
+  animation-delay: 700ms !important;
+}
