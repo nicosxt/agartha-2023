@@ -63,19 +63,19 @@ export default function Home(): any {
                 </h1>
                 <div className="flex justify-center pt-4 lg:gap-x-20 md:pt-10 lg:pt-14 sm:gap-x-4">
                   <a style={{ cursor: "pointer" }}>
-                    <img onClick={enterUnite}  className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/unite.png'  />
+                    <img onClick={enterUnite}  className="shrink-0 h-16 w-16 hover:scale-125 animate-bounce" src='/balls/unite.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onClick={enterEarth} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/earth.png'  />
+                  <img onClick={enterEarth} className="shrink-0 h-16 w-16 hover:scale-125 animate-bounce" src='/balls/earth.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onClick={enterPersonal} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/personal.png'  />
+                  <img onClick={enterPersonal} className="shrink-0 h-16 w-16 hover:scale-125 animate-bounce" src='/balls/personal.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onClick={enterPlayful} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/playful.png'  />
+                  <img onClick={enterPlayful} className="shrink-0 h-16 w-16 hover:scale-125 animate-bounce" src='/balls/playful.png'  />
                   </a>
                   <a style={{ cursor: "pointer" }}>
-                  <img onClick={enterTech} className="shrink-0 h-16 w-16 hover:scale-125" src='/balls/technical.png'  />
+                  <img onClick={enterTech} className="shrink-0 h-16 w-16 hover:scale-125 animate-bounce" src='/balls/technical.png'  />
                   </a>
                 </div>
                 <Subscription/>

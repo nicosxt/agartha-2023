@@ -66,9 +66,6 @@ import { useEffect, useState } from "react";
             </div>
         </div>
         <div className=" py-16 px-4 sm:py-2 sm:px-6 md:py-2 lg:max-w-full lg:px-0 lg:py-2 xl:py-2">
-
-
-
           <div className="mt-0 grid grid-cols-1 gap-8 sm:grid-cols-2  md:grid-col-3 lg:mr-32 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 
             {searchResults && searchResults.map((community:any) => (
