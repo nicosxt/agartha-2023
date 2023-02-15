@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Accommodations from '../../components/coliving/options'
 
 const ColivingEvent = () => {
     return (
@@ -27,7 +28,7 @@ const ColivingEvent = () => {
                                 <div className="px-4 py-5 sm:p-6">
                                     <h3 className="text-lg font-bold text-[#0000FF] ">Location</h3>
                                     <div className="mt-2 text-sm text-[#0000FF]">
-                                        <p><a className='font-bold' href="https://newfrontierranch.com">New Frontier Ranch</a> - in the middle of some seriously awesome nature in Oregon. It's a state that's all about nature, with tons of natural resources, and people who really care about taking care of the land through permaculture. </p>
+                                        <p><a className='font-bold' href="https://newfrontierranch.com">New Frontier Ranch</a> - in the middle of some seriously awesome nature in Oregon. It&apos;s a state that&apos;s all about nature, with tons of natural resources, and people who really care about taking care of the land through permaculture. </p>
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +37,7 @@ const ColivingEvent = () => {
                                 <div className="px-4 py-5 sm:p-6">
                                     <h3 className="text-lg font-bold text-[#0000FF]">Accommodations</h3>
                                     <div className="mt-2 text-sm text-[#0000FF]">
-                                        <p><a className='font-bold' href="https://newfrontierranch.com/accomodations">New Frontier Ranch's Lakeview Cabin </a>- We will be living in a cabin that potentially lives 10-12 people, with other options such as tipis or bunkalows available, you can also bring your own van! See below for more details.</p>
+                                        <p><a className='font-bold' href="https://newfrontierranch.com/accomodations">New Frontier Ranch&apos;s Cabin </a>- We will be living in a cabin that potentially lives around 7 people, with other options such as tipis or bunkalows available, you can also bring your own van! See below for more details.</p>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +59,7 @@ const ColivingEvent = () => {
                                 </div>
                             </div>
                         </div>
-                        <img  src="/coliving/cabin.jpeg" />
+                       <Accommodations />
 
                         <div className="mt-16 text-center">
                             <p className="text-lg leading-6 font-medium text-gray-900">Ready to join us this June?</p>
