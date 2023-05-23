@@ -1,13 +1,10 @@
-import Link from 'next/link';
-import { useContext, useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 export default function CommunityProfilePage(props: any) {
     const [isMobile, setIsMobile] = useState(false)
     const [isReadMore, setIsReadMore] = useState(false)
     const defaultValues = props.community;
-    const { register, handleSubmit, reset, watch, formState, setError } = useForm({ defaultValues, mode: 'onChange' });
 
     useEffect(() => {
     }, [isReadMore]);

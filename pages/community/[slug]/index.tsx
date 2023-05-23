@@ -1,20 +1,36 @@
-import { getCommunityWithSlug, communityToJSON, memberToJSON, postToJSON } from '../../../lib/firebaseConfig/init';
-import {firestore} from '../../../lib/firebaseConfig/init';
 import CommunityProfilePage from '../../../components/communities/CommunityProfilePage';
 import { useEffect, useState } from 'react';
-import { query, doc, getDoc, collection, getDocs, where, collectionGroup} from 'firebase/firestore';
 import Link from 'next/link';
-export async function getServerSideProps(context:any){
-    const {query:qr} = context;
-    const {slug} = qr;
-    return {
-        props: {slug}
+import { fetchPages } from '../../../lib/notion';
+import { GetServerSideProps, InferGetServerSidePropsType, NextPageContext } from 'next';
+import { parseNotionCommunity } from '../../../lib/community';
+
+
+export async function getServerSideProps(context: GetServerSideProps) {
+
+    console.log('slug', context.query.slug)
+
+    //https://www.notion.so/agarthamap/446c0e9d7937439ca478aa84e1ea9f15
+  
+    const response = await fetchPages('446c0e9d7937439ca478aa84e1ea9f15');
+  
+    const communities = response.results.map(parseNotionCommunity);
+    const community = communities.find(({ slug }) => slug === context.query.slug)
+    if (!community) {
+      return {
+        notFound: true,
+      };
     }
-}
+    return {
+      props: {
+        community: community ?? {}
+      },
+    };
+  }
 
 
-
-export default function Community(props:any) {
+export default function Community(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const community = props.community;
     const [isMobile, setIsMobile] = useState(false)
     const handleResize = () => {
         if (window.innerWidth < 640) {
@@ -28,23 +44,6 @@ export default function Community(props:any) {
         handleResize()
         return () => window.removeEventListener('resize', handleResize)
     }, [])
-
-
-
-    const [community, setCommunity] = useState<any>(null);
-    const realSlug = props.slug;
-    console.log(realSlug)
-
-    useEffect(() => {
-        const getCommunityData = async () => {
-            const communityRef = doc(firestore, 'communities', realSlug);
-            const communityDoc = await getDoc(communityRef);
-            const communityData = communityDoc.data();
-            console.log("communityData is", communityData);
-            setCommunity(communityData);
-        }
-        getCommunityData();
-    }, []);
 
     return (
             <div className="min-h-screen bg-white ">

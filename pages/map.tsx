@@ -215,8 +215,9 @@ const Map: NextPage = ({
             .setLngLat(coordinates)
             .setHTML(
               `
-              <div class='map-popup'><h2>
-                ${title}
+              <div class='map-popup'>
+              <h2>
+              <a href="/communities/${slug}"> ${title}</a>
               </h2>
               <p>${description.slice(0, 100)}...</p>
               <a href="/communities/${slug}">Read more</a>
