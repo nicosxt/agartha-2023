@@ -54,33 +54,10 @@ const Map: NextPage = ({
               if (error) throw error;
             } catch (error) {
               console.log(error);
-              router.reload();
-            }
-            try {
-              // if (map.current?.hasImage("flower")) {
-              //   map.current?.removeImage("flower");
-              // }
-              // if (map.current) {
-              //   map.current?.addImage('flower', image!);
-              // }
-            } catch (error) {
-              console.log(error);
-              router.reload();
             }
 
-
-            // Add a GeoJSON source with 2 points
-            // if (map.current?.getLayer('points')) {
-            //   map.current?.removeLayer("points");
-            // }
-            // if (map.current?.getSource('points')) {
-            //   map.current?.removeSource("points");
-            // }
             try {
-              console.log('points', map.current.getSource('points'))
               if (!map.current?.getSource('points')) {
-                console.log('images', image)
-                console.log('adding geojson', communitiesToGeoJson(communities))
                 map.current?.addSource('points', {
                   type: 'geojson',
                   data: communitiesToGeoJson(communities),
@@ -231,22 +208,6 @@ const Map: NextPage = ({
         map.current?.on('mouseleave', 'points', () => {
           map.current!.getCanvas().style.cursor = ''
         })
-        // map.current?.on('click', 'points', (e: any) => {
-        //   // Copy coordinates array.
-        //   const coordinates = e.features[0].geometry.coordinates.slice();
-        //   const description = e.features[0].properties.slug;
-        //   const slug = e.features[0].properties.slug;
-        //   router.push(`/community/${slug}`);
-        //   // Ensure that if the map is zoomed out such that multiple
-        //   // copies of the feature are visible, the popup appears
-        //   // over the copy being pointed to.
-        //   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        //     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        //   }
-
-
-        // });
-
       });
     }
   }, [communities, isListOpen, map]);
