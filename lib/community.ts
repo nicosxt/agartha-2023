@@ -6,7 +6,6 @@ export const communitiesToGeoJson = (communities): FeatureCollection => {
             const coords = community?.properties?.Coordinates?.rich_text?.[0]?.plain_text?.split(', ') ?? [0, 0];
             const longitude: number = +coords[1];
             const latitude: number = +coords[0];
-            console.log(community.properties)
 
             return {
                 "type": "Feature",

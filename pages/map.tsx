@@ -11,6 +11,8 @@ import { FeatureCollection } from 'geojson';
 import { useRouter } from 'next/router';
 import { fetchPages } from '../lib/notion';
 
+import styles from '../style/Map.module.css';
+
 const Map: NextPage = ({
   communities
 }) => {
@@ -48,13 +50,15 @@ const Map: NextPage = ({
       map.current?.on('load', () => {
         // Add an image to use as a custom marker
         map.current?.loadImage(
-          'https://s2.loli.net/2022/10/25/fbt6uYgSUCTdGK4.png',
+          '/flower.png',
           (error, image) => {
             try {
               if (error) throw error;
             } catch (error) {
               console.log(error);
             }
+
+            map.current.addImage('flower', image);
 
             try {
               if (!map.current?.getSource('points')) {
@@ -64,14 +68,45 @@ const Map: NextPage = ({
                   cluster: true,
                   clusterMaxZoom: 14, // Max zoom to cluster points on
                   clusterRadius: 50
-                  // todo: 
                 });
+
+                // Add a symbol layer
+                try {
+                  map.current?.addLayer({
+                    'id': 'points',
+                    'type': 'symbol',
+                    'source': 'points',
+                    "filter": ["!has", "point_count"],
+                    'layout': {
+                      'icon-allow-overlap': true,
+                      'icon-image': 'flower',
+                      // get the title name from the source's "title" property
+                      'text-field': ['get', 'title'],
+                      'text-font': [
+                        'Open Sans Semibold',
+                        'Arial Unicode MS Bold'
+                      ],
+                      'text-size': 12,
+                      'text-offset': [0, 1],
+                      'text-anchor': 'top',
+                    },
+                    "paint": {
+                      "text-color": "#0000FF"
+                    }
+                  });
+                } catch (error) {
+                  console.log(error);
+                  router.reload();
+                }
 
                 map.current.addLayer({
                   id: 'clusters',
                   type: 'circle',
                   source: 'points',
                   filter: ['has', 'point_count'],
+                  // layout: {
+                  //   'icon-image': '',
+                  // },
                   paint: {
                     // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
                     // with three steps to implement three types of circles:
@@ -81,20 +116,18 @@ const Map: NextPage = ({
                     'circle-color': [
                       'step',
                       ['get', 'point_count'],
-                      '#51bbd6',
+                      '#FFDDED',
                       2,
-                      '#f1f075',
-                      5,
-                      '#f28cb1'
+                      '#FFDDED',
                     ],
                     'circle-radius': [
                       'step',
                       ['get', 'point_count'],
-                      20,
+                      10,
                       2,
-                      30,
+                      20,
                       5,
-                      40
+                      30
                     ]
                   }
                 });
@@ -108,22 +141,20 @@ const Map: NextPage = ({
                   layout: {
                     'text-field': ['get', 'point_count_abbreviated'],
                     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                    'text-size': 12
+                    'text-size': 12,
+                    'icon-image': '',
+                  },
+                  paint: {
+                    "text-color": "#0000FF"
                   }
                 });
 
-                map.current.addLayer({
-                  id: 'unclustered-point',
-                  type: 'circle',
-                  source: 'points',
-                  filter: ['!', ['has', 'point_count']],
-                  paint: {
-                    'circle-color': '#11b4da',
-                    'circle-radius': 4,
-                    'circle-stroke-width': 1,
-                    'circle-stroke-color': '#fff'
-                  }
-                });
+                // map.current.addLayer({
+                //   id: 'unclustered-point',
+
+                //   source: 'points',
+                //   filter: ['!', ['has', 'point_count']],
+                // });
 
                 map.current.on('click', 'clusters', (e) => {
                   const features = map.current.queryRenderedFeatures(e.point, {
@@ -137,42 +168,19 @@ const Map: NextPage = ({
 
                       map.current.easeTo({
                         center: features[0].geometry.coordinates,
-                        zoom: zoom
+                        zoom: zoom,
+                        duration: 200,
                       });
                     }
                   );
                 });
-
-                console.log(map.current?.getSource('points'))
               }
             } catch (error) {
               console.log(error);
               router.reload();
             }
 
-            // Add a symbol layer
-            try {
-              map.current?.addLayer({
-                'id': 'points',
-                'type': 'symbol',
-                'source': 'points',
-                'layout': {
-                  'icon-image': 'flower',
-                  // get the title name from the source's "title" property
-                  'text-field': ['get', 'title'],
-                  'text-font': [
-                    'Open Sans Semibold',
-                    'Arial Unicode MS Bold'
-                  ],
-                  'text-offset': [0, 1.25],
-                  'text-anchor': 'top',
-
-                }
-              });
-            } catch (error) {
-              console.log(error);
-              router.reload();
-            }
+            console.log(map.current.getStyle());
 
           }
         );
@@ -181,7 +189,15 @@ const Map: NextPage = ({
         // the unclustered-point layer, open a popup at
         // the location of the feature, with
         // description HTML from its properties.
-        map.current.on('click', 'unclustered-point', (e) => {
+        map.current.on('click', 'points', (e) => {
+
+          /**
+           * TODO:
+           *  - when a point is clicked, have a centered modal appear.x
+           */
+
+
+
           const coordinates = e.features[0].geometry.coordinates.slice();
           const title = e.features[0].properties.title;
           const slug = e.features[0].properties.slug;
@@ -198,7 +214,15 @@ const Map: NextPage = ({
           new mapboxgl.Popup()
             .setLngLat(coordinates)
             .setHTML(
-              `<h2><a href="/communities/${slug}">${title}</a></h2><p>${description.slice(0, 50)}...</p><img style="aspect-ratio: 1/1; width: 100%;"src="${image}"/>`
+              `
+              <div class='map-popup'><h2>
+                ${title}
+              </h2>
+              <p>${description.slice(0, 100)}...</p>
+              <a href="/communities/${slug}">Read more</a>
+              <img style="aspect-ratio: 1/1; width: 100%;"src="${image}"/>
+              </div>
+              `
             )
             .addTo(map.current);
         });
