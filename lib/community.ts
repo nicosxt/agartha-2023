@@ -24,17 +24,15 @@ export function parseNotionCommunity(notionCommunity: any): Community {
     const longitude: number = +coords[1];
     const latitude: number = +coords[0];
 
-    console.log(Object.keys(notionCommunity.properties))
-
     return {
         coordinates: [longitude, latitude],
-        title: notionCommunity?.properties?.Name?.title?.[0]?.plain_text,
-        slug: getCommunitySlugFromName(notionCommunity?.properties?.Name?.title?.[0]?.plain_text),
+        title: notionCommunity?.properties?.Name?.title?.[0]?.plain_text ?? '',
+        slug: getCommunitySlugFromName(notionCommunity?.properties?.Name?.title?.[0]?.plain_text) ?? '',
         description: notionCommunity?.properties?.Description?.rich_text?.[0]?.plain_text ?? '',
-        image: notionCommunity?.properties?.Logo?.files?.[0]?.file?.url,
-        tags: notionCommunity?.properties?.Tags?.multi_select?.map(({ name }) => name),
-        url: notionCommunity?.properties?.URL?.url,
-        country: notionCommunity?.properties?.Country?.select?.name,
+        image: notionCommunity?.properties?.Logo?.files?.[0]?.file?.url ?? '',
+        tags: notionCommunity?.properties?.Tags?.multi_select?.map(({ name }) => name) ?? [],
+        url: notionCommunity?.properties?.URL?.url ?? '',
+        country: notionCommunity?.properties?.Country?.select?.name ?? '',
         toStay: notionCommunity?.properties?.['To-Stay']?.multi_select?.map(({ name }) => name),
         toVisit: notionCommunity?.properties?.['To-Visit']?.multi_select?.map(({ name }) => name),
     }
@@ -42,14 +40,14 @@ export function parseNotionCommunity(notionCommunity: any): Community {
 
 export const communitiesToGeoJson = (communities: any): FeatureCollection => {
     const features = communities.map(
-        (notionCommunity: any) => {
+        (community: any) => {
             const {
                 coordinates,
                 title,
                 slug,
                 description,
                 image,
-            } = parseNotionCommunity(notionCommunity);
+            } = community;
 
             return {
                 "type": "Feature",

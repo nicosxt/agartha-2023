@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { getCommunities, communitiesToGeoJson } from '../lib/community.ts';
+import { getCommunities, communitiesToGeoJson, parseNotionCommunity } from '../lib/community.ts';
 
 import React from "react";
 import { motion } from "framer-motion";
@@ -214,13 +214,15 @@ const Map: NextPage = ({
           new mapboxgl.Popup()
             .setLngLat(coordinates)
             .setHTML(
+              // todo: make this open CommunityProfile component in React tree
+              // similar to instagram website when clicking a post from a profile
               `
               <div class='map-popup'>
               <h2>
-              <a href="/communities/${slug}"> ${title}</a>
+              <a href="/community/${slug}"> ${title}</a>
               </h2>
               <p>${description.slice(0, 100)}...</p>
-              <a href="/communities/${slug}">Read more</a>
+              <a href="/community/${slug}">Read more</a>
               <img style="aspect-ratio: 1/1; width: 100%;"src="${image}"/>
               </div>
               `
@@ -249,7 +251,7 @@ const Map: NextPage = ({
       </>
       )}
       {isListOpen && (<>
-        <CommunityList />
+        <CommunityList communities={communities} />
       </>
       )}
 
@@ -311,14 +313,8 @@ export async function getServerSideProps(context) {
 
   const response = await fetchPages('446c0e9d7937439ca478aa84e1ea9f15');
 
-  const communities = response.results.map((c) => {
-    return {
-      id: c.id,
-      last_edited_time: c.last_edited_time,
-      created_time: c.created_time,
-      properties: c.properties,
-    };
-  })
+  const communities = response.results.map(parseNotionCommunity);
+  console.log(communities)
 
   return {
     props: {
