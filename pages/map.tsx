@@ -1,21 +1,17 @@
 import type { NextPage } from 'next';
-import { getCommunities, communitiesToGeoJson, parseNotionCommunity } from '../lib/community.ts';
+import { communitiesToGeoJson, parseNotionCommunity, Community } from '../lib/community.ts';
 
 import React from "react";
-import { motion } from "framer-motion";
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState, useEffect, useRef } from 'react';
 import CommunityList from '../components/list';
-import { FeatureCollection } from 'geojson';
 import { useRouter } from 'next/router';
 import { fetchPages } from '../lib/notion';
 
-import styles from '../style/Map.module.css';
-
 const Map: NextPage = ({
-  communities
-}) => {
+  communities,
+}: { communities: Community[] }) => {
   const geo = communitiesToGeoJson(communities);
   const [isOn, setIsOn] = useState<any>(false);
   useEffect(() => {
@@ -44,7 +40,7 @@ const Map: NextPage = ({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/light-v10',
         center: [-39.4629, 35.7465],
-        zoom: .5,
+        zoom: 1.5,
 
       });
       map.current?.on('load', () => {
@@ -104,15 +100,8 @@ const Map: NextPage = ({
                   type: 'circle',
                   source: 'points',
                   filter: ['has', 'point_count'],
-                  // layout: {
-                  //   'icon-image': '',
-                  // },
                   paint: {
                     // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-                    // with three steps to implement three types of circles:
-                    //   * Blue, 20px circles when point count is less than 100
-                    //   * Yellow, 30px circles when point count is between 100 and 750
-                    //   * Pink, 40px circles when point count is greater than or equal to 750
                     'circle-color': [
                       'step',
                       ['get', 'point_count'],
@@ -149,13 +138,9 @@ const Map: NextPage = ({
                   }
                 });
 
-                // map.current.addLayer({
-                //   id: 'unclustered-point',
-
-                //   source: 'points',
-                //   filter: ['!', ['has', 'point_count']],
-                // });
-
+                /**
+                 * Clusters callback - zoom in
+                 */
                 map.current.on('click', 'clusters', (e) => {
                   const features = map.current.queryRenderedFeatures(e.point, {
                     layers: ['clusters']
@@ -213,6 +198,7 @@ const Map: NextPage = ({
 
           new mapboxgl.Popup()
             .setLngLat(coordinates)
+            .setMaxWidth("350px")
             .setHTML(
               // todo: make this open CommunityProfile component in React tree
               // similar to instagram website when clicking a post from a profile
@@ -244,10 +230,8 @@ const Map: NextPage = ({
 
       {!isListOpen && (<>
         <main>
-          <div style={{ width: 2000, height: 700, maxWidth: '100%' }} ref={mapContainer} />
+          <div style={{ height: 'calc(100vh - 4.75rem)', maxWidth: '100%' }} ref={mapContainer} />
         </main>
-
-
       </>
       )}
       {isListOpen && (<>
@@ -256,10 +240,7 @@ const Map: NextPage = ({
       )}
 
       <div onClick={toggleList} className="fixed z-90 bottom-10 right-8 drop-shadow-lg flex justify-center items-center text-white text-4xl">
-
-        <motion.div animate className=
-          {`toggleSwitch ${isListOpen ? "on " : "off"} `} >
-          <motion.div animate>
+        <div>
             <div className="bg-[#0000FF] ">
               <div className='toggleImg'>
 
@@ -280,8 +261,7 @@ const Map: NextPage = ({
               </div>
 
             </div>
-          </motion.div>
-        </motion.div>
+        </div>
         <div className='toggleImg'>
           <img className=
             {isListOpen ?

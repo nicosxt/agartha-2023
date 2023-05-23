@@ -39,6 +39,7 @@
 
 .mapboxgl-popup-content {
     padding: 0 !important;
+    border-radius: 4px;
 }
 
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
@@ -52,6 +53,8 @@
 .map-popup {
     background-color: #FFDDED;
     padding: 8px;
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .map-popup h2 {
