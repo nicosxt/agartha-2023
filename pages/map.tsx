@@ -4,7 +4,6 @@ import type { NextPage } from "next";
 import {
   communitiesToGeoJson,
   parseNotionCommunity,
-  Community,
 } from "../lib/community";
 
 import React from "react";
@@ -12,23 +11,15 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useState, useEffect, useRef } from "react";
 import CommunityList from "../components/list";
-import { useRouter } from "next/router";
 import { fetchPages } from "../lib/notion";
+import Flower from "../components/svgs/flower";
+import Hamburger from "../components/svgs/hamburger";
 
-const Map: NextPage = ({ communities }: any) => {
-  const geo = communitiesToGeoJson(communities);
-  const [isOn, setIsOn] = useState<any>(false);
-  useEffect(() => {
-    // background-color changes every time "isOn"
-    // changes using JavaScript DOM methods
-    document.body.style.backgroundColor = isOn ? "#1c1c1c" : "#ffffff";
-  }, [isOn]);
-
-  const router = useRouter();
+const Map: NextPage = ({ communities, isListView }: any) => {
 
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [isListOpen, setIsListOpen] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(isListView);
 
   const toggleList = () => {
     const x = !isListOpen;
@@ -93,7 +84,6 @@ const Map: NextPage = ({ communities }: any) => {
                 });
               } catch (error) {
                 console.log(error);
-                router.reload();
               }
 
               map?.current?.addLayer({
@@ -166,7 +156,6 @@ const Map: NextPage = ({ communities }: any) => {
             }
           } catch (error) {
             console.log(error);
-            router.reload();
           }
         });
 
@@ -244,65 +233,9 @@ const Map: NextPage = ({ communities }: any) => {
 
         <div className="toggleTrack">
           <div className="toggleIndicator"></div>
-          {/* Flower */}
-          <svg
-            className="flower"
-            width="15"
-            height="23"
-            viewBox="0 0 15 23"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.48 7.05153C14.48 10.9097 9.39724 22.15 7.42482 22.15C5.4524 22.15 0.369629 10.9097 0.369629 7.05153C0.369629 3.19335 3.52835 0.0656738 7.42482 0.0656738C11.3213 0.0656738 14.48 3.19335 14.48 7.05153Z"
-              fill={isListOpen ? "#0000FF" : "#FFDDED"}
-            />
-            <ellipse
-              cx="7.42492"
-              cy="7.69486"
-              rx="5.03942"
-              ry="4.8184"
-              fill={isListOpen ? "#FFDDED" : "#0000FF"}
-            />
-          </svg>
-
+          <Flower blue={isListOpen} />
           {/* hamburgher */}
-          <svg
-            className="burger"
-            width="20"
-            height="18"
-            viewBox="0 0 20 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <line
-              x1="2.12866"
-              y1="9.04932"
-              x2="18.0573"
-              y2="9.04932"
-              stroke={isListOpen ? "#FFDDED" : "#0000FF"}
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-            <line
-              x1="2.12866"
-              y1="2.09009"
-              x2="18.0573"
-              y2="2.09009"
-              stroke={isListOpen ? "#FFDDED" : "#0000FF"}
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-            <line
-              x1="2.12866"
-              y1="16.418"
-              x2="18.0573"
-              y2="16.418"
-              stroke={isListOpen ? "#FFDDED" : "#0000FF"}
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-          </svg>
+          <Hamburger blue={isListOpen} />
         </div>
       </label>
     </>
@@ -316,9 +249,11 @@ export async function getServerSideProps(context) {
   const response = await fetchPages("446c0e9d7937439ca478aa84e1ea9f15");
   const communities = response.results.map(parseNotionCommunity);
 
+  const isListView = context?.query?.list ?? false;
   return {
     props: {
       communities,
+      isListView,
     }, // will be passed to the page component as props
   };
 }
