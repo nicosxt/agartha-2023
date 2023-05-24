@@ -22,14 +22,14 @@
 
 .wrapper:after {
     position: absolute;
-content: '';
-right: 97px;
-top: 0;
-height: 100%;
-width: 2.5px;
-background-color: #1100FF;
-transform: skewX(45deg);
-transform-origin: top;
+    content: '';
+    right: 97px;
+    top: 0;
+    height: 100%;
+    width: 2.5px;
+    background-color: #1100FF;
+    transform: skewX(45deg);
+    transform-origin: top;
 }
 
 .imageLinkContainer {
@@ -43,6 +43,13 @@ transform-origin: top;
     grid-column-start: 2;
     grid-column-end: 4;
     padding-left: 40px;
+}
+
+@media (max-width: 700px) {
+    .container {
+        grid-column-start: 1;
+        padding: 0 10px;
+    }
 }
 
 .cross {
@@ -112,6 +119,8 @@ transform-origin: top;
     font-size: 3rem;
     color: #0000FF;
     -webkit-line-clamp: 2;
+    /* account for diagonal */
+    width: 90%;
 }
 
 .line {
@@ -136,6 +145,7 @@ transform-origin: top;
     font-weight: medium;
     font-size: 1rem;
     margin-right: 4px;
+    margin-top: 4px;
 }
 
 .link {
