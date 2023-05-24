@@ -36,8 +36,6 @@ const Map: NextPage = ({
   useEffect(() => {
     if (isListOpen === false) {
       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? '';
-      console.log(mapContainer.current)
-      console.log(map)
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/syntonikka/cli1b7iw6005i01rb5rt30qxy',
@@ -167,9 +165,6 @@ const Map: NextPage = ({
               console.log(error);
               router.reload();
             }
-
-            console.log(map.current.getStyle());
-
           }
         );
 
@@ -268,13 +263,9 @@ const Map: NextPage = ({
 export default Map;
 
 export async function getServerSideProps(context) {
-
   //https://www.notion.so/agarthamap/446c0e9d7937439ca478aa84e1ea9f15
-
   const response = await fetchPages('446c0e9d7937439ca478aa84e1ea9f15');
-
   const communities = response.results.map(parseNotionCommunity);
-  console.log(communities)
 
   return {
     props: {
