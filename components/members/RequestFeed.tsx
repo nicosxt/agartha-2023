@@ -66,61 +66,58 @@ function MemberItem(props: MemberProps) {
   let realUsername:string = username!;
 
 
-  return (
-    
-    <>
-    {userDoc &&( 
-      <tbody className="divide-y divide-gray-200 bg-white">
-          <tr>
-            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-              <div className="flex items-center">
-                <div className="h-10 w-10 flex-shrink-0">
-                <Link href={`/${request.username}`}>
-                <a>
+  return <>
+  {userDoc &&( 
+    <tbody className="divide-y divide-gray-200 bg-white">
+        <tr>
+          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+            <div className="flex items-center">
+              <div className="h-10 w-10 flex-shrink-0">
+              <Link href={`/${request.username}`}>
 
-                  <img className="h-10 w-10 rounded-full" src={userDoc.avatarUrl? userDoc.avatarUrl :"https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" } alt=""/>
-                  </a>
+                <img className="h-10 w-10 rounded-full" src={userDoc.avatarUrl? userDoc.avatarUrl :"https://s2.loli.net/2022/05/02/bftaDElM8VYuxn5.jpg" } alt=""/>
 
-                  </Link>
+              </Link>
 
-                </div>
-                <div className="ml-4">
-                  <Link href={`/${request.username}`}>
-                    <a>
-                  <div className="font-medium text-gray-900">{request.username}</div>
-                  </a>
-                  </Link>
-                  <div className="text-gray-500">{userDoc.email}</div>
-                </div>
               </div>
-            </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              <div className="text-gray-900">{request.reference}</div>
-              {/* <div className="text-gray-500">{request.reason}</div> */}
-            </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{request.reason}</td>
+              <div className="ml-4">
+                <Link href={`/${request.username}`}>
 
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {admin && (
-              <Link href={`/${realUsername}/community/${slug}/members/approve/${request.uid}`}>
-                <a className="text-green-600 hover:text-green-900">Approve</a>
-                </Link>           
-              )}
-            </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <div className="font-medium text-gray-900">{request.username}</div>
+
+                </Link>
+                <div className="text-gray-500">{userDoc.email}</div>
+              </div>
+            </div>
+          </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            <div className="text-gray-900">{request.reference}</div>
+            {/* <div className="text-gray-500">{request.reason}</div> */}
+          </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{request.reason}</td>
+
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             {admin && (
-              <DeleteRequestButton uid={request.uid} slug={slug} username={username}/>
-              // <Link href={`/${username}/community/${slug}/members/${request.uid}`}>
-              // <a className="text-red-600 hover:text-red-900">Decline</a>
-              // </Link>
+            <Link
+              href={`/${realUsername}/community/${slug}/members/approve/${request.uid}`}
+              className="text-green-600 hover:text-green-900">
+              Approve
+              </Link>           
             )}
-            </td>
-          </tr>
+          </td>
+          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+          {admin && (
+            <DeleteRequestButton uid={request.uid} slug={slug} username={username}/>
+            // <Link href={`/${username}/community/${slug}/members/${request.uid}`}>
+            // <a className="text-red-600 hover:text-red-900">Decline</a>
+            // </Link>
+          )}
+          </td>
+        </tr>
 
-        </tbody>
-        )}
-    </>
-  );
+      </tbody>
+      )}
+  </>;
 }
 
 

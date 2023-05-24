@@ -34,20 +34,20 @@ export default function FrontPage({ children }: Props) {
           <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
             <div className="flex items-center justify-between w-full md:w-auto">
               <Link href='/'>
-                <a>
-                  <span className="sr-only">Agartha</span>
-                  <img className="h-14 w-auto sm:h-14" src="https://s2.loli.net/2022/10/24/U2uwF43q5IeXtYL.png" />
-                </a>
+
+                <span className="sr-only">Agartha</span>
+                <img className="h-14 w-auto sm:h-14" src="https://s2.loli.net/2022/10/24/U2uwF43q5IeXtYL.png" />
+
               </Link>
 
             </div>
           </div>
 
           <div className="text-xs sm:text-sm mr-4 items-center flex justify-end sm:flex md:flex md:flex-1 lg:w-0 ">
-            <Link href={'/map'}>
-              <a style={{ cursor: "pointer" }}>
-                <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>Communities</p>
-              </a>
+            <Link href={'/map'} style={{ cursor: "pointer" }}>
+
+              <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>Communities</p>
+
             </Link>
             <a target="_blank" rel="noreferrer" href='https://learn.agartha.one/'>
               <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>Learn</p>
@@ -55,10 +55,10 @@ export default function FrontPage({ children }: Props) {
             <a target="_blank" rel="noreferrer" href='https://www.notion.so/Agartha-4e4dcfd1584f420f87daf46ca2aaf25c'>
               <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>Wiki</p>
             </a>
-            <Link href={'/about'}>
-              <a style={{ cursor: "pointer" }}>
-                <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>About</p>
-              </a>
+            <Link href={'/about'} style={{ cursor: "pointer" }}>
+
+              <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>About</p>
+
             </Link>
             <Dropdown menu={{ items }} trigger={['click']} arrow={false}>
               <a style={{ cursor: "pointer" }} onClick={(e) => e.preventDefault()}>
@@ -80,6 +80,6 @@ export default function FrontPage({ children }: Props) {
       </div>
     </Banner>
 
-  </>
+  </>;
 
 }

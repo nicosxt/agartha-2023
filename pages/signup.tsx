@@ -147,27 +147,27 @@ function ProfilePage() {
         </h2>
         <div className="mt-8 flex justify-center">
           <div className="inline-flex rounded-md shadow">
-            <Link href={`/${username}`}>
-            <a
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl "
-            >
+            <Link
+              href={`/${username}`}
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl ">
+            
               Bring me to my profile
-            </a>
+            
             </Link>
           </div>
           <div className="ml-3 inline-flex">
-            <Link href={`/getstarted`}>
-            <a
-              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
-             > Get started
-            </a>
+            <Link
+              href={`/getstarted`}
+              className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
+             Get started
+            
             </Link>
           </div>
         </div>
       </div>
     </div>
 
-  </>
+  </>;
 
 
 }
