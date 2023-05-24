@@ -38,9 +38,10 @@ const Map: NextPage = ({
       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? '';
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/light-v10',
+        style: 'mapbox://styles/weer/cli0m4a55005101rbgh5phde8',
         center: [-39.4629, 35.7465],
         zoom: 1.5,
+
 
       });
       map.current?.on('load', () => {
