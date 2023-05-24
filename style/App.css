@@ -132,11 +132,6 @@
     padding: 0 4px;
 }
 
-/* .toggleListButton input:not([disabled]):checked+.toggleTrack {
-    background-color: blue;
-    border: 1px solid blue;
-} */
-
 .toggleTrack>svg {
     flex: 1;
     position: relative;
@@ -159,4 +154,12 @@
 
 .toggleListButton input:not([disabled]):checked+.toggleTrack .toggleIndicator {
     transform: translateX(calc(100% - 6px));
+}
+
+.navbar {
+    background-color: rgb(255 221 237);
+    padding: 1rem;
+    margin: 0;
+    box-sizing: content-box;
+    display: flex;
 }
