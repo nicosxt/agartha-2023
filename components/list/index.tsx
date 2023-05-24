@@ -1,8 +1,37 @@
-import { collectionGroup, collection, query, where, getDocs, orderBy, limit, startAfter, getDoc } from "firebase/firestore";
 import Fuse from 'fuse.js';
-import { firestore } from '../../lib/firebaseConfig/init'
-import { getUserWithUsername, communityToJSON } from '../../lib/firebaseConfig/init';
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+
+import style from './list.module.css';
+
+function Card({community, onClick}) {
+
+  const clickCommunity = useCallback((e) => {
+      e.preventDefault();
+      onClick(community);
+    }, [community]);
+  return (
+    <a key={community.slug} href={`/community/${community.slug}`} data-key={community.title} onClick={clickCommunity}>
+
+      <div key={community.slug} className={style.card}>
+        <div className={style.cardContent}>
+          <div className={style.imageWrapper}>
+            <img
+              src={community.image}
+              className="h-full w-full  object-cover object-center lg:h-full lg:w-full"
+            />
+          </div>
+          <div>
+            <h3 className="text-md mt-4 font-bold font-inter text-[#0000FF] text-center">
+              {community.title}
+            </h3>
+            <p className=" text-sm pt-2 font-inter text-[#0000FF] text-center">{community.country}</p>
+          </div>
+        </div>
+
+      </div>
+    </a>
+  )
+}
 
 export default function CommunityList({ communities }) {
   const [communityQuery, setCommunityQuery] = useState('');
@@ -33,6 +62,12 @@ export default function CommunityList({ communities }) {
   function changeQuery(tag: string) {
     setCommunityQuery(tag);
   }
+
+  function onClickCommunity(community) {
+    console.log(community);
+  }
+
+
   return (
 
     <div className="bg-white ">
@@ -54,34 +89,10 @@ export default function CommunityList({ communities }) {
         </div>
       </div>
       <div className=" py-16 px-4 sm:py-2 sm:px-6 md:py-2 lg:max-w-full lg:px-0 lg:py-2 xl:py-2">
-        <div className="mt-0 grid grid-cols-1 gap-8 sm:grid-cols-2  md:grid-col-3 lg:mr-32 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-
+        <div className={style.cardGrid}>
           {searchResults && searchResults.map((community: any) => (
-            <a key={community.slug} href={`/community/${community.slug}`}>
-
-              <div key={community.slug} className=" ">
-                <div className="mx-10 border-2  border-[#0000FF] bg-[#EAFFF4]  pb-4  lg:w-72 lg:h-96 2xl:h-96 xl:h-96 md:h-96 w-72 h-96 bg-gray-200 group-hover:opacity-75 lg:aspect-none  bg-[#DDFFF3]">
-                  <div className="h-60 w-60  mt-6 mx-5 lg:mx-5 mb-2 border-2 border-[#0000FF] ">
-                    <img
-                      src={community.image}
-                      className="h-full w-full  object-cover object-center lg:h-full lg:w-full"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-md mt-4 font-bold font-inter text-[#0000FF] text-center">
-                      <a href={`/community/${community.slug}`}>
-                        <span aria-hidden="true" className="" />
-                        {community.communityName}
-                      </a>
-                    </h3>
-                    <p className=" text-sm pt-2 font-inter text-[#0000FF] text-center">{community.location}</p>
-                  </div>
-                </div>
-
-              </div>
-            </a>
+            <Card key={community.slug} community={community} onClick={onClickCommunity} />
           ))}
-
         </div>
       </div>
     </div>
