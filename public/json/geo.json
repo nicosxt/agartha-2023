@@ -1,21 +1,15 @@
-
 {
-    "type": "FeatureCollection",
-    "features":
-        [
-        
-
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [-73.9497211, 40.6526006]
-            },
-            "properties": {
-                "title": "706 NY"
-            }
-        }
-    ]
-
-
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.9497211, 40.6526006]
+      },
+      "properties": {
+        "title": "706 NY"
+      }
+    }
+  ]
 }

@@ -2,9 +2,9 @@
 module.exports = {
   reactStrictMode: true,
   experimental: {
-    esmExternals: false
+    esmExternals: false,
   },
   images: {
-    domains: ['firebasestorage.googleapis.com'],
-  }
-}
+    domains: ["firebasestorage.googleapis.com"],
+  },
+};

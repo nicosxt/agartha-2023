@@ -1,199 +1,204 @@
 .outerWrapper {
-    background-color: #0000FF;
-    margin-top: 20px;
-    margin-left: 20px;
-    position: relative;
-    max-width: 1200px;
-    width: calc(100% - 30px);
+  background-color: #0000ff;
+  margin-top: 20px;
+  margin-left: 20px;
+  position: relative;
+  max-width: 1200px;
+  width: calc(100% - 30px);
 }
 
 .wrapper {
-    transform: translateY(-10px) translateX(-10px);
-    background-color: #EAFFF4;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 12px;
-    -webkit-clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 100px, calc(100% - 100px) 0);
-    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 100px, calc(100% - 100px) 0);
-    border: 1.5px solid #1100FF;
-    /* margin-right: 12px; */
-    overflow-x: hidden;
+  transform: translateY(-10px) translateX(-10px);
+  background-color: #eafff4;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 12px;
+  -webkit-clip-path: polygon(
+    0 0,
+    0 100%,
+    100% 100%,
+    100% 100px,
+    calc(100% - 100px) 0
+  );
+  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 100px, calc(100% - 100px) 0);
+  border: 1.5px solid #1100ff;
+  /* margin-right: 12px; */
+  overflow-x: hidden;
 }
 
 .wrapper:after {
-    position: absolute;
-    content: '';
-    right: 97px;
-    top: 0;
-    height: 100%;
-    width: 2.5px;
-    background-color: #1100FF;
-    transform: skewX(45deg);
-    transform-origin: top;
+  position: absolute;
+  content: "";
+  right: 97px;
+  top: 0;
+  height: 100%;
+  width: 2.5px;
+  background-color: #1100ff;
+  transform: skewX(45deg);
+  transform-origin: top;
 }
 
 .imageLinkContainer {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    display: flex;
-    flex-direction: column;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
-    grid-column-start: 2;
-    grid-column-end: 4;
-    padding-left: 40px;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  padding-left: 40px;
 }
 
 @media (max-width: 700px) {
-    .container {
-        grid-column-start: 1;
-        padding: 0 10px;
-    }
+  .container {
+    grid-column-start: 1;
+    padding: 0 10px;
+  }
 }
 
 .cross {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    right: 10px;
-    top: 10px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 10px;
+  top: 10px;
 }
 
 .image img {
-    object-fit: cover;
-    object-position: center;
-    aspect-ratio: 1 / 1;
-    position: relative;
-    display: block;
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  display: block;
 }
 
 .image {
-    position: relative;
+  position: relative;
 }
 .image::before {
-    content: '';
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    background-color: blue;
-    width: 100%;
-    height: 100%;
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background-color: blue;
+  width: 100%;
+  height: 100%;
 }
 
 .overlay {
-    height: 36px;
-    width: 36px;
-    padding: 4px;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    background-color: #0000FF;
+  height: 36px;
+  width: 36px;
+  padding: 4px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background-color: #0000ff;
 }
 
 .links {
-    display: flex;
-    padding-top: 52px;
+  display: flex;
+  padding-top: 52px;
 }
 
 .links a {
-    margin-left: 4px;
-    margin-top: 4px;
-    display: block;
+  margin-left: 4px;
+  margin-top: 4px;
+  display: block;
 }
 
 .content {
-    position: absolute;
-    margin-top: 8px;
-    margin-left: 4px;
-    width: 100%;
+  position: absolute;
+  margin-top: 8px;
+  margin-left: 4px;
+  width: 100%;
 }
 
 .title {
-    font-size: 5rem;
-    font-family: monospace;
-    font-weight: bold;
-    padding-bottom: 2px;
-    font-size: 3rem;
-    color: #0000FF;
-    -webkit-line-clamp: 2;
-    /* account for diagonal */
-    width: 90%;
+  font-size: 5rem;
+  font-family: monospace;
+  font-weight: bold;
+  padding-bottom: 2px;
+  font-size: 3rem;
+  color: #0000ff;
+  -webkit-line-clamp: 2;
+  /* account for diagonal */
+  width: 90%;
 }
 
 .line {
-    margin-top: 4px;
-    width: 83.3333%;
-    width: 50%;
-    border-bottom: 2px solid blue;
+  margin-top: 4px;
+  width: 83.3333%;
+  width: 50%;
+  border-bottom: 2px solid blue;
 }
 
 .tags {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 0 0;
 }
 
 .tag {
-    color: #FFDDED;
-    background-color: #0000FF;
-    border-radius: 48px;
-    padding: 4px 12px;
-    font-family: monospace;
-    font-weight: medium;
-    font-size: 1rem;
-    margin-right: 4px;
-    margin-top: 4px;
+  color: #ffdded;
+  background-color: #0000ff;
+  border-radius: 48px;
+  padding: 4px 12px;
+  font-family: monospace;
+  font-weight: medium;
+  font-size: 1rem;
+  margin-right: 4px;
+  margin-top: 4px;
 }
 
 .link {
-    color: #0000FF;
-    padding: 20px 0;
+  color: #0000ff;
+  padding: 20px 0;
 }
 
 .location {
-    display: flex;
-    padding: 20px 0;
+  display: flex;
+  padding: 20px 0;
 }
 
 .pin {
-    margin-top: 0;
-    width: 4px;
-    height: 6px;
-    width: 2px;
-    height: 3px;
-    height: 6px;
-    width: 4px;
+  margin-top: 0;
+  width: 4px;
+  height: 6px;
+  width: 2px;
+  height: 3px;
+  height: 6px;
+  width: 4px;
 }
 
 .country {
-    margin-left: 4px;
-    margin-top: 0;
-    color: #0000FF;
-    font-family: monospace;
-    font-weight: thin;
-    font-size: 0.875rem;
-    font-size: 1rem;
-    font-size: 1rem;
+  margin-left: 4px;
+  margin-top: 0;
+  color: #0000ff;
+  font-family: monospace;
+  font-weight: thin;
+  font-size: 0.875rem;
+  font-size: 1rem;
+  font-size: 1rem;
 }
 
 .description {
-    height: fit-content;
-    padding: 20px;
-    background-color: #0000FF;
+  height: fit-content;
+  padding: 20px;
+  background-color: #0000ff;
 }
 
 .text {
-    margin: 4px 8px;
-    font-size: 0.875rem;
-    color: white;
-    font-family: monospace;
-    font-size: 0.75rem;
-    font-size: 1rem;
-    font-size: 1rem;
-    font-size: 1rem;
-    font-size: 1rem;
+  margin: 4px 8px;
+  font-size: 0.875rem;
+  color: white;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-size: 1rem;
+  font-size: 1rem;
+  font-size: 1rem;
+  font-size: 1rem;
 }
-

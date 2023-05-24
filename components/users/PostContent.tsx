@@ -1,23 +1,26 @@
-import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 
-interface Props{
-    post: any
+interface Props {
+  post: any;
 }
 
 // UI component for main post content
 export default function PostContent(prop: Props) {
   const post = prop.post;
-  const createdAt = typeof post?.createdAt === 'number' ? new Date(post.createdAt) : post.createdAt.toDate();
+  const createdAt =
+    typeof post?.createdAt === "number"
+      ? new Date(post.createdAt)
+      : post.createdAt.toDate();
 
   return (
     <div className="card">
       <h1>{post?.title}</h1>
       <span className="text-sm">
-        Written by{' '}
+        Written by{" "}
         <Link href={`/${post.username}/`} className="text-info">
           @{post.username}
-        </Link>{' '}
+        </Link>{" "}
         on {createdAt.toISOString()}
       </span>
       <ReactMarkdown>{post?.content}</ReactMarkdown>

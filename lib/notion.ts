@@ -15,7 +15,7 @@ export const fetchPages = (database_id: string) => {
   return notion.databases.query({
     database_id,
   });
-}
+};
 
 export const fetchPageBySlug = (slug: string, database_id: string) => {
   return notion.databases
@@ -29,10 +29,10 @@ export const fetchPageBySlug = (slug: string, database_id: string) => {
       },
     })
     .then((res) => res.results[0] as PageObjectResponse | undefined);
-}
+};
 
 export const fetchPageBlocks = (pageId: string) => {
   return notion.blocks.children
     .list({ block_id: pageId })
     .then((res) => res.results as BlockObjectResponse[]);
-}
+};

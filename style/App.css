@@ -1,165 +1,168 @@
 .toggleSwitch {
-    width: 115px;
-    height: 50px;
-    border-radius: 100px;
-    border: #0000FF 4px solid;
-    padding: 0px;
-    display: flex;
-    cursor: pointer;
-    z-index: 2;
-    position: relative;
-    z-index: -1;
+  width: 115px;
+  height: 50px;
+  border-radius: 100px;
+  border: #0000ff 4px solid;
+  padding: 0px;
+  display: flex;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  z-index: -1;
 }
 
 /* CSS for switch when "on"*/
 .toggleSwitch.on {
-    background-color: #FFDDED;
-    justify-content: flex-end;
-    /* for smooth transition*/
-    transition: 0.5s ease-in-out;
+  background-color: #ffdded;
+  justify-content: flex-end;
+  /* for smooth transition*/
+  transition: 0.5s ease-in-out;
 }
 
 /*CSS for switch when "off"*/
 .toggleSwitch.off {
-    background-color: #FFDDED;
-    justify-content: flex-start;
+  background-color: #ffdded;
+  justify-content: flex-start;
 }
 
 .toggleSwitch div {
-    width: 62px;
-    height: 43px;
-    border-radius: 20px;
-
+  width: 62px;
+  height: 43px;
+  border-radius: 20px;
 }
 
 .ToggleImg {
-    width: 15px;
-    height: 15px;
+  width: 15px;
+  height: 15px;
 }
 
 .mapboxgl-popup-content {
-    padding: 0 !important;
-    border-radius: 4px;
+  padding: 0 !important;
+  border-radius: 4px;
 }
 
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-    border-bottom-color: #FFDDED !important;
+  border-bottom-color: #ffdded !important;
 }
 
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-    border-top-color: #FFDDED !important;
+  border-top-color: #ffdded !important;
 }
 
 .map-popup {
-    background-color: #FFDDED;
-    padding: 8px;
-    border-radius: 4px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background-color: #ffdded;
+  padding: 8px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 .map-popup h2 {
-    font-size: 2rem;
-    line-height: 1.2;
-    color: blue;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: blue;
 }
 
 .map-popup a {
-    color: blue;
+  color: blue;
 }
 
 .map-popup a:hover {
-    color: dodgerblue;
+  color: dodgerblue;
 }
 
 .mapboxgl-popup-close-button {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .toggleListButton {
-    position: fixed;
-    bottom: 10px;
-    right: 0;
-    height: 40px;
-    width: 80px;
-    z-index: 2;
-    display: flex;
-    flex-direction: row;
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  height: 40px;
+  width: 80px;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
 
-    align-items: center;
-    border-radius: 100px;
-    display: flex;
-    font-weight: 700;
-    margin-bottom: 16px;
+  align-items: center;
+  border-radius: 100px;
+  display: flex;
+  font-weight: 700;
+  margin-bottom: 16px;
 }
 
 .toggleListButton input {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 /* This style sets the focus ring. The ":not([disabled])" prevents the focus ring from creating a flash when the element is clicked. */
-.toggleListButton input:not([disabled]):active+.toggleTrack,
-.toggleListButton input:not([disabled]):focus+.toggleTrack {
-    border: 1px solid transparent;
-    box-shadow: 0px 0px 0px 2px darkblue;
+.toggleListButton input:not([disabled]):active + .toggleTrack,
+.toggleListButton input:not([disabled]):focus + .toggleTrack {
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 0px 2px darkblue;
 }
 
-.toggleListButton input:disabled+.toggleTrack {
-    cursor: not-allowed;
-    opacity: 0.7;
+.toggleListButton input:disabled + .toggleTrack {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .toggleTrack {
-    background-color: #FFDDED;
-    border: 1px solid #FFDDED;
-    border-radius: 100px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 40px;
-    margin-right: 12px;
-    position: relative;
-    width: 80px;
-    transition: 200ms border, 200ms background-color;
-    padding: 0 4px;
+  background-color: #ffdded;
+  border: 1px solid #ffdded;
+  border-radius: 100px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 40px;
+  margin-right: 12px;
+  position: relative;
+  width: 80px;
+  transition: 200ms border, 200ms background-color;
+  padding: 0 4px;
 }
 
-.toggleTrack>svg {
-    flex: 1;
-    position: relative;
+.toggleTrack > svg {
+  flex: 1;
+  position: relative;
 }
 
 .toggleIndicator {
-    align-items: center;
-    background: blue;
-    border-radius: 100px;
-    bottom: 2px;
-    display: flex;
-    height: 34px;
-    justify-content: center;
-    left: 2px;
-    outline: solid 2px transparent;
-    position: absolute;
-    transition: 200ms background, 200ms transform;
-    width: 34px;
+  align-items: center;
+  background: blue;
+  border-radius: 100px;
+  bottom: 2px;
+  display: flex;
+  height: 34px;
+  justify-content: center;
+  left: 2px;
+  outline: solid 2px transparent;
+  position: absolute;
+  transition: 200ms background, 200ms transform;
+  width: 34px;
 }
 
-.toggleListButton input:not([disabled]):checked+.toggleTrack .toggleIndicator {
-    transform: translateX(calc(100% - 6px));
+.toggleListButton
+  input:not([disabled]):checked
+  + .toggleTrack
+  .toggleIndicator {
+  transform: translateX(calc(100% - 6px));
 }
 
 .navbar {
-    background-color: rgb(255 221 237);
-    padding: 1rem;
-    margin: 0;
-    box-sizing: content-box;
-    display: flex;
+  background-color: rgb(255 221 237);
+  padding: 1rem;
+  margin: 0;
+  box-sizing: content-box;
+  display: flex;
 }
