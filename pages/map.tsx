@@ -238,48 +238,25 @@ const Map: NextPage = ({
         <CommunityList communities={communities} />
       </>
       )}
+      <label className="toggleListButton" htmlFor="mapListToggle">
+        <input onClick={toggleList} type="checkbox" id="mapListToggle" />
+          
+        <div className="toggleTrack">
+          <div className='toggleIndicator'></div>
+          {/* Flower */}
+          <svg className='flower' width="15" height="23" viewBox="0 0 15 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.48 7.05153C14.48 10.9097 9.39724 22.15 7.42482 22.15C5.4524 22.15 0.369629 10.9097 0.369629 7.05153C0.369629 3.19335 3.52835 0.0656738 7.42482 0.0656738C11.3213 0.0656738 14.48 3.19335 14.48 7.05153Z" fill={isListOpen ? '#0000FF' : '#FFDDED'} />
+            <ellipse cx="7.42492" cy="7.69486" rx="5.03942" ry="4.8184" fill={isListOpen ? '#FFDDED' : '#0000FF'} />
+          </svg>
 
-      <div onClick={toggleList} className="fixed z-90 bottom-10 right-8 drop-shadow-lg flex justify-center items-center text-white text-4xl">
-        <div>
-            <div className="bg-[#0000FF] ">
-              <div className='toggleImg'>
-
-                <img className=
-                  {isListOpen ?
-
-                    "ml-6 py-3.5 "
-                    :
-                    "mx-5 py-2.5"
-                  }
-                  src={isListOpen
-                    ?
-                    "https://s2.loli.net/2022/11/01/dYSHOGi8PcfyklQ.png"
-                    :
-                    "https://s2.loli.net/2022/11/01/RFmEylD2h7dAa3x.png"
-
-                  } />
-              </div>
-
-            </div>
-        </div>
-        <div className='toggleImg'>
-          <img className=
-            {isListOpen ?
-
-              "absolute bottom-3.5 right-20 "
-              :
-              "absolute bottom-4 right-6"
-            }
-            src={isListOpen
-              ?
-              "https://s2.loli.net/2022/11/01/wYF7zAv6J3bHQLD.png"
-
-              :
-              "https://s2.loli.net/2022/11/01/ZaAnoLSQXl14zpf.png"
-
-            } />
-        </div>
-      </div>
+          {/* hamburgher */}
+          <svg className="burger" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="2.12866" y1="9.04932" x2="18.0573" y2="9.04932" stroke={isListOpen ? '#FFDDED' : '#0000FF'} stroke-width="3" stroke-linecap="round" />
+            <line x1="2.12866" y1="2.09009" x2="18.0573" y2="2.09009" stroke={isListOpen ? '#FFDDED' : '#0000FF'} stroke-width="3" stroke-linecap="round" />
+            <line x1="2.12866" y1="16.418" x2="18.0573" y2="16.418" stroke={isListOpen ? '#FFDDED' : '#0000FF'} stroke-width="3" stroke-linecap="round" />
+          </svg>
+          </div>
+      </label>
     </>
   )
 };
