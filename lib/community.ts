@@ -1,7 +1,7 @@
 import { FeatureCollection } from 'geojson';
 import { notion } from './notion';
 
-interface Community {
+export interface Community {
     title: string;
     slug: string;
     description: string;
@@ -29,11 +29,11 @@ export function parseNotionCommunity(notionCommunity: any): Community {
         slug: getCommunitySlugFromName(notionCommunity?.properties?.Name?.title?.[0]?.plain_text) ?? '',
         description: notionCommunity?.properties?.Description?.rich_text?.[0]?.plain_text ?? '',
         image: notionCommunity?.properties?.Logo?.files?.[0]?.file?.url ?? '',
-        tags: notionCommunity?.properties?.Tags?.multi_select?.map(({ name }) => name) ?? [],
+        tags: notionCommunity?.properties?.Tags?.multi_select?.map(({ name }: { name: any }) => name) ?? [],
         url: notionCommunity?.properties?.URL?.url ?? '',
         country: notionCommunity?.properties?.Country?.select?.name ?? '',
-        toStay: notionCommunity?.properties?.['To-Stay']?.multi_select?.map(({ name }) => name),
-        toVisit: notionCommunity?.properties?.['To-Visit']?.multi_select?.map(({ name }) => name),
+        toStay: notionCommunity?.properties?.['To-Stay']?.multi_select?.map(({ name }: { name: any }) => name),
+        toVisit: notionCommunity?.properties?.['To-Visit']?.multi_select?.map(({ name }: { name: any }) => name),
     }
 }
 

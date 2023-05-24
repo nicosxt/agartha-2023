@@ -4,12 +4,12 @@ import { useCallback, useState } from "react";
 import style from './list.module.css';
 import CommunityProfilePage from '../communities/CommunityProfilePage';
 
-function Card({community, onClick}) {
-
+function Card(props: any) {
+  const { community, onClick } = props;
   const clickCommunity = useCallback((e) => {
-      e.preventDefault();
-      onClick(community);
-    }, [community]);
+    e.preventDefault();
+    onClick(community);
+  }, [community]);
   return (
     <a key={community.slug} href={`/community/${community.slug}`} data-key={community.title} onClick={clickCommunity}>
 
@@ -34,7 +34,8 @@ function Card({community, onClick}) {
   )
 }
 
-export default function CommunityList({ communities }) {
+export default function CommunityList(props: any) {
+  const { communities } = props;
   const [communityQuery, setCommunityQuery] = useState('');
   const [communityView, setCommunityView] = useState(null);
 
@@ -62,7 +63,7 @@ export default function CommunityList({ communities }) {
     setCommunityQuery(tag);
   }
 
-  function onClickCommunity(community) {
+  function onClickCommunity(community: any) {
     setCommunityView(community);
     history.pushState({}, '', `/community/${community.slug}`);
   }
@@ -102,7 +103,7 @@ export default function CommunityList({ communities }) {
         <div className={style.communityModalWrapper}>
           <CommunityProfilePage onClick={closeCommunityModal} community={communityView}></CommunityProfilePage>
         </div>
-      ): null}
+      ) : null}
     </div>
   )
 }

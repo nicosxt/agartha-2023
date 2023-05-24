@@ -1,16 +1,13 @@
 
 
 import Head from 'next/head'
-import { useState } from 'react';
 import Link from 'next/link'
-import { useAuth } from '../lib/authContext'
 import { useRouter } from 'next/router';
 import ParticlesCustom from '../components/layout/particles'
 import { motion } from "framer-motion"
 
 
 export default function Home(): any {
-  const { user} = useAuth();
   const router = useRouter();
   const sleep = (ms:number) => new Promise(r => setTimeout(r, ms));
 
@@ -81,7 +78,6 @@ export default function Home(): any {
               </div>
 
               <div className=" pt-6 flex gap-x-6 sm:mt-8 sm:flex  justify-center lg:gap-x-14 justify-center">
-                {!user && (<>
                 <div>
                   <Link href='/map' style={{ cursor: "pointer" }}>
 
@@ -94,8 +90,6 @@ export default function Home(): any {
                     <img className="h-10 sm:h-14 md:h-14 lg:h-14" src='/buttons/join.png'/>
                   </a>
                 </div>
-                </>
-                )}
               </div>
               </div>
             </div>

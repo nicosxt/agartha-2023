@@ -1,13 +1,11 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useAuth, signOut } from '../lib/authContext'
 import { useRouter } from 'next/router';
 import ParticlesCustom from '../components/layout/particles'
 import { motion } from "framer-motion"
 import { Banner, Container, Body } from '../components/styles/styles';
 import Subscription from '../components/button/subscription';
 export default function Home(): any {
-  const { user } = useAuth();
   const router = useRouter();
   const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
@@ -118,21 +116,18 @@ export default function Home(): any {
 
 
               <div className=" pt-6 flex gap-x-6 sm:mt-8 sm:flex  lg:gap-x-14 justify-center">
-                {!user && (<>
-                  <div>
-                    <Link href='/map' style={{ cursor: "pointer" }}>
+                <div>
+                  <Link href='/map' style={{ cursor: "pointer" }}>
 
-                      <img className="h-10 sm:h-14 md:h-14 lg:h-14 " src='/buttons/explore.png' />
+                    <img className="h-10 sm:h-14 md:h-14 lg:h-14 " src='/buttons/explore.png' />
 
-                    </Link>
-                  </div>
-                  <div>
-                    <a href='https://discord.gg/UAjzAx62Ug' target="_blank" rel="noreferrer">
-                      <img className="h-10 sm:h-14 md:h-14 lg:h-14" src='/buttons/join.png' />
-                    </a>
-                  </div>
-                </>
-                )}
+                  </Link>
+                </div>
+                <div>
+                  <a href='https://discord.gg/UAjzAx62Ug' target="_blank" rel="noreferrer">
+                    <img className="h-10 sm:h-14 md:h-14 lg:h-14" src='/buttons/join.png' />
+                  </a>
+                </div>
               </div>
             </div>
           </div>

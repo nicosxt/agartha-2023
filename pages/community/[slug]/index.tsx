@@ -5,16 +5,15 @@ import { fetchPages } from '../../../lib/notion';
 import { GetServerSideProps, InferGetServerSidePropsType, NextPageContext } from 'next';
 import { parseNotionCommunity } from '../../../lib/community';
 
-export async function getServerSideProps(context: GetServerSideProps) {
+export async function getServerSideProps(context: any) {
 
     //https://www.notion.so/agarthamap/446c0e9d7937439ca478aa84e1ea9f15
   
     const response = await fetchPages('446c0e9d7937439ca478aa84e1ea9f15');
   
     const communities = response.results.map(parseNotionCommunity);
-    const community = communities.find(({ slug }) => {
-      return slug === context.query.slug
-    })
+    /* ts-ignore */
+    const community = communities.find(({ slug }) => slug === context.query.slug)
     if (!community) {
       return {
         notFound: true,

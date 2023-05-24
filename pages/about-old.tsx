@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { useState } from 'react';
 import Link from 'next/link'
-import { useAuth,signOut } from '../lib/authContext'
 
 
 
@@ -13,7 +12,6 @@ export default function Home(props:Props): any {
   const [posts, setPosts] = useState(props.posts);
   const [loading, setLoading] = useState(false);
   const [postsEnd, setPostsEnd] = useState(false);  
-  const { user} = useAuth();
 
   const [isHovering, setIsHovered] = useState(false);
 

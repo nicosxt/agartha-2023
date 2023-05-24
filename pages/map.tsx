@@ -1,5 +1,7 @@
+// @ts-nocheck
+
 import type { NextPage } from 'next';
-import { communitiesToGeoJson, parseNotionCommunity, Community } from '../lib/community.ts';
+import { communitiesToGeoJson, parseNotionCommunity, Community } from '../lib/community';
 
 import React from "react";
 import mapboxgl from 'mapbox-gl'
@@ -11,7 +13,7 @@ import { fetchPages } from '../lib/notion';
 
 const Map: NextPage = ({
   communities,
-}: { communities: Community[] }) => {
+}: any) => {
   const geo = communitiesToGeoJson(communities);
   const [isOn, setIsOn] = useState<any>(false);
   useEffect(() => {
@@ -54,8 +56,10 @@ const Map: NextPage = ({
             } catch (error) {
               console.log(error);
             }
+            if (image) {
 
-            map.current.addImage('flower', image);
+              map?.current?.addImage('flower', image);
+            }
 
             try {
               if (!map.current?.getSource('points')) {
@@ -96,7 +100,7 @@ const Map: NextPage = ({
                   router.reload();
                 }
 
-                map.current.addLayer({
+                map?.current?.addLayer({
                   id: 'clusters',
                   type: 'circle',
                   source: 'points',
@@ -123,7 +127,7 @@ const Map: NextPage = ({
                 });
 
 
-                map.current.addLayer({
+                map?.current?.addLayer({
                   id: 'cluster-count',
                   type: 'symbol',
                   source: 'points',
@@ -142,18 +146,20 @@ const Map: NextPage = ({
                 /**
                  * Clusters callback - zoom in
                  */
-                map.current.on('click', 'clusters', (e) => {
-                  const features = map.current.queryRenderedFeatures(e.point, {
+                map?.current?.on('click', 'clusters', (e) => {
+                  const features = map?.current?.queryRenderedFeatures(e.point, {
                     layers: ['clusters']
                   });
-                  const clusterId = features[0].properties.cluster_id;
-                  map.current.getSource('points').getClusterExpansionZoom(
+                  const clusterId = features?.[0]?.properties?.cluster_id;
+                  // @ts-nocheck
+
+                  map?.current?.getSource('points')?.getClusterExpansionZoom(
                     clusterId,
-                    (err, zoom) => {
+                    (err: any, zoom: number) => {
                       if (err) return;
 
-                      map.current.easeTo({
-                        center: features[0].geometry.coordinates,
+                      map?.current?.easeTo({
+                        center: features?.[0]?.geometry?.coordinates,
                         zoom: zoom,
                         duration: 200,
                       });
