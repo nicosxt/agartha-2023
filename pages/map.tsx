@@ -36,6 +36,8 @@ const Map: NextPage = ({
   useEffect(() => {
     if (isListOpen === false) {
       mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GL_ACCESS_TOKEN ?? '';
+      console.log(mapContainer.current)
+      console.log(map)
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/syntonikka/cli1b7iw6005i01rb5rt30qxy',

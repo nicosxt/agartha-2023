@@ -12,7 +12,7 @@ export default function CommunityProfilePage(props: any) {
   const community = props.community;
   return (
     <div className={styles.outerWrapper}>
-      <img className={styles.cross} src='/community/cross.png' />
+      <img onClick={props.onClick} className={styles.cross} src='/community/cross.png' />
       <div className={styles.wrapper}>
 
         <div className={styles.imageLinkContainer}>

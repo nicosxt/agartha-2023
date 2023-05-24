@@ -2,6 +2,7 @@ import Fuse from 'fuse.js';
 import { useCallback, useState } from "react";
 
 import style from './list.module.css';
+import CommunityProfilePage from '../communities/CommunityProfilePage';
 
 function Card({community, onClick}) {
 
@@ -35,7 +36,7 @@ function Card({community, onClick}) {
 
 export default function CommunityList({ communities }) {
   const [communityQuery, setCommunityQuery] = useState('');
-  console.log(communities)
+  const [communityView, setCommunityView] = useState(null);
 
   const tags = ["Regen", "Techy", "Artsy",
     "DAO", "Coliving", "Earthship", "Farm",
@@ -65,13 +66,18 @@ export default function CommunityList({ communities }) {
 
   function onClickCommunity(community) {
     console.log(community);
+    setCommunityView(community);
+    history.pushState({}, '', `/community/${community.slug}`);
+  }
+
+  function closeCommunityModal() {
+    setCommunityView(null);
+    history.pushState({}, '', '/?list=true');
   }
 
 
   return (
-
     <div className="bg-white ">
-
       <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6 md:px-8 lg:max-w-7xl lg:px-8">
         <form>
           <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
@@ -95,6 +101,11 @@ export default function CommunityList({ communities }) {
           ))}
         </div>
       </div>
+      {!!communityView ? (
+        <div className={style.communityModalWrapper}>
+          <CommunityProfilePage onClick={closeCommunityModal} community={communityView}></CommunityProfilePage>
+        </div>
+      ): null}
     </div>
   )
 }
