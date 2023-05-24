@@ -50,8 +50,6 @@ export default function CommunityList({ communities }) {
   if (communities) {
 
     const results = fuse.search(communityQuery);
-
-    console.log("results", results, communityQuery);
     searchResults = communityQuery ? results.map((result: any) => result.item) : communities;
   }
 
@@ -65,7 +63,6 @@ export default function CommunityList({ communities }) {
   }
 
   function onClickCommunity(community) {
-    console.log(community);
     setCommunityView(community);
     history.pushState({}, '', `/community/${community.slug}`);
   }

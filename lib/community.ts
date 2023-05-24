@@ -19,7 +19,6 @@ export function getCommunitySlugFromName(name: string): string {
 }
 
 export function parseNotionCommunity(notionCommunity: any): Community {
-    // console.log(notionCommunity.properties)
     const coords = notionCommunity?.properties?.Coordinates?.rich_text?.[0]?.plain_text?.split(', ') ?? [0, 0];
     const longitude: number = +coords[1];
     const latitude: number = +coords[0];
