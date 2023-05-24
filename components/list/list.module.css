@@ -1,0 +1,45 @@
+.communityModalWrapper {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.cardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 250px);;
+    grid-auto-flow: dense;
+    gap: 15px;
+    justify-content: center;
+}
+
+.card {
+    position: relative;
+    height: 100%;
+}
+
+.card:hover .cardContent {
+    transform: translateX(-11px) translateY(-11px);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    background-color: blue;
+    width: 100%;
+    height: 100%;
+}
+
+.cardContent {
+    position: relative;
+    background-color: #DDFFF3;
+    border: 1px solid blue;
+    padding: 30px;
+    transition: 200ms ease-in-out transform;
+    height: 100%;
+}
+
+.imageWrapper {
+    aspect-ratio: 1 / 1;
+    border: 1px solid blue;
+    position: relative;
+}
