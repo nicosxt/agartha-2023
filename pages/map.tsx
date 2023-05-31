@@ -25,7 +25,7 @@ const MapPage: NextPage = ({ communities, isListView, isBackground }: any) => {
   return (
     <>
       <div className={`${MapStyles.listToggleWrapper} ${isListOpen ? MapStyles.hide : ''}`} >
-        <Map communities={communities} />
+        <Map communities={communities} isBackground={isBackground} />
       </div>
       <div className={`${MapStyles.listToggleWrapper} ${isListOpen ? '' : MapStyles.hide}`}>
         <CommunityList communities={communities} />

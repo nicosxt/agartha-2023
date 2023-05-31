@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 
-import ParticlesCustom from "../components/layout/particles";
+import ParticlesCustom from "../../components/layout/particles";
 
 export default function Home(): any {
   const router = useRouter();

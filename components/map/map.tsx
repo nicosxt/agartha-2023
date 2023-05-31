@@ -4,8 +4,26 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useState, useEffect, useRef } from "react";
 import { communitiesToGeoJson } from "../../lib/community";
 
+function setLayerVisibiliy(map, isBackground) {
+  console.log(map.isStyleLoaded(), isBackground);
+  const layers = ["country-label", "cluster-count", "points", "clusters"];
+  layers.forEach((layerId) => {
+    try {
+      map.setLayoutProperty(
+        layerId,
+        "visibility",
+        isBackground ? "none" : "visible"
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  });
+} 
+
 export default function Map(props: any) {
-  const { communities } = props;
+  const { communities, isBackground } = props;
+
+  const layerVisibility = isBackground ? "none" : "visible";
 
   const mapContainer = useRef<any>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -56,6 +74,7 @@ export default function Map(props: any) {
                   "text-size": 12,
                   "text-offset": [0, 1],
                   "text-anchor": "top",
+                  visibility: isBackground ? "none" : "visible",
                 },
                 paint: {
                   "text-color": "#0000FF",
@@ -70,6 +89,9 @@ export default function Map(props: any) {
               type: "circle",
               source: "points",
               filter: ["has", "point_count"],
+              layout: {
+                visibility: isBackground ? "none" : "visible",
+              },
               paint: {
                 // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
                 "circle-color": [
@@ -101,11 +123,20 @@ export default function Map(props: any) {
                 "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
                 "text-size": 12,
                 "icon-image": "",
+                visibility: isBackground ? "none" : "visible",
               },
               paint: {
                 "text-color": "#0000FF",
               },
             });
+
+            /**
+             * Set map visiblity
+             */
+            // map.current.on("style.load", function () {
+            // console.log('style load')
+            setLayerVisibiliy(map.current, isBackground);
+            // });
 
             /**
              * Clusters callback - zoom in
@@ -189,6 +220,11 @@ export default function Map(props: any) {
     });
   }, [communities, map]);
 
+  useEffect(() => {
+    setLayerVisibiliy(map.current, isBackground);
+    map.current.zoomTo(isBackground ? 0 : 1.5);
+  }, [isBackground]);
+  console.log(map.current);
   return (
     <main>
       <div

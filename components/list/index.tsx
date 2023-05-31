@@ -1,5 +1,5 @@
 import Fuse from "fuse.js";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import style from "./list.module.css";
 import CommunityProfilePage from "../communities/CommunityProfilePage";
@@ -72,28 +72,63 @@ export default function CommunityList(props: any) {
       : communities;
   }
 
-  function handleOnSearch({ currentTarget = {} }: any) {
+  const handleOnSearch = useCallback(({ currentTarget = {} }: any) => {
     const { value } = currentTarget;
     setCommunityQuery(value);
-  }
+  }, []);
 
-  function changeQuery(tag: string) {
+  const changeQuery = useCallback((tag: string) => {
     setCommunityQuery(tag);
-  }
+  }, [])
 
-  function onClickCommunity(community: any) {
+  const onClickCommunity = useCallback((community: any) => {
     setCommunityView(community);
     history.pushState({}, "", `/community/${community.slug}`);
-  }
+  }, [])
 
-  function closeCommunityModal() {
-    setCommunityView(null);
-    history.pushState({}, "", "/?list=true");
-  }
+  const closeCommunityModal = useCallback(() => {
+    // console.log(communityView)
+    if (communityView) {
+      setCommunityView(null);
+      history.pushState({}, "", "/?list=true");
+    }
+  }, [communityView]);
+
+  useEffect(() => {
+    const handleEsc = (event) => {
+       if (event.keyCode === 27) {
+        console.log('Close');
+        closeCommunityModal();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [communityView]);
+
+  useEffect(() => {
+    if (communityView) {
+      document.body.classList.add("modal");
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.classList.remove("modal");
+        document.body.style.overflow = "auto";
+      };
+    }
+    if (!communityView) {
+      document.body.classList.remove("modal");
+      document.body.style.overflow = "auto";
+    }
+  }, [communityView]);
 
   return (
     <div className="bg-white">
-      <div className={`${communityView ? style.communityView : ''}`}>
+      <div
+        onClick={closeCommunityModal}
+        className={`${communityView ? style.communityView : ""}`}
+      >
         <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6 md:px-8 lg:max-w-7xl lg:px-8">
           <form>
             <label

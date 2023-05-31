@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import ParticlesCustom from "../components/layout/particles";
+import ParticlesCustom from "../../components/layout/particles";
 import { motion } from "framer-motion";
 
 export default function Home(): any {

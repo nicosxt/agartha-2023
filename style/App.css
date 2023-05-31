@@ -45,3 +45,8 @@
   box-sizing: content-box;
   display: flex;
 }
+
+.modal .toggleListButton {
+  opacity: 0;
+  visibility: none;
+}

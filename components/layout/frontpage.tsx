@@ -5,6 +5,7 @@ import { Banner, Container, Body } from "../styles/styles";
 import { DownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
+import style from './frontpage.module.css';
 
 const items: MenuProps["items"] = [
   {
@@ -90,7 +91,7 @@ export default function FrontPage({ children }: Props) {
             </div>
           </nav>
 
-          <div>{children}</div>
+          <div className={style.children}>{children}</div>
         </div>
       </Banner>
     </>

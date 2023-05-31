@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { useState } from "react";
 import Link from "next/link";
-import { useAuth } from "../lib/authContext";
+import { useAuth } from "../../lib/authContext";
 import { useRouter } from "next/router";
-import ParticlesCustom from "../components/layout/particles";
+import ParticlesCustom from "../../components/layout/particles";
 import { motion } from "framer-motion";
 
 export default function Home(): any {
