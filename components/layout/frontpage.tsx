@@ -46,20 +46,20 @@ export default function FrontPage({ children }: Props) {
           <div className="text-xs sm:text-sm mr-4 items-center flex justify-end sm:flex md:flex md:flex-1 lg:w-0 ">
             <Link href={'/map'} style={{ cursor: "pointer" }}>
 
-              <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>Communities</p>
+              <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>Home</p>
 
             </Link>
-            <a target="_blank" rel="noreferrer" href='https://learn.agartha.one/'>
+            {/* <a target="_blank" rel="noreferrer" href='https://learn.agartha.one/'>
               <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>Learn</p>
+            </a> */}
+            <a target="_blank" rel="noreferrer" href='https://agarthamap.notion.site/agarthamap/Agartha-913b57d888d44b86accabd9a75bd6a05'>
+              <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>About</p>
             </a>
-            <a target="_blank" rel="noreferrer" href='https://www.notion.so/Agartha-4e4dcfd1584f420f87daf46ca2aaf25c'>
-              <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>Wiki</p>
-            </a>
-            <Link href={'/about'} style={{ cursor: "pointer" }}>
+            {/* <Link href={'/about'} style={{ cursor: "pointer" }}>
 
               <p className='font-mono text-[#0000FF]  pr-3 sm:pr-8'>About</p>
 
-            </Link>
+            </Link> */}
             <Dropdown menu={{ items }} trigger={['click']} arrow={false}>
               <a style={{ cursor: "pointer" }} onClick={(e) => e.preventDefault()}>
                 <p className='font-mono text-[#0000FF] pr-4'>Connect+</p>
