@@ -1,0 +1,21 @@
+.navbar {
+    background-color: rgb(255, 221, 237);
+    padding: 1rem;
+    margin: 0;
+    box-sizing: content-box;
+    display: flex;
+    border-bottom: 2px solid blue;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    transition: 200ms all;
+    color: blue;
+  }
+
+
+.navbarDark {
+    background-color: #010d1a;
+    color: rgb(255, 221, 237);
+    border-bottom: 2px solid rgb(255, 221, 237);;
+
+}

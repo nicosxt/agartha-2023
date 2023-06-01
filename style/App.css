@@ -38,14 +38,6 @@
   height: 30px;
 }
 
-.navbar {
-  background-color: rgb(255 221 237);
-  padding: 1rem;
-  margin: 0;
-  box-sizing: content-box;
-  display: flex;
-}
-
 .modal .toggleListButton {
   opacity: 0;
   visibility: none;

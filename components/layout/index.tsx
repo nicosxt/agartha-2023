@@ -6,11 +6,11 @@ type Props = {
 };
 import { Banner, Container } from "../styles/styles";
 
-export default function Layout({ children }: Props) {
+export default function Layout({ children, darkMode }: Props) {
   return (
     <Banner>
       <div className=" h-16 ">
-        <FrontPage>{children}</FrontPage>
+        <FrontPage darkMode={darkMode}>{children}</FrontPage>
       </div>
     </Banner>
   );
