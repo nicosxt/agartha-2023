@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import ParticlesCustom from "../components/layout/particles";
+import ParticlesCustom from "../../components/layout/particles";
 import { motion } from "framer-motion";
-import { Banner, Container, Body } from "../components/styles/styles";
-import Subscription from "../components/button/subscription";
+import { Banner, Container, Body } from "../../components/styles/styles";
+import Subscription from "../../components/button/subscription";
 export default function Home(): any {
   const router = useRouter();
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
