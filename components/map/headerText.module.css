@@ -1,0 +1,50 @@
+/**
+
+We wanted an outline on the text - but that is not possible
+with html/css. We are using 3 svgs, because text does not wrap
+in SVGs, and we need it to be responsive.
+
+If you update the text, make sure you update all the svgs!
+*/
+
+.headerTextDesktop {
+  display: none;
+}
+
+.headerTextTablet {
+  display: none;
+}
+
+.headerTextMobile {
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .headerTextDesktop {
+    display: none;
+  }
+
+  .headerTextTablet {
+    display: block;
+  }
+
+  .headerTextMobile {
+    display: none;
+  }
+}
+
+@media (min-width: 800px) {
+  .headerTextDesktop {
+    display: block;
+  }
+
+  .headerTextTablet {
+    display: none;
+  }
+
+  .headerTextMobile {
+    display: none;
+  }
+}
+
+

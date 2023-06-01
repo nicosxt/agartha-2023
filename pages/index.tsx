@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import Map, { getServerSideProps as mapGetServerSideProps } from "./map";
+import HeaderText from "../components/map/headerText";
 import styles from "../components/map/landing.module.css";
 
 export default function Index(props) {
@@ -14,7 +15,8 @@ export default function Index(props) {
         className={`${styles.landingWrapper} ${!landing ? "" : styles.fadeOut}`}
       >
         <h2 className={styles.landingHeader}>
-          Solarpunk Communities Intersecting Art, Ecology and Technology
+          {/* Solarpunk Communities Intersecting Art, Ecology and Technology */}
+          <HeaderText />
         </h2>
         <div className={styles.enterButtonWrapper}>
           <div className={styles.enterButtonBackground}></div>
