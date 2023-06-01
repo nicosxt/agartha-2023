@@ -10,8 +10,6 @@ import CommunityList from "../components/list";
 import Map from "../components/map/map";
 import MapStyles from '../components/map/map.module.css';
 import { fetchPages } from "../lib/notion";
-import Flower from "../components/svgs/flower";
-import Hamburger from "../components/svgs/hamburger";
 import ToggleButton from "../components/map/toggleButton";
 
 const MapPage: NextPage = ({ communities, isListView, isBackground }: any) => {

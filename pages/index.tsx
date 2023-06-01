@@ -7,6 +7,7 @@ export default function Index(props) {
   const [landing, setLanding] = useState(false);
   const toMap = useCallback(() => {
     setLanding(!landing);
+    props.setDarkMode(false);
   }, [landing]);
   return (
     <div>

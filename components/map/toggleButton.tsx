@@ -5,10 +5,10 @@ import Hamburger from "../svgs/hamburger";
 import style from './toggleButton.module.css';
 
 export default function ToggleButton(props: any) {
-  const { onClick, open } = props;
+  const { onClick, open, className } = props;
 
   return (
-    <label className={style.toggleListButton} htmlFor="mapListToggle">
+    <label className={`${style.toggleListButton} ${props.className}`} htmlFor="mapListToggle">
         <input onClick={onClick} type="checkbox" id="mapListToggle" />
 
         <div className={style.toggleTrack}>
