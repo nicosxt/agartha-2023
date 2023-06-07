@@ -29,6 +29,9 @@ export default function CommunityProfilePage(props: any) {
               alt=""
             />
           </div>
+        </div>
+        <div className={styles.container}>
+          <h1 className={styles.title}>{community.title}</h1>
           {community.url && (
             <a
               className={styles.link}
@@ -39,9 +42,6 @@ export default function CommunityProfilePage(props: any) {
               {community.url}
             </a>
           )}
-        </div>
-        <div className={styles.container}>
-          <h1 className={styles.title}>{community.title}</h1>
           <div className={styles.line} />
           {community.tags && (
             <div className={styles.tags}>

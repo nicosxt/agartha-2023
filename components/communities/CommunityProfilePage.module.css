@@ -1,7 +1,6 @@
 .outerWrapper {
   background-color: #0000ff;
-  margin-top: 20px;
-  margin-left: 20px;
+  margin: 20px auto;
   position: relative;
   max-width: 1200px;
   width: calc(100% - 30px);

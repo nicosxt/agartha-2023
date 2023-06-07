@@ -47,5 +47,15 @@ export default function Community(
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  return community ? <CommunityProfilePage community={community} /> : null;
+  return community ? (
+    <div style={{
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+    }}>
+      <CommunityProfilePage community={community} />
+    </div>
+  ) : null;
 }
