@@ -53,6 +53,13 @@ export default function Navbar(props) {
         <a
           target="_blank"
           rel="noreferrer"
+          href="https://agartha1.substack.com/"
+        >
+          <p className="font-mono  pr-3 sm:pr-8">Blog</p>
+        </a>
+        <a
+          target="_blank"
+          rel="noreferrer"
           href="https://agarthamap.notion.site/agarthamap/Agartha-913b57d888d44b86accabd9a75bd6a05"
         >
           <p className="font-mono  pr-3 sm:pr-8">About</p>
