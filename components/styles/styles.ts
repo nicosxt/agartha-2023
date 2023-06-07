@@ -1,15 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const Banner = styled.div`
+const Banner = styled.div``;
 
-`;
+const Body = styled.div``;
 
-const Body = styled.div`
+const Container = styled.div``;
 
-`;
-
-const Container = styled.div`
-
-`;
-
-export  {Banner, Container, Body};
+export { Banner, Container, Body };
