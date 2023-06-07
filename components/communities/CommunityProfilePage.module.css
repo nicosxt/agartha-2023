@@ -3,7 +3,7 @@
   margin: 20px auto;
   position: relative;
   max-width: 1200px;
-  width: calc(100% - 30px);
+  width: calc(100% - 30px);;
 }
 
 .wrapper {
@@ -23,6 +23,7 @@
   border: 1.5px solid #1100ff;
   /* margin-right: 12px; */
   overflow-x: hidden;
+  min-height: 50vh;
 }
 
 .wrapper:after {
